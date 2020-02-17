@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Change this toast message in order to simulate the conflict when merging.
+        // Don't forget to pull before pushing your code.
         Toast toast = Toast.makeText(this, "Toast Message Example", Toast.LENGTH_LONG);
         toast.show();
     }
