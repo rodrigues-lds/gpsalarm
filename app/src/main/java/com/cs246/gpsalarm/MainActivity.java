@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Change this toast message in order to simulate the conflict when merging.
         // Don't forget to pull before pushing your code.
-        Toast toast = Toast.makeText(this, "Eduardo decide to keep his code! :)", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this, "Eduardo decide to keep his code! Jose was here:)", Toast.LENGTH_LONG);
         toast.show();
     }
 }
