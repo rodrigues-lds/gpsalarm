@@ -16,8 +16,5 @@ public class MainActivity extends AppCompatActivity {
         // Don't forget to pull before pushing your code.
         Toast toast = Toast.makeText(this, "Eduardo decide to keep his code! :)", Toast.LENGTH_LONG);
         toast.show();
-
-        Toast toast2=Toast.makeText(this, "I tried this, is it working?", Toast.LENGTH_SHORT);
-        toast2.show();
     }
 }
