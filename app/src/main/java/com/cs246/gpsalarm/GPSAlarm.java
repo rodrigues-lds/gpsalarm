@@ -17,7 +17,7 @@ public class GPSAlarm {
     take the Strings in the User and Passwords fields and return true if the have been filled,
     if not this should return false and another function should notify the user this.
      */
-    public boolean validatingUserPassword(String userAndPassword) { //For test purposes we are giving an input, but this should take that informatio by itself
+    public boolean validatingUserPassword(String userAndPassword) { //For test purpuses we are giving an input, but this should take that informatio by itself
 
         if (userAndPassword.length() >1) {//with this we can say that at least there are two characters in the user and password.
             return true;
@@ -32,9 +32,12 @@ public class GPSAlarm {
 
         if (GPSstate=true) {
             return true;
-        } else {
+        } else{
             return false;
         }
     }
 
+    public double convertAddressToLatitude(String address, double latitude) {return latitude;}
+
+    public double convertAddressToLongitude(String address, double longitude) {return longitude;}
 }
