@@ -37,6 +37,17 @@ public class GpsAlarmUnitTests {
     }
 
     @Test
+    public void CheckTheUser() {
+
+        GPSAlarm gpsAlarm= new GPSAlarm();
+
+        String example= "User + Password";
+
+        Assert.assertTrue(gpsAlarm.validatingUser(example));
+
+    }
+
+    @Test
     public void ConvertAddressToLongitudeTest() {
         // Pre Conditions
         GPSAlarm gpsAlarm = new GPSAlarm();
