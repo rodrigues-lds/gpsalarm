@@ -26,6 +26,15 @@ public class GPSAlarm {
         }
     }
 
+    public boolean validatingUser(String user) { //For test purpuses we are giving an input, but this should take that informatio by itself
+
+        if (user.length() >1) {//with this we can say that at least there are two characters in the user and password.
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean checksIfTheGPSisActivated() {
 
         boolean GPSstate=true; //This should be replaced in a future with the real logic of the method and as a result we will obtain true or false
