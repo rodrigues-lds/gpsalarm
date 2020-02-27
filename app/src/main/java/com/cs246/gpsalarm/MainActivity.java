@@ -12,9 +12,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Change this toast message in order to simulate the conflict when merging.
-        // Don't forget to pull before pushing your code.
-        Toast toast = Toast.makeText(this, "Eduardo decide to keep his code! :)", Toast.LENGTH_LONG);
+        /*
+        Change this toast message in order to simulate the conflict when merging.
+        Don't forget to pull before pushing your code.
+        */
+
+        Toast toast = Toast.makeText(this, "Eduardo decide to keep his code! Jose was here:)", Toast.LENGTH_LONG);
         toast.show();
+
     }
 }
