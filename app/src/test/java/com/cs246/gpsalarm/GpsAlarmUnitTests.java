@@ -24,4 +24,15 @@ public class GpsAlarmUnitTests {
         // Check Expected Results
         Assert.assertEquals(miles * 1.609344, kilometers, 0);
     }
+
+    @Test
+    public void CheckThePassword() {
+
+        GPSAlarm gpsAlarm= new GPSAlarm();
+
+        String example= "User + Password";
+
+        Assert.assertTrue(gpsAlarm.validatingUserPassword(example));
+
+    }
 }
