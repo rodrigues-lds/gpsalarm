@@ -29,15 +29,14 @@ public class GpsAlarmUnitTests {
     public void CheckThePassword() {
 
         GPSAlarm gpsAlarm= new GPSAlarm();
-
         String example= "User + Password";
-
         Assert.assertTrue(gpsAlarm.validatingUserPassword(example));
 
     }
 
     @Test
     public void ConvertAddressToCoordTest() {
+
         // Pre Conditions
 
         // Data Mass
@@ -47,4 +46,23 @@ public class GpsAlarmUnitTests {
         // Check Expected Results
         
     }
+    /*
+    This function is checking if the checkifTheGPSisActivated method is working as it should be, providing boolean data
+
+     */
+    @Test
+    public void CheckGPSActivated() {
+        //Check if the GPS is activated
+        GPSAlarm gpsAlarm=new GPSAlarm();
+
+        if (gpsAlarm.checksIfTheGPSisActivated()){
+            Assert.assertEquals(true , gpsAlarm.checksIfTheGPSisActivated());
+        } else {
+            Assert.assertEquals(false, gpsAlarm.checksIfTheGPSisActivated());
+        }
+
+
+    }
+
+
 }
