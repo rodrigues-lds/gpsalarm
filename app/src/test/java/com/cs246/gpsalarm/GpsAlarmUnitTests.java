@@ -37,14 +37,32 @@ public class GpsAlarmUnitTests {
     }
 
     @Test
-    public void ConvertAddressToCoordTest() {
+    public void ConvertAddressToLongitudeTest() {
         // Pre Conditions
+        GPSAlarm gpsAlarm = new GPSAlarm();
 
         // Data Mass
+        String address = "Address";
 
         // Test Steps
+        double longitude = gpsAlarm.convertAddressToLongitude(address, 0);
 
         // Check Expected Results
-        
+        Assert.assertEquals(longitude, 0, 0);
+    }
+
+    @Test
+    public void ConvertAddressToLatitudeTest() {
+        // Pre Conditions
+        GPSAlarm gpsAlarm = new GPSAlarm();
+
+        // Data Mass
+        String address = "Address";
+
+        // Test Steps
+        double latitude = gpsAlarm.convertAddressToLatitude(address, 0);
+
+        // Check Expected Results
+        Assert.assertEquals(latitude, 0, 0);
     }
 }

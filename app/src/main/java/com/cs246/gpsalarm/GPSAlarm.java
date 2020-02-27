@@ -25,4 +25,8 @@ public class GPSAlarm {
             return false;
         }
     }
+
+    public double convertAddressToLatitude(String address, double latitude) {return latitude;}
+
+    public double convertAddressToLongitude(String address, double longitude) {return longitude;}
 }
