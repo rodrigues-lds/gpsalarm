@@ -35,4 +35,16 @@ public class GpsAlarmUnitTests {
         Assert.assertTrue(gpsAlarm.validatingUserPassword(example));
 
     }
+
+    @Test
+    public void ConvertAddressToCoordTest() {
+        // Pre Conditions
+
+        // Data Mass
+
+        // Test Steps
+
+        // Check Expected Results
+        
+    }
 }
