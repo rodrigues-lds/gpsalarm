@@ -37,14 +37,59 @@ public class GpsAlarmUnitTests {
     }
 
     @Test
-    public void ConvertAddressToCoordTest() {
+    public void CheckTheUser() {
+
+        GPSAlarm gpsAlarm= new GPSAlarm();
+
+        String example= "User + Password";
+
+        Assert.assertTrue(gpsAlarm.validatingUser(example));
+
+    }
+
+    @Test
+    public void ConvertAddressToLongitudeTest() {
         // Pre Conditions
+        GPSAlarm gpsAlarm = new GPSAlarm();
 
         // Data Mass
+        String address = "Address";
 
         // Test Steps
+        double longitude = gpsAlarm.convertAddressToLongitude(address, 0);
 
         // Check Expected Results
-        
+        Assert.assertEquals(longitude, 0, 0);
+    }
+
+    @Test
+    public void ConvertAddressToLatitudeTest() {
+        // Pre Conditions
+        GPSAlarm gpsAlarm = new GPSAlarm();
+
+        // Data Mass
+        String address = "Address";
+
+        // Test Steps
+        double latitude = gpsAlarm.convertAddressToLatitude(address, 0);
+
+        // Check Expected Results
+        Assert.assertEquals(latitude, 0, 0);
+    }
+    /*
+    This function is checking if the checkifTheGPSisActivated method is working as it should be, providing boolean data
+
+     */
+    @Test
+    public void CheckGPSActivated() {
+        //Check if the GPS is activated
+        GPSAlarm gpsAlarm=new GPSAlarm();
+
+        if (gpsAlarm.checksIfTheGPSisActivated()){
+            Assert.assertTrue(gpsAlarm.checksIfTheGPSisActivated());
+        } else {
+            Assert.assertFalse(gpsAlarm.checksIfTheGPSisActivated());
+        }
+
     }
 }
