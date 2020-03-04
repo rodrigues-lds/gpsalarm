@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "718770653191",
+    "firebase_url": "https://gps-alarm-93191.firebaseio.com",
+    "project_id": "gps-alarm-93191",
+    "storage_bucket": "gps-alarm-93191.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718770653191:android:e13daaf66763b04f8402a2",
+        "android_client_info": {
+          "package_name": "com.cs246.gpsalarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718770653191-uaji2v1r8n2uq4f9ag62iue93aess92q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cs246.gpsalarm",
+            "certificate_hash": "521afcebb7e65c75545867c39770d859543b8143"
+          }
+        },
+        {
+          "client_id": "718770653191-a345t7nr081ri1nktuu2972kqu95b81k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1V2GX2kbP_m4OPUM0npdCaeK-X_gRXcU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "718770653191-a345t7nr081ri1nktuu2972kqu95b81k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
