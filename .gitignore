@@ -44,3 +44,14 @@ app/build.gradle
 app/gpsalarm-app.iml
 GPS Alarm.iml
 local.properties
+.gradle/5.6.4/executionHistory/executionHistory.lock
+.gradle/5.6.4/fileHashes/fileHashes.lock
+.idea/caches/build_file_checksums.ser
+.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml
+.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_1_0_aar.xml
+.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_auth_16_0_5_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_auth_interop_16_0_1_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_common_16_0_3_aar.xml
+app/build.gradle
+local.properties
