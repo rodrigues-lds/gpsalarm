@@ -86,10 +86,13 @@ public class GpsAlarmUnitTests {
         GPSAlarm gpsAlarm=new GPSAlarm();
 
         if (gpsAlarm.checksIfTheGPSisActivated()){
-            Assert.assertTrue(gpsAlarm.checksIfTheGPSisActivated());
+            Assert.assertEquals(true , gpsAlarm.checksIfTheGPSisActivated());
         } else {
-            Assert.assertFalse(gpsAlarm.checksIfTheGPSisActivated());
+            Assert.assertEquals(false, gpsAlarm.checksIfTheGPSisActivated());
         }
 
+
     }
+
+
 }
