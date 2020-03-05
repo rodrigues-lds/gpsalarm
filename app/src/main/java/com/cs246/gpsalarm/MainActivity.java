@@ -19,6 +19,5 @@ public class MainActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(this, "Eduardo decide to keep his code! Jose was here:)", Toast.LENGTH_LONG);
         toast.show();
-
     }
 }
