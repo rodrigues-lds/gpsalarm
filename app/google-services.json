@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "718770653191-998bsd03le12odp4p0cmccv78gn8bmft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cs246.gpsalarm",
+            "certificate_hash": "25c0052495b1b1d023234c2e45a5dc8a138889f6"
+          }
+        },
+        {
           "client_id": "718770653191-uaji2v1r8n2uq4f9ag62iue93aess92q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

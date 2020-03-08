@@ -117,4 +117,9 @@ public class MainActivity extends AppCompatActivity {
             openAddressesActivity();
         }
     }
+
+    public void changeToMaps(View view) {
+        Intent maps=new Intent(this, MapsActivity.class);
+        startActivity(maps);
+    }
 }
