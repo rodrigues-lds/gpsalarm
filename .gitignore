@@ -64,3 +64,197 @@ app/build.gradle
 build.gradle
 local.properties
 .gradle/5.6.4/executionHistory/executionHistory.lock
+local.properties
+.gradle/5.6.4/executionHistory/executionHistory.bin
+.gradle/5.6.4/executionHistory/executionHistory.bin
+.gradle/5.6.4/executionHistory/executionHistory.lock
+.gradle/5.6.4/fileHashes/fileHashes.bin
+.gradle/5.6.4/fileHashes/fileHashes.lock
+.gradle/5.6.4/fileHashes/resourceHashesCache.bin
+.gradle/5.6.4/javaCompile/classAnalysis.bin
+.gradle/5.6.4/javaCompile/jarAnalysis.bin
+.gradle/5.6.4/javaCompile/javaCompile.lock
+.gradle/5.6.4/javaCompile/taskHistory.bin
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/buildOutputCleanup/outputFiles.bin
+.idea/libraries/Gradle__android_android_29.xml
+.idea/libraries/Gradle__androidx_activity_activity_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_appcompat_appcompat_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml
+.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_1_1_3_aar.xml
+.idea/libraries/Gradle__androidx_core_core_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_customview_customview_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_drawerlayout_drawerlayout_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_fragment_fragment_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_interpolator_interpolator_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_2_0_0_aar.xml
+.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_0_0_aar.xml
+.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_1_0_aar.xml
+.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_1_0_aar.xml
+.idea/libraries/Gradle__androidx_loader_loader_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_savedstate_savedstate_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_test_core_1_2_0_aar.xml
+.idea/libraries/Gradle__androidx_test_espresso_espresso_core_3_2_0_aar.xml
+.idea/libraries/Gradle__androidx_test_espresso_espresso_idling_resource_3_2_0_aar.xml
+.idea/libraries/Gradle__androidx_test_ext_junit_1_1_1_aar.xml
+.idea/libraries/Gradle__androidx_test_monitor_1_2_0_aar.xml
+.idea/libraries/Gradle__androidx_test_runner_1_2_0_aar.xml
+.idea/libraries/Gradle__androidx_vectordrawable_vectordrawable_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_vectordrawable_vectordrawable_animated_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml
+.idea/libraries/Gradle__com_google_android_gms_play_services_base_17_0_0_aar.xml
+.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml
+.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_17_0_0_aar.xml
+.idea/libraries/Gradle__com_google_auto_value_auto_value_annotations_1_6_5_jar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_auth_interop_18_0_0_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_common_19_3_0_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_components_16_0_0_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_database_19_2_1_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_database_collection_17_0_0_aar.xml
+.idea/libraries/Gradle__junit_junit_4_13_jar.xml
+.idea/misc.xml
+.idea/workspace.xml
+.gradle/5.6.4/executionHistory/executionHistory.bin
+.gradle/5.6.4/executionHistory/executionHistory.lock
+.gradle/5.6.4/fileHashes/fileHashes.bin
+.gradle/5.6.4/fileHashes/fileHashes.lock
+.gradle/5.6.4/fileHashes/resourceHashesCache.bin
+.gradle/5.6.4/javaCompile/classAnalysis.bin
+.gradle/5.6.4/javaCompile/jarAnalysis.bin
+.gradle/5.6.4/javaCompile/javaCompile.lock
+.gradle/5.6.4/javaCompile/taskHistory.bin
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/buildOutputCleanup/outputFiles.bin
+.idea/caches/build_file_checksums.ser
+.idea/libraries/Gradle__androidx_activity_activity_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_appcompat_appcompat_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_0_aar.xml
+.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_1_1_3_aar.xml
+.idea/libraries/Gradle__androidx_core_core_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_customview_customview_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_drawerlayout_drawerlayout_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_fragment_fragment_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_interpolator_interpolator_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_2_0_0_aar.xml
+.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_0_0_aar.xml
+.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_1_0_aar.xml
+.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_1_0_aar.xml
+.idea/libraries/Gradle__androidx_loader_loader_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_savedstate_savedstate_1_0_0_aar.xml
+.idea/libraries/Gradle__androidx_test_core_1_2_0_aar.xml
+.idea/libraries/Gradle__androidx_test_espresso_espresso_core_3_2_0_aar.xml
+.idea/libraries/Gradle__androidx_test_espresso_espresso_idling_resource_3_2_0_aar.xml
+.idea/libraries/Gradle__androidx_test_ext_junit_1_1_1_aar.xml
+.idea/libraries/Gradle__androidx_test_monitor_1_2_0_aar.xml
+.idea/libraries/Gradle__androidx_test_runner_1_2_0_aar.xml
+.idea/libraries/Gradle__androidx_vectordrawable_vectordrawable_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_vectordrawable_vectordrawable_animated_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_versionedparcelable_versionedparcelable_1_1_0_aar.xml
+.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml
+.idea/libraries/Gradle__junit_junit_4_13_jar.xml
+.idea/misc.xml
+.idea/workspace.xml
+GPS Alarm.iml
+local.properties
+
+.gradle
+/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+
+# Generated files
+bin/
+gen/
+out/
+#  Uncomment the following line in case you need and you don't have the release build type files in your app
+# release/
+
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Proguard folder generated by Eclipse
+proguard/
+
+# Log Files
+*.log
+
+# Android Studio Navigation editor temp files
+.navigation/
+
+# Android Studio captures folder
+captures/
+
+# IntelliJ
+*.iml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+# Android Studio 3 in .gitignore file.
+.idea/caches
+.idea/modules.xml
+# Comment next line if keeping position of elements in Navigation Editor is relevant for you
+.idea/navEditor.xml
+
+# Keystore files
+# Uncomment the following lines if you do not want to check your keystore files in.
+#*.jks
+#*.keystore
+
+# External native build folder generated in Android Studio 2.2 and later
+.externalNativeBuild
+.cxx/
+
+# Google Services (e.g. APIs or Firebase)
+# google-services.json
+
+# Freeline
+freeline.py
+freeline/
+freeline_project_description.json
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
+
+# Version control
+vcs.xml
+
+# lint
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
+.gradle/buildOutputCleanup/cache.properties

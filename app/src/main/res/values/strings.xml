@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GPS Alarm</string>
+    <string name="hintPassword">Password</string>
+    <string name="hintEmail">E-mail</string>
+    <string name="btnLogin">Login</string>
+    <string name="lblWelcome">Welcome</string>
+    <string name="lblSingUp">Need an account? Sign Up</string>
+    <string name="imgText">TODO</string>
 </resources>
