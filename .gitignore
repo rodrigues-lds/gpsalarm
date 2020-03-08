@@ -258,3 +258,9 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 .gradle/buildOutputCleanup/cache.properties
+.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml
+.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_1_0_aar.xml
+.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_auth_16_0_5_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_auth_interop_16_0_1_aar.xml
+.idea/libraries/Gradle__com_google_firebase_firebase_common_16_0_3_aar.xml
