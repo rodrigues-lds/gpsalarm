@@ -40,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
     private boolean validateLoginForm(String username, String password) {
 
         if (username.trim().isEmpty() && password.trim().isEmpty()) {
-            Toast.makeText(this, "Insert username and password!",
+            Toast.makeText(this, "Insert both username and password!",
                     Toast.LENGTH_LONG).show();
             return false;
         } else if (username.trim().isEmpty()) {
-            Toast.makeText(this, "Insert username!",
+            Toast.makeText(this, "Insert the username!",
                     Toast.LENGTH_LONG).show();
             return false;
         } else if (password.trim().isEmpty()) {
-            Toast.makeText(this, "Insert password!",
+            Toast.makeText(this, "Insert the password!",
                     Toast.LENGTH_LONG).show();
             return false;
         } else {
@@ -89,12 +89,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-    This function open the Addresses Activity.
+    This function opens the Addresses Activity.
      */
     private void openAddressesActivity() {
         // Creating a new instance of the intent
         Intent intent = new Intent(this, AddressesActivity.class);
         startActivity(intent);
+    }
+
+    /*
+    This function opens the Register Activity
+     */
+    public void openRegisterActivity(View view) {
+        // Creating a new instance of the intent
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    /*
+    This function opens the Maps Activity.
+     */
+    public void changeToMaps(View view) {
+        Intent maps = new Intent(this, MapsActivity.class);
+        startActivity(maps);
     }
 
     /*
@@ -118,8 +135,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void changeToMaps(View view) {
-        Intent maps=new Intent(this, MapsActivity.class);
-        startActivity(maps);
-    }
 }
