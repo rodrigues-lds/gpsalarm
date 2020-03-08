@@ -1,5 +1,6 @@
 package com.cs246.gpsalarm;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 /**
  * Created by Eduardo A Rodrigues on 2/24/2020.
  */
+@SuppressLint("Registered")
 public class GPSAlarm extends Service {
 
     Alarm alarm = new Alarm();
@@ -69,7 +71,7 @@ public class GPSAlarm extends Service {
 
         boolean GPSstate=true; //This should be replaced in a future with the real logic of the method and as a result we will obtain true or false
 
-        if (GPSstate=true) {
+        if (GPSstate) {
             return true;
         } else{
             return false;

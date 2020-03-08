@@ -6,4 +6,5 @@
     <string name="lblWelcome">Welcome</string>
     <string name="lblSingUp">Need an account? Sign Up</string>
     <string name="imgText">TODO</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
