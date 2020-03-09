@@ -1,10 +1,36 @@
 <resources>
     <string name="app_name">GPS Alarm</string>
-    <string name="hintPassword">Password</string>
+
+    <!-- HINTS -->
+    <string name="hintConfirmPassword">Confirm Password</string>
     <string name="hintEmail">E-mail</string>
+    <string name="hintName">Name</string>
+    <string name="hintPassword">Password</string>
+
+    <!-- BUTTONS -->
     <string name="btnLogin">Login</string>
+    <string name="btnRegister">Register</string>
+
+    <!-- LABELS -->
+    <string name="lblNeedAnAccount">Need an account?</string>
+    <string name="lblRegister">Register</string>
+    <string name="lblSingUp"><u>Sign Up</u></string>
     <string name="lblWelcome">Welcome</string>
-    <string name="lblSingUp">Need an account? Sign Up</string>
+
+    <!-- IMAGES -->
     <string name="imgText">TODO</string>
+
+    <!-- USER PREFERENCES -->
+    <bool name="userLoggedIn">false</bool>
+    <string name="username">com.cs246.gpsalarm.USERNAME</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="title_activity_addresses">AddressesActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
