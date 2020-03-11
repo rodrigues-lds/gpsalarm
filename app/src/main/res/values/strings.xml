@@ -4,6 +4,8 @@
     <string name="hintEmail">E-mail</string>
     <string name="btnLogin">Login</string>
     <string name="lblWelcome">Welcome</string>
-    <string name="lblSingUp">Need an account? Sign Up</string>
+    <string name="lblSignUp">Need an account? Click here</string>
+    <string name="btnSignUp">Sign up </string>
+    <string name="lblLogin">Already have an account? Login</string>
     <string name="imgText">TODO</string>
 </resources>
