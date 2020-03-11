@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/2020-gpsalarm-app.iml" filepath="$PROJECT_DIR$/app/2020-gpsalarm-app.iml" group="GPS Alarm/app" />
       <module fileurl="file://$PROJECT_DIR$/GPS Alarm.iml" filepath="$PROJECT_DIR$/GPS Alarm.iml" group="GPS Alarm" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="GPS Alarm/app" />
       <module fileurl="file://$PROJECT_DIR$/app/gpsalarm-app.iml" filepath="$PROJECT_DIR$/app/gpsalarm-app.iml" group="GPS Alarm/app" />
