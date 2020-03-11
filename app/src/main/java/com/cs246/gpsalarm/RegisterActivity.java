@@ -2,15 +2,19 @@ package com.cs246.gpsalarm;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 /*
 This class defines the RegisterActivity
  */
 public class RegisterActivity extends AppCompatActivity {
+
+    private static final String TAG = "com.cs246.gpsalarm.TAG";
 
     /*
    This function is called each time this activity is instantiated.
@@ -47,6 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
             return false;
         } else {
+            // Generate Log
+            Log.i(TAG, "GPS LOG | The register form was properly validated!");
             return true;
         }
     }
@@ -68,8 +74,14 @@ public class RegisterActivity extends AppCompatActivity {
     [ STUB FUNCTION ] This function checks if a user with the same username (e-mail) already exist.
      */
     private boolean isUserDuplicated(String username) {
-        // TO BE IMPLEMENTED
-        return false;
+        try {
+            // TO BE IMPLEMENTED
+            return true;
+        }catch (Exception ex){
+            // Generate Log
+            Log.e(TAG, "GPS LOG | It was not possible to check if user is duplicated.");
+            return false;
+        }
     }
 
     /*
@@ -78,6 +90,14 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean registerUserAtFirebase(String name, String username, String password) {
         // TO BE IMPLEMENTED
         boolean userRegistered = true;
+
+        try {
+            // Generate Log
+            Log.i(TAG, "GPS LOG | The user were properly registered at Firebase.");
+        }catch (Exception ex){
+            // Generate Log
+            Log.e(TAG, "GPS LOG | It was not possible to register the user at Firebase.");
+        }
 
         if (userRegistered) {
             Toast.makeText(this, "User Registered! Insert your username and password.",
@@ -121,6 +141,9 @@ public class RegisterActivity extends AppCompatActivity {
 
             // Open Addresses Activity
             openMainActivity();
+
+            // Generate Log
+            Log.e(TAG, "GPS LOG | The user is properly registered at the app.");
         }
     }
 }
