@@ -4,15 +4,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 /*
 This class defines the MainActivity
  */
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "com.cs246.gpsalarm.TAG";
 
     /*
     This function is called each time this main activity is instantiated.
@@ -52,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
             return false;
         } else {
+            // Generate Log
+            Log.i(TAG, "GPS LOG | The login form was properly validated!");
             return true;
         }
     }
@@ -60,32 +66,55 @@ public class MainActivity extends AppCompatActivity {
     [ STUB FUNCTION ] This function validates the user credentials at Firebase.
      */
     private boolean validateLoginFirebase(String username, String password) {
-        // TO BE IMPLEMENTED BY JOSE PAZ
-        return true;
+        try {
+
+            // TO BE IMPLEMENTED BY JOSE PAZ
+            // Generate Log
+            Log.i(TAG, "GPS LOG | The credentials were properly validated.");
+            return true;
+        } catch (Exception ex) {
+            // Generate Log
+            Log.w(TAG, "GPS LOG | Something went wrong when validating the Login at Firebase.");
+            return false;
+        }
     }
 
     /*
     This function retrieve the Login status from the shared preferences.
      */
     private boolean getLoginStatus() {
-        // Creating the preferences where the data will be retrieved
-        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor mEditor = myPreferences.edit();
-        return myPreferences.getBoolean("userLoggedIn", false);
+        try {
+            // Creating the preferences where the data will be retrieved
+            SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor mEditor = myPreferences.edit();
+            return myPreferences.getBoolean("userLoggedIn", false);
+        }catch (Exception ex) {
+            // Generate Log
+            Log.e(TAG, "GPS LOG | It was not possible to read shared preferences.");
+            return false;
+        }
     }
 
     /*
     This function saves the username as well as the login status into the shared preferences.
      */
     private void setLoginStatus(String username) {
-        // Creating the preferences where the data will be saved
-        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor mEditor = myPreferences.edit();
+        try {
+            // Creating the preferences where the data will be saved
+            SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor mEditor = myPreferences.edit();
 
-        // Saving the data in the keys strings as defined in the class string.xml
-        mEditor.putString(getString(R.string.username), username);
-        mEditor.putBoolean("userLoggedIn", true);
-        mEditor.commit();
+            // Saving the data in the keys strings as defined in the class string.xml
+            mEditor.putString(getString(R.string.username), username);
+            mEditor.putBoolean("userLoggedIn", true);
+            mEditor.commit();
+
+            // Generate Log
+            Log.i(TAG, "GPS LOG | Username and login status were saved at shared preferences.");
+        } catch (Exception ex) {
+            // Generate Log
+            Log.e(TAG, "GPS LOG | It was not possible to save shared preferences.");
+        }
     }
 
     /*
@@ -132,7 +161,9 @@ public class MainActivity extends AppCompatActivity {
 
             // Open Addresses Activity
             openAddressesActivity();
+
+            // Generate Log
+            Log.i(TAG, "GPS LOG | User credentials are ok.");
         }
     }
-
 }
