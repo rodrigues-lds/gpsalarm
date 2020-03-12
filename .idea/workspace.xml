@@ -9,11 +9,8 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity2.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity2.java" afterDir="false" />
-    </list>
+    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
+    <list id="5c92c598-7792-4e95-a813-0f35089503f7" name="Adding a second maps-activity that uses Geofences Locally, not with Geofire." comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,8 +257,25 @@
       <option name="project" value="LOCAL" />
       <updated>1583973350090</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version.">
+      <created>1583977191383</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1583977191383</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -284,6 +298,7 @@
     <MESSAGE value="Adding the part of the GPS, able to test." />
     <MESSAGE value="Before pulling. Without changes." />
     <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding a second maps-activity that uses Geofences Locally, not with Geofire." />
+    <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
   </component>
 </project>
