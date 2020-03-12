@@ -83,7 +83,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(MapsActivity2.this, "You must enable permission",Toast.LENGTH_SHORT);
+                        Toast.makeText(MapsActivity2.this, "You must enable permission",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -95,20 +95,11 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         //Initializing the Geofence client
         geofencingClient = LocationServices.getGeofencingClient(this);
 
-        //createGeofence2();
-
-
 
 
 
 
     }
-    //Testing mode, to be errased if this doesn't work
-    /*private void createGeofence2() {
-        mGeofenceList=new ArrayList<>();
-
-
-    }*/
 
     private void buildLocationCallback() {
         locationCallback=new LocationCallback() {
