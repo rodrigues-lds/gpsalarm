@@ -7,6 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GeofenceBroadcastReceiver.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity2.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -37,6 +38,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -55,6 +63,9 @@
   </component>
   <component name="RecentsManager">
     <key name="android.template.packageName">
+      <recent name="com.cs246.gpsalarm" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
       <recent name="com.cs246.gpsalarm" />
     </key>
   </component>
@@ -235,7 +246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583972281090</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Adding a second maps-activity that uses Geofences Locally, not with Geofire.">
+      <created>1583973338964</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1583973338964</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -258,6 +276,7 @@
     <MESSAGE value="Before uploading the GPS part" />
     <MESSAGE value="Adding the part of the GPS, able to test." />
     <MESSAGE value="Before pulling. Without changes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Before pulling. Without changes." />
+    <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding a second maps-activity that uses Geofences Locally, not with Geofire." />
   </component>
 </project>
