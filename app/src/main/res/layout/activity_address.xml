@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddressActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+            <TextView
+                android:id="@+id/textViewAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="30dp"
+                android:fontFamily="casual"
+                android:paddingBottom="10dp"
+                android:text="@string/lblAddress"
+                android:textAlignment="center"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textColor="#0B7280"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:fontFamily="casual"
+                android:hint="@string/hintAddress"
+                android:paddingBottom="15dp"
+                android:textColor="#0B7280"
+                android:textColorHighlight="#0B7280"
+                android:textColorHint="#0B7280"
+                android:textColorLink="#0B7280" />
+
+            <EditText
+                android:id="@+id/txtZipcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:fontFamily="casual"
+                android:hint="@string/hintZipcode"
+                android:inputType="number"
+                android:paddingBottom="15dp"
+                android:textColor="#0B7280"
+                android:textColorHighlight="#0B7280"
+                android:textColorHint="#0B7280"
+                android:textColorLink="#0B7280" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/lblRadius"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="casual"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:text="@string/lblRadius"
+                    android:textColor="#0B7280"
+                    android:textColorHighlight="#0B7280"
+                    android:textColorHint="#0B7280"
+                    android:textColorLink="#0B7280"
+                    />
+
+                <EditText
+                    android:id="@+id/txtRadius"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="casual"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:paddingBottom="15dp"
+                    android:textColor="#0B7280"
+                    android:textColorHighlight="#0B7280"
+                    android:textColorHint="#0B7280"
+                    android:textColorLink="#0B7280" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/txtRingtone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:hint="@string/hintRingtone"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:paddingBottom="15dp"
+                android:textColor="#0B7280"
+                android:textColorHighlight="#0B7280"
+                android:textColorHint="#0B7280"
+                android:textColorLink="#0B7280" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="100dp"
+                android:background="#FFFFFF"
+                android:onClick="saveAddress"
+                android:text="@string/btnSave"
+                android:textAllCaps="true"
+                android:textColor="#0B7280"
+                android:textCursorDrawable="@drawable/rounded_button_transparent"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
