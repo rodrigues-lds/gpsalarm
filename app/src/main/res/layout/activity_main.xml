@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1.5">
 
         <ImageView
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             android:orientation="vertical"
             android:paddingLeft="35dp"
             android:paddingRight="35dp">
-            <!--  No space for welcome message, for now.
+
             <TextView
                 android:id="@+id/textViewSignIn"
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="26sp"
                 android:textStyle="bold" />
-             -->
+
             <EditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"

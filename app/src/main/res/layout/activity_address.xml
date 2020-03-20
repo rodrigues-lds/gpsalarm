@@ -64,16 +64,19 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <EditText
+                <TextView
                     android:id="@+id/lblRadius"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
                     android:inputType="text"
                     android:paddingBottom="15dp"
+                    android:paddingLeft="05dp"
                     android:text="@string/lblRadius"
+                    android:textSize="18sp"
                     android:textColor="#0B7280"
                     android:textColorHighlight="#0B7280"
                     android:textColorHint="#0B7280"
@@ -92,6 +95,40 @@
                     android:textColorHighlight="#0B7280"
                     android:textColorHint="#0B7280"
                     android:textColorLink="#0B7280" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="casual"
+                    android:text="miles"
+                    android:textColor="#0B7280"
+                    android:textColorHighlight="#0B7280"
+                    android:paddingBottom="18sp"
+                    android:textColorHint="#0B7280"
+                    android:textColorLink="#0B7280"
+                    />
+
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#0B7280"
+                    android:textColorHighlight="#0B7280"
+                    android:textColorHint="#0B7280"
+                    android:textColorLink="#0B7280"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="casual"
+                    android:paddingBottom="18sp"
+                    android:text="km"
+                    android:textColor="#0B7280"
+                    android:textColorHighlight="#0B7280"
+                    android:textColorHint="#0B7280"
+                    android:textColorLink="#0B7280"
+                    />
+
             </LinearLayout>
 
             <EditText
@@ -114,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="100dp"
                 android:background="#FFFFFF"

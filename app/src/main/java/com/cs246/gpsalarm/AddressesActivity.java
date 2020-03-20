@@ -8,6 +8,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +24,10 @@ public class AddressesActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseInstance;
     private String UserId;
 
+
     EditText user,email;
+    private static final String TAG = "com.cs246.gpsalarm.TAG";
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,10 @@ public class AddressesActivity extends AppCompatActivity {
 
     public void  updateUser(String username,String email)
     {
+        mAuth = FirebaseAuth.getInstance();
+        String aaa = mAuth.getUid();
+        Log.e(TAG, "GPS LOG | " + aaa.toString());
+
         mFirebaseDatabase.child("Users").child(UserId).child("username").setValue(username);
         mFirebaseDatabase.child("Users").child(UserId).child("email").setValue(email);
     }

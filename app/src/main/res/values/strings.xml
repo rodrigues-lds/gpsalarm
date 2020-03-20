@@ -14,27 +14,23 @@
     <string name="btnLogin">Login</string>
     <string name="btnRegister">Register</string>
     <string name="btnSave">Save</string>
+    <string name="btnSignUp">Sign up </string>
 
     <!-- LABELS -->
-    <string name="lblNeedAnAccount">Need an account?</string>
     <string name="lblRegister">Register</string>
-    <string name="lblSingUp"><u>Sign Up</u></string>
     <string name="lblWelcome">Welcome</string>
     <string name="lblAddress">Address</string>
     <string name="lblRadius">Radius:  </string>
-
-    <string name="lblSignUp">Need an account? Click here</string>
-    <string name="btnSignUp">Sign up </string>
+    <string name="lblSignUp">Need an account? <u>Sing up</u></string>
     <string name="lblLogin">Already have an account? Login</string>
 
-
     <!-- IMAGES -->
-
     <string name="imgText">TODO</string>
 
     <!-- USER PREFERENCES -->
     <bool name="userLoggedIn">false</bool>
     <string name="username">com.cs246.gpsalarm.USERNAME</string>
+    <string name="userid">com.cs246.gpsalarm.USERID</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="title_activity_addresses">AddressesActivity</string>
