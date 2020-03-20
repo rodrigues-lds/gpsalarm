@@ -112,10 +112,11 @@
                     android:id="@+id/switch1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="saveAddress"
                     android:textColor="#0B7280"
                     android:textColorHighlight="#0B7280"
                     android:textColorHint="#0B7280"
-                    android:textColorLink="#0B7280"/>
+                    android:textColorLink="#0B7280" />
 
                 <TextView
                     android:layout_width="wrap_content"
