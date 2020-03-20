@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 /*
 This class defines the Addresses Activity
  */
-public class AddressesActivity extends AppCompatActivity {
+public class ControlPanelActivity extends AppCompatActivity {
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;

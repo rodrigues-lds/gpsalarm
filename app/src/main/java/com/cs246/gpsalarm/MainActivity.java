@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -43,16 +44,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         // Initiate the instances
-        editTextUsername = (EditText) findViewById(R.id.editTextEmail);
+        editTextUsername = (EditText) findViewById(R.id.editTextUsername);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
+
+        // Initializing FirebaseAuth
         try {
             mAuth = FirebaseAuth.getInstance();
         } catch (Exception ex) {
-            Log.e(TAG, "GPS LOG | It was not possible to get the instance from Firebase!");
+            Log.e(TAG, "GPS LOG | It was not possible to get the instance from Firebase!" + ex.getMessage().toString());
         }
 
-        // This elements are being monitored. If they are clicked, an action is performed
+        // Hide keyboard when text boxes looses its focus.
+        editTextUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
+        editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
+        // These elements are being monitored. If they are clicked, an action is performed
         findViewById(R.id.textViewSignUp).setOnClickListener(this);
         findViewById(R.id.buttonLogin).setOnClickListener(this);
     }
@@ -67,11 +89,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             // Login button
             case R.id.buttonLogin:
-                performLogin();
+                performLogin(view);
                 break;
             // Sing Up link
             case R.id.textViewSignUp:
-                startActivity(new Intent(this, SignUpActivity.class));
+                startActivity(new Intent(this, RegisterActivity.class));
+                break;
+            default:
                 break;
         }
     }
@@ -87,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mAuth.getCurrentUser() != null) {
             Log.i(TAG, "GPS LOG | The user is already logged in.");
             finish();
-            startActivity(new Intent(this, AddressesActivity.class));
+            startActivity(new Intent(this, ControlPanelActivity.class));
         }
     }
 
@@ -129,17 +153,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // Credentials are validated
-        Log.i(TAG, "GPS LOG | The inserted data are valid.");
+        Log.i(TAG, "GPS LOG | The inserted data are valid in the login.");
         return true;
     }
 
     /**
      * This function performs the login process by checking the user credentials in the database.
      */
-    private void performLogin() {
+    private void performLogin(View view) {
         // Extract the data from the Login form
         final String username = editTextUsername.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+
+        // Hide the Keyboard
+        hideKeyboard(view);
 
         //If the credentials are valid, perform the login with database.
         if (validateCredentials(username, password)) {
@@ -151,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             Log.i(TAG, "GPS LOG | The user " + username + " is logged in!");
-                            openAddressesActivity();
+                            openControlPanelActivity();
                         } else {
                             Log.w(TAG, "GPS LOG | " + task.getException().getMessage());
                             Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -159,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
             } catch (Exception ex) {
-                Log.e(TAG, "GPS LOG | It was not possible to authenticate. The connection with Firebase is not OK.");
+                Log.e(TAG, "GPS LOG | It was not possible to authenticate. " + ex.getMessage().toString());
             }
         }
     }
@@ -167,13 +194,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * This function opens the next activity once the user is logged in.
      */
-    private void openAddressesActivity() {
+    private void openControlPanelActivity() {
         // Close the current activity
         this.finish();
 
-        // Open the main menu (AddressesActivity)
-        Intent intent = new Intent(MainActivity.this, AddressesActivity.class);
+        // Open the main menu (ControlPanelActivity)
+        Intent intent = new Intent(MainActivity.this, ControlPanelActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    /**
+     * This function hides the Android Keyboard as soon as the Sing Up button is pressed.
+     *
+     * @param view The element keyboard.
+     */
+    private void hideKeyboard(View view) {
+
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

@@ -22,7 +22,7 @@
     <string name="lblAddress">Address</string>
     <string name="lblRadius">Radius:  </string>
     <string name="lblSignUp">Need an account? <u>Sing up</u></string>
-    <string name="lblLogin">Already have an account? Login</string>
+    <string name="lblLogin">Already have an account? <u>Login</u></string>
 
     <!-- IMAGES -->
     <string name="imgText">TODO</string>
