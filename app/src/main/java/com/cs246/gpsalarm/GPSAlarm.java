@@ -1,7 +1,6 @@
 package com.cs246.gpsalarm;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -19,6 +18,7 @@ public class GPSAlarm extends Service {
         super.onCreate();
     }
 
+    //**
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         alarm.setAlarm(this);
