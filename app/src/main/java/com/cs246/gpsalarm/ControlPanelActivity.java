@@ -22,63 +22,40 @@ public class ControlPanelActivity extends AppCompatActivity {
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
-    private String UserId;
-
-
-    EditText user,email;
+    private FirebaseAuth mAuth;
+    private EditText name, username;
     private static final String TAG = "com.cs246.gpsalarm.TAG";
-    FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addresses);
+        setContentView(R.layout.activity_controlpanel);
 
-        user = (EditText)findViewById(R.id.txtName);
-        email = (EditText)findViewById(R.id.txtEmail);
+        name = (EditText) findViewById(R.id.txtName);
+        username = (EditText) findViewById(R.id.txtUsername);
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers");
-        UserId = mFirebaseDatabase.push().getKey();
+        mFirebaseDatabase = mFirebaseInstance.getReference("Users");
     }
 
-    public void addUser(String username,String email)
-    {
-        User users = new User(username,email);
-        mFirebaseDatabase.child("Users").child(UserId).setValue(users);
+
+    public void updateData(View view) {
+        User user = new User();
+        user.setName(name.getText().toString().trim());
+        user.updateUserData();
     }
 
-    public void  updateUser(String username,String email)
-    {
-        mAuth = FirebaseAuth.getInstance();
-        String aaa = mAuth.getUid();
-        Log.e(TAG, "GPS LOG | " + aaa.toString());
-
-        mFirebaseDatabase.child("Users").child(UserId).child("username").setValue(username);
-        mFirebaseDatabase.child("Users").child(UserId).child("email").setValue(email);
-    }
-
-    public void insertData(View view)
-    {
-        addUser(user.getText().toString().trim(),email.getText().toString().trim());
-    }
-
-    public void updateData(View view)
-    {
-        updateUser(user.getText().toString().trim(),email.getText().toString().trim());
-    }
-
-    public void readData(View view)
-    {
+    public void readData(View view) {
         mFirebaseDatabase.child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()){
-                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                         String dbuser = ds.child("username").getValue(String.class);
                         String dbemail = ds.child("email").getValue(String.class);
-                        Log.d("TAG",dbuser+"/"+dbemail);
+                        Log.d("TAG", dbuser + "/" + dbemail);
 
                     }
                 }

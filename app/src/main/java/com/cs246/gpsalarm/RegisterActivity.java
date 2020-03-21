@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private static final String TAG = "com.cs246.gpsalarm.TAG";
     private FirebaseAuth mAuth;
-    private EditText editTextUsername, editTextPassword, editTextPasswordConfirmation;
+    private EditText editTextName, editTextUsername, editTextPassword, editTextPasswordConfirmation;
     private ProgressBar progressBar;
 
     /**
@@ -45,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
 
         // Initiate the instances
+        editTextName = (EditText) findViewById(R.id.editTextName);
         editTextUsername = (EditText) findViewById(R.id.editTextUsername);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextPasswordConfirmation = (EditText) findViewById(R.id.editTextConfirmPassword);
@@ -58,6 +59,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         // Hide keyboard when text boxes looses its focus.
+        editTextName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
         editTextUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -119,7 +129,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      * @param passwordConfirmation This parameter is the password confirmation inserted by the user.
      * @return if the credentials are valid, it returns true. Otherwise, false.
      */
-    private boolean validateUserInformation(String username, String password, String passwordConfirmation) {
+    private boolean validateUserInformation(String name, String username, String password, String passwordConfirmation) {
+
+        // Check if name is empty
+        if (name.isEmpty()) {
+            editTextName.setError("Name is required.");
+            editTextName.requestFocus();
+            return false;
+        }
 
         // Check if username is empty
         if (username.isEmpty()) {
@@ -173,6 +190,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     private void registerUser(View view) {
         // Extract the data from the Register form
+        final String name = editTextName.getText().toString().trim();
         final String username = editTextUsername.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String passwordConfirmation = editTextPasswordConfirmation.getText().toString().trim();
@@ -181,7 +199,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         hideKeyboard(view);
 
         //If the credentials are valid, perform the login with database
-        if (validateUserInformation(username, password, passwordConfirmation)) {
+        if (validateUserInformation(name, username, password, passwordConfirmation)) {
             progressBar.setVisibility(View.VISIBLE);
             try {
                 mAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -189,13 +207,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
+                            // Create User database
+                            User user = new User();
+                            user.setName(name);
+                            user.createUserDatabase();
+
                             // This line of code is necessary because the login is done when a user is created
                             mAuth.signOut();
-                            Log.i(TAG, "GPS LOG | The user " + username + " was properly registered at Firebase!");
+
+                            // Ask the user to log in
                             openMainActivity();
+
+                            Log.i(TAG, "GPS LOG | The user " + username + " was properly registered at Firebase!");
                         } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                             Log.w(TAG, "GPS LOG | You are already registered!" + task.getException().getMessage());
-                            Toast.makeText(getApplicationContext(), "You are already registered!" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "You are already registered! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         } else {
                             Log.w(TAG, "GPS LOG | " + task.getException().getMessage());
                             Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -203,7 +229,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                 });
             } catch (Exception ex) {
-                Log.e(TAG, "GPS LOG | It was not possible to create the user. " + ex.getMessage().toString());
+                Log.e(TAG, "GPS LOG | It was not possible to create the user. " + ex.getMessage());
             }
         }
     }

@@ -11,12 +11,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressToUse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/HttpDataHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_address.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_address.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_addresses.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_controlpanel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
     </list>
     <list id="5c92c598-7792-4e95-a813-0f35089503f7" name="Adding a second maps-activity that uses Geofences Locally, not with Geofire." comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,7 +27,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="MRMRBMAYSWAULJB6" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="c6a9b8dd0205" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
