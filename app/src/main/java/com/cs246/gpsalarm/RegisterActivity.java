@@ -189,8 +189,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      * This function register the user in the Firebase database.
      */
     private void registerUser(View view) {
+
         hideKeyboard(view);
-        progressBar.setVisibility(View.VISIBLE);
 
         // Extract the data from the Register form
         final String name = editTextName.getText().toString().trim();
@@ -200,11 +200,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         //If the credentials are valid, perform the login with database
         if (validateUserInformation(name, username, password, passwordConfirmation)) {
-
+            progressBar.setVisibility(View.VISIBLE);
             try {
                 mAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             // Create User database
                             User user = new User();
@@ -232,7 +233,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         }
 
-        progressBar.setVisibility(View.GONE);
     }
 
     /**
