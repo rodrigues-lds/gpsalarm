@@ -45,6 +45,7 @@
                 android:fontFamily="casual"
                 android:hint="@string/hintName"
                 android:paddingBottom="15dp"
+                android:singleLine="true"
                 android:textColor="#FFFFFF"
                 android:textColorHighlight="#FFFFFF"
                 android:textColorHint="#FFFFFF"
@@ -127,9 +128,10 @@
             android:id="@+id/progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:visibility="gone" />
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

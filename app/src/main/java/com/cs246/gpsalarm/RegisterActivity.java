@@ -30,8 +30,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "com.cs246.gpsalarm.TAG";
-    private FirebaseAuth mAuth;
     private EditText editTextName, editTextUsername, editTextPassword, editTextPasswordConfirmation;
+    private FirebaseAuth mAuth;
     private ProgressBar progressBar;
 
     /**
@@ -124,9 +124,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     /**
      * This function validates if the required register info are inserted in the register form.
      *
-     * @param username             This parameter is the username inserted by the user.
-     * @param password             This parameter is the password inserted by the user.
-     * @param passwordConfirmation This parameter is the password confirmation inserted by the user.
+     * @param username             is the username inserted by the user.
+     * @param password             is the password inserted by the user.
+     * @param passwordConfirmation is the password confirmation inserted by the user.
      * @return if the credentials are valid, it returns true. Otherwise, false.
      */
     private boolean validateUserInformation(String name, String username, String password, String passwordConfirmation) {
@@ -189,23 +189,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      * This function register the user in the Firebase database.
      */
     private void registerUser(View view) {
+        hideKeyboard(view);
+        progressBar.setVisibility(View.VISIBLE);
+
         // Extract the data from the Register form
         final String name = editTextName.getText().toString().trim();
         final String username = editTextUsername.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        String passwordConfirmation = editTextPasswordConfirmation.getText().toString().trim();
-
-        // Hide the Keyboard
-        hideKeyboard(view);
+        final String password = editTextPassword.getText().toString().trim();
+        final String passwordConfirmation = editTextPasswordConfirmation.getText().toString().trim();
 
         //If the credentials are valid, perform the login with database
         if (validateUserInformation(name, username, password, passwordConfirmation)) {
-            progressBar.setVisibility(View.VISIBLE);
+
             try {
                 mAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             // Create User database
                             User user = new User();
@@ -220,11 +219,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             Log.i(TAG, "GPS LOG | The user " + username + " was properly registered at Firebase!");
                         } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                            Log.w(TAG, "GPS LOG | You are already registered!" + task.getException().getMessage());
                             Toast.makeText(getApplicationContext(), "You are already registered! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Log.w(TAG, "GPS LOG | You are already registered!" + task.getException().getMessage());
                         } else {
-                            Log.w(TAG, "GPS LOG | " + task.getException().getMessage());
                             Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Log.w(TAG, "GPS LOG | " + task.getException().getMessage());
                         }
                     }
                 });
@@ -232,6 +231,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Log.e(TAG, "GPS LOG | It was not possible to create the user. " + ex.getMessage());
             }
         }
+
+        progressBar.setVisibility(View.GONE);
     }
 
     /**
@@ -253,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     /**
      * This function hides the Android Keyboard as soon as the Sing Up button is pressed.
      *
-     * @param view The element keyboard.
+     * @param view the element keyboard.
      */
     private void hideKeyboard(View view) {
 
