@@ -1,7 +1,5 @@
 package com.cs246.gpsalarm;
 
-import android.app.ProgressDialog;
-import android.location.Address;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,7 +48,7 @@ public class AddressActivity extends AppCompatActivity {
 
 
         user = (EditText)findViewById(R.id.txtName);
-        email = (EditText)findViewById(R.id.txtEmail);
+        email = (EditText)findViewById(R.id.txtUsername);
         address = (EditText) findViewById(R.id.txtAddress);
         radius=(EditText) findViewById(R.id.txtRadius);
 
@@ -60,11 +58,7 @@ public class AddressActivity extends AppCompatActivity {
 
     }
 
-    public void addUser(String username,String email)
-    {
-        User users = new User(username,email);
-        mFirebaseDatabase.child("Users").child(UserId).setValue(users);
-    }
+
 
     public void  updateUser(String username,String email)
     {
@@ -72,10 +66,6 @@ public class AddressActivity extends AppCompatActivity {
         mFirebaseDatabase.child("Users").child(UserId).child("email").setValue(email);
     }
 
-    public void insertData(View view)
-    {
-        addUser(user.getText().toString().trim(),email.getText().toString().trim());
-    }
 
     public void updateData(View view)
     {

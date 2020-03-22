@@ -133,6 +133,34 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/latitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:fontFamily="casual"
+                android:hint="@string/hintLatitude"
+                android:inputType="number"
+                android:paddingBottom="15dp"
+                android:textColor="#0B7280"
+                android:textColorHighlight="#0B7280"
+                android:textColorHint="#0B7280"
+                android:textColorLink="#0B7280" />
+
+            <EditText
+                android:id="@+id/longitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:fontFamily="casual"
+                android:hint="@string/hintLongitude"
+                android:inputType="number"
+                android:paddingBottom="15dp"
+                android:textColor="#0B7280"
+                android:textColorHighlight="#0B7280"
+                android:textColorHint="#0B7280"
+                android:textColorLink="#0B7280" />
+
+            <EditText
                 android:id="@+id/txtRingtone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

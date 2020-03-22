@@ -9,6 +9,8 @@
     <string name="hintRingtone">Ringtone</string>
     <string name="hintAddress">Address</string>
     <string name="hintZipcode">Zipcode</string>
+    <string name="hintLatitude">Latitude</string>
+    <string name="hintLongitude">Longitude</string>
 
     <!-- BUTTONS -->
     <string name="btnLogin">Login</string>

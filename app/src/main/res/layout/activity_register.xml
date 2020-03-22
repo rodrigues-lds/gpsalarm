@@ -37,7 +37,6 @@
                 android:textSize="26sp"
                 android:textStyle="bold" />
 
-            <!-- Name of the user will not be necessary
             <EditText
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
@@ -46,11 +45,11 @@
                 android:fontFamily="casual"
                 android:hint="@string/hintName"
                 android:paddingBottom="15dp"
+                android:singleLine="true"
                 android:textColor="#FFFFFF"
                 android:textColorHighlight="#FFFFFF"
                 android:textColorHint="#FFFFFF"
                 android:textColorLink="#FFFFFF" />
-                -->
 
             <EditText
                 android:id="@+id/editTextUsername"

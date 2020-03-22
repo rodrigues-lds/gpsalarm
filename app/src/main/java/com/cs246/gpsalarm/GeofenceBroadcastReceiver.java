@@ -3,6 +3,9 @@ package com.cs246.gpsalarm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +19,13 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         GeofencingEvent geofencingEvent=GeofencingEvent.fromIntent(intent);
+
+        // adds link to ringtone and sends toast message indicating arrival
+        Toast.makeText(context , "Your are at Desired Location",Toast.LENGTH_LONG).show();
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Ringtone r = RingtoneManager.getRingtone(context, notification);
+        r.play();
+
         if (geofencingEvent.hasError()) {
             //String errorMessage = GeofenceStatusCodes.getErrorString(geofencingEvent.getErrorCode());
             Log.e(TAG, "Error in the event");

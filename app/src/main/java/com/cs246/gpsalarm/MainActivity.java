@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e(TAG, "GPS LOG | It was not possible to authenticate. " + ex.getMessage().toString());
             }
         }
+
     }
 
     /**
