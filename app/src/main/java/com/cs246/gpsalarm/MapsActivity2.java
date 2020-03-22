@@ -100,7 +100,9 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
 
     }
-
+    /**
+     * This method is used to define the LocationCallback, so we put here the actions that we want to perform when we have a response of the location
+     */
     private void buildLocationCallback() {
         locationCallback=new LocationCallback() {
 
@@ -120,7 +122,11 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
             }
         };
     }
-    //This method is for detailing the request of the location services
+
+    /**
+     * This method is for detailing the request of the location services
+     * @autor Hernan Yupanqui
+     */
     private void buildLocationRequest() {
         locationRequest=new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -130,7 +136,12 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     }
 
 
-
+    /**
+     * This methods set the actions to perform when the map is ready.
+     * Here we are using a marker for our location and, checking the permissions, setting the click listener to allow create a geofence by touching the map.
+     * We also also setting the Location updates based on the request and callback previously created.
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -161,12 +172,19 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     }
 
 
-    //#################################################################3
+    /**
+     * Used when we make a touch in the map
+     * @param latLng
+     */
     @Override
     public void onMapClick(LatLng latLng) {
         markerForGeofence(latLng);
     }
 
+    /**
+     * Creates a marker in the place touched and creates the geofence in that place. We can only have one geofence at a time
+     * @param latLng
+     */
     private void markerForGeofence(LatLng latLng) {
         MarkerOptions optionsMarker=new MarkerOptions()
                 .position(latLng)
@@ -185,10 +203,13 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         }
     }
 
+    /**
+     * This method calls other methods to create the Geofence based in the position of the marker. Then it call the method add geofence.
+     */
     private void startGeofence() {
         if (geofenceMarker != null) {
 
-            Geofence geofence=createGeofence(geofenceMarker.getPosition(),400f);
+            Geofence geofence=createGeofence(geofenceMarker.getPosition(),10000f);
             geoRequest = createGeoRequest(geofence);
             addGeofence(geofence);
 
@@ -196,6 +217,11 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         }
     }
 
+
+    /**
+     * In this method the geofence was created and it just adds the geofence to the application and when it is successfully added when can draw the limits
+     * @param geofence
+     */
     private void addGeofence(Geofence geofence) {
 
         geofencingClient.addGeofences(geoRequest, createGeofencingPendingIntent())
@@ -215,7 +241,10 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 });
 
     }
-
+    /**
+     * Here we creates the pending intent of the Geofence and we pass it to the GeofenceBroadcastReceiver, which will manage if we enter or exit the desired area
+     * @return
+     */
     private PendingIntent createGeofencingPendingIntent() {
         if (geofencePendingIntent!=null) {
             return geofencePendingIntent;
@@ -228,6 +257,9 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
     }
 
+    /**
+     * THis method is for drawing the limits of the geofence in the map, this is called after the geofence was set and added to the geofence Client
+     */
     private void drawGeofence() {
         if (geoFenceLimits!=null) {
             geoFenceLimits.remove();
@@ -237,13 +269,18 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 .center(geofenceMarker.getPosition())
                 .strokeColor(Color.argb(50,70,70,70))
                 .fillColor(Color.argb(100,150,150,150))
-                .radius(400f);
+                .radius(10000f);
 
         geoFenceLimits = mMap.addCircle(circleOptions);
 
 
     }
 
+    /**
+     * This function retrieves the Geofencing Request which basically builds the Geofence
+     * @param geofence
+     * @return GeofencingRequest
+     */
     private GeofencingRequest createGeoRequest(Geofence geofence) {
         return new GeofencingRequest.Builder()
                 .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
@@ -251,6 +288,13 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 .build();
     }
 
+    /**
+     * THis method creates the geofence with the triggers that we want to monitor and the name of the Geofence.
+     * We are giving the position of the marker in where we want to have the geofence.
+     * @param position
+     * @param v
+     * @return
+     */
     private Geofence createGeofence(LatLng position, float v) {
         return new Geofence.Builder()
                 .setRequestId("My Geofence")
@@ -259,6 +303,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER| Geofence.GEOFENCE_TRANSITION_EXIT)
                 .build();
     }
+
 
     @Override
     public boolean onMarkerClick(Marker marker) {

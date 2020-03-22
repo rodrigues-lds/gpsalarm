@@ -18,12 +18,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AddressActivity extends AppCompatActivity {
+
+    Gson gson=new Gson();
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
@@ -42,6 +46,8 @@ public class AddressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
+
+
 
         user = (EditText)findViewById(R.id.txtName);
         email = (EditText)findViewById(R.id.txtEmail);
@@ -142,20 +148,23 @@ public class AddressActivity extends AppCompatActivity {
 
             try {
                 JSONArray jsonArray=new JSONArray(s);
-                //JSONObject jsonObject = new JSONObject(s);
                 JSONObject jsonObject=jsonArray.getJSONObject(0);
 
                 String lat = (String) jsonObject.get("lat").toString();
                 String lon = (String) jsonObject.get("lon").toString();
-                description=(String) jsonObject.get("display_name");    //Description of the place
-
                 the_address=new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));   //Creating the coordinates to use from the latitude and longitude
+                description=(String) jsonObject.get("display_name");                        //Description of the place
 
-
-                String temp_result="Latitude: "+lat+"Longitude: "+lon;
-
+                //Just for testing purposes:
+                String temp_result="Latitude: "+lat+"Longitude: "+lon+description;
                 Log.v("Main", "working---"+ temp_result);
                 Toast.makeText(AddressActivity.this, temp_result, Toast.LENGTH_SHORT).show();
+
+                //The final new object created as result of all the previous code
+                addressToUse=new AddressToUse(the_address, desired_radius, description, null);
+
+                //Uploading the new object to firebase
+                mFirebaseDatabase.push().setValue(addressToUse);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -179,7 +188,8 @@ public class AddressActivity extends AppCompatActivity {
         desired_radius=Integer.parseInt(radius_in_string);     //It has to have a value, if its null it will not works, Be careful!!
         new GetCoordinates().execute(temp);
 
-        addressToUse=new AddressToUse(the_address, desired_radius, description, null);
+
+
     }
 
 

@@ -14,10 +14,19 @@ public class AddressToUse {
             int the_radius,
             String the_description,
             Ringtone the_ringtone) {
+
         coordinates=the_coordinates;
         radius=the_radius;
         ringtone=the_ringtone;
         description=the_description;
 
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LatLng getCoordinates() {
+        return coordinates;
     }
 }
