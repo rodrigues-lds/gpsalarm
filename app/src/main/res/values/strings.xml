@@ -25,6 +25,9 @@
     <string name="lblRadius">Radius:  </string>
     <string name="lblSignUp">Need an account? <u>Sing up</u></string>
     <string name="lblLogin">Already have an account? <u>Login</u></string>
+    <string name="lblControlPanel">Control Panel</string>
+    <string name="lblAddressOne">ADDRESS #1</string>
+    <string name="lblAddressTwo">ADDRESS #2</string>
 
     <!-- IMAGES -->
     <string name="imgText">TODO</string>

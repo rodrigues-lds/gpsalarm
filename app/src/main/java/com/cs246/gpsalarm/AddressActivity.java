@@ -41,8 +41,8 @@ public class AddressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
-        user = (EditText)findViewById(R.id.txtName);
-        email = (EditText)findViewById(R.id.txtUsername);
+        //user = (EditText)findViewById(R.id.txtName);
+        //email = (EditText)findViewById(R.id.txtUsername);
         address = (EditText) findViewById(R.id.txtAddress);
         radius=(EditText) findViewById(R.id.txtRadius);
 

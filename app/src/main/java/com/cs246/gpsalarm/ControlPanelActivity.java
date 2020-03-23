@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
  * @version 1.2
  * @since 2020-03-10
  */
-public class ControlPanelActivity extends AppCompatActivity {
+public class ControlPanelActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
@@ -45,14 +45,41 @@ public class ControlPanelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controlpanel);
 
+        // These elements are being monitored. If they are clicked, an action is performed
+        findViewById(R.id.editAddressOne).setOnClickListener(this);
+        findViewById(R.id.editAddressTwo).setOnClickListener(this);
+        findViewById(R.id.textAddressOne).setOnClickListener(this);
+        findViewById(R.id.textAddressTwo).setOnClickListener(this);
+
         // TO BE REMOVED
-        name = (EditText) findViewById(R.id.txtName);
-        username = (EditText) findViewById(R.id.txtUsername);
+        //name = (EditText) findViewById(R.id.txtName);
+        //username = (EditText) findViewById(R.id.txtUsername);
 
         // TO BE REMOVED
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
+    }
+
+    /**
+     * This function takes actions when any element is clicked on the screen.
+     *
+     * @param view is the base class for the activity.
+     */
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.editAddressOne:
+            case R.id.textAddressOne:
+                openAddressActivity();
+                break;
+            case R.id.editAddressTwo:
+            case R.id.textAddressTwo:
+                openAddressActivity();
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -105,6 +132,23 @@ public class ControlPanelActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "It was not possible to perform the logout process.", Toast.LENGTH_LONG).show();
         }
     }
+
+    /**
+     * This function opens the the address information
+     */
+    private void openAddressActivity() {
+        Intent intent = new Intent(ControlPanelActivity.this, AddressActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+
+
+
+
+
+
+
 
 
 
