@@ -12,7 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressToUse.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressToUse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/CustomAdapter.java" beforeDir="false" />

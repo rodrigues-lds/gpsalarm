@@ -25,7 +25,6 @@ import org.json.JSONObject;
 
 public class AddressActivity extends AppCompatActivity {
 
-    Gson gson=new Gson();
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
@@ -34,7 +33,7 @@ public class AddressActivity extends AppCompatActivity {
     //These variables are used to create the AddresToUse object
     private LatLng the_address;
     private String description;
-    private AddressToUse addressToUse;
+    private AddressToUse addressToUse;          //The address that will be uploaded to Firebase
     private int desired_radius;
 
     //These variables are from the view part
@@ -46,9 +45,9 @@ public class AddressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_address);
 
 
-
-        user = (EditText)findViewById(R.id.txtName);
-        email = (EditText)findViewById(R.id.txtUsername);
+        //Not sure the purpose of the following (by Hernan)
+        //user = (EditText)findViewById(R.id.txtName);
+        //email = (EditText)findViewById(R.id.txtUsername);
         address = (EditText) findViewById(R.id.txtAddress);
         radius=(EditText) findViewById(R.id.txtRadius);
 
@@ -167,6 +166,8 @@ public class AddressActivity extends AppCompatActivity {
     public void saveAddress(View view) {
         createAddressToUse();
 
+        //Here we should upload the new address to Fire base
+
 
     }
 
@@ -179,8 +180,7 @@ public class AddressActivity extends AppCompatActivity {
         desired_radius=Integer.parseInt(radius_in_string);     //It has to have a value, if its null it will not works, Be careful!!
         new GetCoordinates().execute(temp);
 
-
-
+        addressToUse=new AddressToUse(the_address, desired_radius, description, null);
     }
 
 

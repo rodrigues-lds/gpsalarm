@@ -21,11 +21,7 @@
 
         <receiver android:name=".GeofenceBroadcastReceiver" />
         <activity android:name=".WorkingAddresses">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
 
@@ -53,7 +49,11 @@
         </activity>
         <activity android:name=".ControlPanelActivity" />
         <activity android:name=".AddressActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".MapsActivity2">

@@ -144,7 +144,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
      * This methods set the actions to perform when the map is ready.
      * Here we are using a marker for our location and, checking the permissions, setting the click listener to allow create a geofence by touching the map.
      * We also also setting the Location updates based on the request and callback previously created.
-     * @param googleMap
+     * @param googleMap It is an API
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
