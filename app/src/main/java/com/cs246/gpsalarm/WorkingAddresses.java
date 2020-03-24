@@ -17,6 +17,9 @@ import android.os.Looper;
 import android.provider.Telephony;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -72,7 +75,6 @@ public class WorkingAddresses extends AppCompatActivity {
     private  PendingIntent geofencePendingIntent;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +84,7 @@ public class WorkingAddresses extends AppCompatActivity {
 
         //This is only for testing purposes, actually here should come the real Addresses of the user after requesting the data to Firebase
         for (int x=0; x<5; x++) {
-            the_list.add(new AddressToUse(new LatLng(-11.960517, -77.08517), 20000, "Address #"+(x+1), null));
+            the_list.add(new AddressToUse(new LatLng(-11.960517, -77.08517), 20000, "Lima. province of Lima, Peru, America #"+(x+1), null));
         }
 
         //Setting the LIstView of the activity
@@ -264,6 +266,37 @@ public class WorkingAddresses extends AppCompatActivity {
         Log.v("Ups", String.valueOf(200f));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.userinfo, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemLogout:
+                openMainActivity();
+                return true;
+            case R.id.itemAddAddress:
+                openAddressActivity();
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openAddressActivity() {
+        Intent intent = new Intent(this, AddressActivity.class);
+        startActivity(intent);
+    }
+
+    private void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     /**
      * This inner class creates the ListView by receiving the array of AddressToUse
@@ -309,10 +342,14 @@ public class WorkingAddresses extends AppCompatActivity {
             final AddressToUse tempAddress = (AddressToUse) getItem(position);
 
             TextView desc = (TextView) convertView.findViewById(R.id.textView1);
-            TextView latlon = (TextView) convertView.findViewById(R.id.textView2);
+            TextView view_latitude = (TextView) convertView.findViewById(R.id.textView2);
+            TextView view_longitude= (TextView) convertView.findViewById(R.id.textView3);
+
 
             desc.setText(tempAddress.getDescription());
-            latlon.setText(tempAddress.getCoordinates().toString());
+            view_latitude.setText("Lat: "+String.valueOf(tempAddress.getCoordinates().latitude));
+            view_longitude.setText("Long: "+String.valueOf(tempAddress.getCoordinates().longitude));
+
 
             final Switch swtch = (Switch) convertView.findViewById(R.id.switch2);
 

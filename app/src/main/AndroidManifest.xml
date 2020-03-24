@@ -21,7 +21,11 @@
 
         <receiver android:name=".GeofenceBroadcastReceiver" />
         <activity android:name=".WorkingAddresses">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
 
@@ -38,6 +42,7 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".MainActivity"></activity>
+
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".MainActivity">
@@ -47,18 +52,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ControlPanelActivity" />
-        <activity android:name=".AddressActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ControlPanelActivity" ></activity>
 
-        <activity android:name=".MapsActivity2">
+        <activity android:name=".AddressActivity"></activity>
 
-        </activity>
+        <activity android:name=".MapsActivity2"></activity>
     </application>
 
 </manifest>

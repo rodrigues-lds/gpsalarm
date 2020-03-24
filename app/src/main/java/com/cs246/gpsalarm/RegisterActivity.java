@@ -210,7 +210,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             // Create User database
                             User user = new User();
                             user.setName(name);
-                            user.createUserDatabase();
+                            user.createDatabase();
 
                             // This line of code is necessary because the login is done when a user is created
                             mAuth.signOut();

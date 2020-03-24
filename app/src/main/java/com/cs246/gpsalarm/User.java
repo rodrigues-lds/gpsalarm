@@ -38,6 +38,15 @@ public class User {
     }
 
     /**
+     * This function sets the name of the user.
+     *
+     * @param name of the user
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * This function creates the Firebase instance to save and retrieve data.
      */
     private void createFirebaseInstance() {
@@ -56,7 +65,7 @@ public class User {
     /**
      * This function creates the database for the created user.
      */
-    public void createUserDatabase() {
+    public void createDatabase() {
         try {
             mFirebaseDatabase.child(this.userID).setValue(this);
             Log.i(TAG, "GPS LOG | The " + this.name + " database was created at Firebase.");
@@ -66,22 +75,29 @@ public class User {
     }
 
     /**
-     * This function sets the name of the user.
-     *
-     * @param name of the user
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * This function updates the user data.
      */
-    public void updateUserData() {
+    public void updateData() {
         try {
             mFirebaseDatabase.child(this.userID).child("name").setValue(this.name);
         } catch (Exception ex) {
             Log.e(TAG, "GPS LOG | It was not possible to update the database. " + ex.getMessage());
+        }
+    }
+
+    /**
+     * This function performs the log out process.
+     *
+     * @return true if the user is logged out. Otherwise, false.
+     */
+    public boolean logout() {
+        try {
+            mAuth.signOut();
+            Log.i(TAG, "GPS LOG | The user " + this.username + " is logged out.");
+            return true;
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | It was not possible to log out! " + ex.getMessage());
+            return false;
         }
     }
 }

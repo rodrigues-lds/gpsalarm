@@ -96,7 +96,7 @@ public class AddressActivity extends AppCompatActivity {
     }
 
     /**
-     * This class makes an asyncronous activity to request the information of the string given
+     * This class makes an asynchronous activity to request the information of the string given
      * It returns the Latitude, Longitude and Descriptions of the place
      */
     private class GetCoordinates extends AsyncTask<String,Void, String> {
@@ -105,11 +105,6 @@ public class AddressActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*
-            dialog.setMessage("Please wait");
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.show();
-            */
 
             Toast.makeText(AddressActivity.this,"Looking the place", Toast.LENGTH_SHORT).show();
         }
@@ -179,8 +174,6 @@ public class AddressActivity extends AppCompatActivity {
         String radius_in_string=radius.getText().toString();
         desired_radius=Integer.parseInt(radius_in_string);     //It has to have a value, if its null it will not works, Be careful!!
         new GetCoordinates().execute(temp);
-
-        addressToUse=new AddressToUse(the_address, desired_radius, description, null);
     }
 
 
