@@ -14,17 +14,16 @@ import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.List;
 
+/**
+ * This class receives the information of the geofence and is activated when the user enters or exits the area.
+ * We define here what the program does when is entering or exiting.
+ * @author Hernan Yupanqui, Robert Hampton
+ */
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
     private String TAG="GeofenceBroadcastReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
         GeofencingEvent geofencingEvent=GeofencingEvent.fromIntent(intent);
-
-        // adds link to ringtone and sends toast message indicating arrival
-        Toast.makeText(context , "Your are at Desired Location",Toast.LENGTH_LONG).show();
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        Ringtone r = RingtoneManager.getRingtone(context, notification);
-        r.play();
 
         if (geofencingEvent.hasError()) {
             //String errorMessage = GeofenceStatusCodes.getErrorString(geofencingEvent.getErrorCode());
@@ -52,7 +51,12 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
         //Here we are going to put all the actions we want to make when the user enters; notifications will be made here also
         if (geofenceTransition==Geofence.GEOFENCE_TRANSITION_ENTER) {
-            Toast.makeText(context,"I am near to the desired area", Toast.LENGTH_SHORT).show();
+
+            // adds link to ringtone and sends toast message indicating arrival
+            Toast.makeText(context , "Your are at Desired Location",Toast.LENGTH_LONG).show();
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            Ringtone r = RingtoneManager.getRingtone(context, notification);
+            r.play();
 
         } else if (geofenceTransition==Geofence.GEOFENCE_TRANSITION_EXIT) {
             Toast.makeText(context,"I am exiting the desired area", Toast.LENGTH_SHORT).show();

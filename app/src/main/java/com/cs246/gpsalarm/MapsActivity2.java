@@ -41,6 +41,10 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 
+/**
+ * This class is for testing purposes only
+ * @author Hernan Yupanqui
+ */
 public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;

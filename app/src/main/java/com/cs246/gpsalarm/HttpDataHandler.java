@@ -10,6 +10,10 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+/**
+ * This class is used to manage the request of coordinates to the API.
+ * We use this only for receiving the coordinates when the user enters a desired area.
+ */
 public class HttpDataHandler {
 
     public HttpDataHandler() {

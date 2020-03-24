@@ -163,6 +163,7 @@ public class AddressActivity extends AppCompatActivity {
 
     }
 
+    //For now we are using the switch of the miles_to_kilometers to test the functionality
     public void saveAddress(View view) {
         createAddressToUse();
 

@@ -48,6 +48,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * For testing purposes only. A previous version of the MapsActivity using geofire.
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GeoQueryDataEventListener {
 
     /*
