@@ -26,6 +26,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
 
@@ -41,11 +42,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity">
+
+
+        </activity>
 
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".MainActivity">
+
+
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
@@ -58,6 +64,7 @@
         <activity android:name=".AddressActivity"></activity>
 
         <activity android:name=".MapsActivity2"></activity>
+
     </application>
 
 </manifest>
