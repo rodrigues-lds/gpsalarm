@@ -6,7 +6,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 /**
  * This class contains all the information related with the address.
- * It is used in as an element of the list that creates the ListView in WorkingAddresses
+ * It is used in as an element of the list that creates the ListView in ControlPanelActivity
  * @author Hernan Yupanqui
  */
 public class AddressToUse {
