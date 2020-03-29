@@ -54,7 +54,7 @@ public class ControlPanelActivity extends AppCompatActivity {
 
     //Variables of the view part
     private ListView listView;
-    public static List<AddressToUse> the_list = new ArrayList<AddressToUse>();
+    public static List<GPSAlarm> the_list = new ArrayList<GPSAlarm>();
     public static String example;
 
     //Variables of the location part
@@ -82,7 +82,7 @@ public class ControlPanelActivity extends AppCompatActivity {
 
         //This is only for testing purposes, actually here should come the real Addresses of the user after requesting the data to Firebase
         for (int x=0; x<5; x++) {
-            the_list.add(new AddressToUse(new LatLng(-11.960517, -77.08517), 20000, "Lima. province of Lima, Peru, America #"+(x+1), null));
+            the_list.add(new GPSAlarm(new LatLng(-11.960517, -77.08517), 20000, "Lima. province of Lima, Peru, America #"+(x+1), null));
         }
 
         //Setting the LIstView of the activity
@@ -292,12 +292,12 @@ public class ControlPanelActivity extends AppCompatActivity {
      */
     private class CustomAdapter extends BaseAdapter {
 
-        List<AddressToUse> the_list;
+        List<GPSAlarm> the_list;
         Context context;
         ControlPanelActivity activity;
 
         //Constructor
-        public CustomAdapter(Context c, List<AddressToUse> my_list, ControlPanelActivity act) {
+        public CustomAdapter(Context c, List<GPSAlarm> my_list, ControlPanelActivity act) {
             context = c;
             this.the_list = my_list;
             this.activity = act;
@@ -326,7 +326,7 @@ public class ControlPanelActivity extends AppCompatActivity {
                 convertView = LayoutInflater.from(context).inflate(R.layout.row, parent, false);
             }
 
-            final AddressToUse tempAddress = (AddressToUse) getItem(position);
+            final GPSAlarm tempAddress = (GPSAlarm) getItem(position);
 
             TextView desc = (TextView) convertView.findViewById(R.id.textView1);
             TextView view_latitude = (TextView) convertView.findViewById(R.id.textView2);
