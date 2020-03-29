@@ -11,10 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/RequestAddressesData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_address.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_address.xml" afterDir="false" />
     </list>
     <list id="5c92c598-7792-4e95-a813-0f35089503f7" name="Adding a second maps-activity that uses Geofences Locally, not with Geofire." comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -328,7 +328,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585093536938</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Before pulling">
+      <created>1585157298998</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1585157298998</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -363,11 +370,11 @@
     <MESSAGE value="Before pulling. Without changes." />
     <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire." />
     <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
-    <MESSAGE value="Before pulling" />
     <MESSAGE value="The Geocoder was implemented in the Address activity. New classes were created to accomplish this. It isn't pushed to firebase yet." />
     <MESSAGE value="WorkingAddresses added with the ListView of the user's addresses. Also, geofence is working, but not with the ListView. It still have to request Firebase data and be able to activate many Geofences at the same time." />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;app/src/main/AndroidManifest.xml&#10;#&#9;app/src/main/java/com/cs246/gpsalarm/AddressActivity.java&#10;&#10;After pulling the new changes and merging with my local changes" />
     <MESSAGE value="Working Addresses with a better design an with some navigation functionality. No firebase connection yet." />
-    <option name="LAST_COMMIT_MESSAGE" value="Working Addresses with a better design an with some navigation functionality. No firebase connection yet." />
+    <MESSAGE value="Before pulling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Before pulling" />
   </component>
 </project>

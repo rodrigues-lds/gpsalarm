@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,15 +75,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
                     android:inputType="text"
-                    android:paddingBottom="15dp"
                     android:paddingLeft="05dp"
+                    android:paddingBottom="15dp"
                     android:text="@string/lblRadius"
-                    android:textSize="18sp"
                     android:textColor="#0B7280"
                     android:textColorHighlight="#0B7280"
                     android:textColorHint="#0B7280"
                     android:textColorLink="#0B7280"
-                    />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/txtRadius"
@@ -100,18 +101,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
+                    android:paddingBottom="18sp"
                     android:text="miles"
                     android:textColor="#0B7280"
                     android:textColorHighlight="#0B7280"
-                    android:paddingBottom="18sp"
                     android:textColorHint="#0B7280"
-                    android:textColorLink="#0B7280"
-                    />
+                    android:textColorLink="#0B7280" />
 
                 <Switch
                     android:id="@+id/switchUnitDistance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:onClick="saveAddress"
                     android:textColor="#0B7280"
                     android:textColorHighlight="#0B7280"
@@ -127,8 +128,7 @@
                     android:textColor="#0B7280"
                     android:textColorHighlight="#0B7280"
                     android:textColorHint="#0B7280"
-                    android:textColorLink="#0B7280"
-                    />
+                    android:textColorLink="#0B7280" />
 
             </LinearLayout>
 
@@ -190,6 +190,10 @@
                 android:textColor="#0B7280"
                 android:textCursorDrawable="@drawable/rounded_button_transparent"
                 android:textSize="15sp" />
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </RelativeLayout>
