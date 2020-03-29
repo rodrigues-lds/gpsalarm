@@ -25,7 +25,7 @@ import org.json.JSONObject;
 public class AddressActivity extends AppCompatActivity {
 
     //These variables are from the view part
-    EditText user, email, address, radius;
+    EditText user, email, address, radius, latitude_txt, longitude_txt;;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private String UserId;
@@ -36,8 +36,6 @@ public class AddressActivity extends AppCompatActivity {
     private GPSAlarm addressToUse;          //The address that will be uploaded to Firebase
     private int desired_radius;
 
-    //These variables are from the view part
-    EditText user, email, address, radius, latitude_txt, longitude_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
