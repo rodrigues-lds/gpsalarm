@@ -368,4 +368,18 @@
     <MESSAGE value="Working Addresses with a better design an with some navigation functionality. No firebase connection yet." />
     <option name="LAST_COMMIT_MESSAGE" value="Working Addresses with a better design an with some navigation functionality. No firebase connection yet." />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java</url>
+          <line>38</line>
+          <properties class="com.cs246.gpsalarm.AddressActivity" method="onCreate">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
 </project>
