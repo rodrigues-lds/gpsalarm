@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +29,7 @@ public class AddressActivity extends AppCompatActivity {
     EditText user, email, address, radius, latitude_txt, longitude_txt;;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
+    private FirebaseAuth mAuth;
     private String UserId;
 
     //These variables are used to create the AddressToUse object
@@ -45,11 +47,12 @@ public class AddressActivity extends AppCompatActivity {
         //Not sure the purpose of the following (by Hernan)
         //user = (EditText)findViewById(R.id.txtName);
         //email = (EditText)findViewById(R.id.txtUsername);
+
         address = (EditText) findViewById(R.id.txtAddress);
         radius = (EditText) findViewById(R.id.txtRadius);
-
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers");
+        mFirebaseDatabase = mFirebaseInstance.getReference("Users");
+
         UserId = mFirebaseDatabase.push().getKey();
     }
 
@@ -87,10 +90,6 @@ public class AddressActivity extends AppCompatActivity {
     //For now we are using the switch of the miles_to_kilometers to test the functionality
     public void saveAddress(View view) {
         createAddressToUse();
-
-        //Here we should upload the new address to Fire base
-
-
     }
 
     /**
@@ -168,7 +167,10 @@ public class AddressActivity extends AppCompatActivity {
                 addressToUse = new GPSAlarm(the_address, desired_radius, description, null);
 
                 //Uploading the new object to firebase
-                mFirebaseDatabase.push().setValue(addressToUse);
+                //mFirebaseDatabase.push().setValue(addressToUse);
+                // We need to retreive the number of addresses already saved on Firebase, save it in a variable and...
+                // ... replace the child("1") for that variable
+                mFirebaseDatabase.child(mAuth.getInstance().getUid()).child("Addresses").child("1").setValue(addressToUse);
 
             } catch (JSONException e) {
                 e.printStackTrace();

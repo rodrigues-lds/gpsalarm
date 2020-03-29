@@ -32,7 +32,6 @@ class requestDataFromFirebase extends AsyncTask<String, Void, String> {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 address_from_dafirebase= (List<GPSAlarm>) dataSnapshot.getValue();
-
             }
 
             @Override
@@ -51,7 +50,7 @@ class requestDataFromFirebase extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        list_of_address_fromfirebase= gson.fromJson(s, new TypeToken<List<GPSAlarm>>(){}.getType());
+        list_of_address_fromfirebase = gson.fromJson(s, new TypeToken<List<GPSAlarm>>(){}.getType());
 
 
 
