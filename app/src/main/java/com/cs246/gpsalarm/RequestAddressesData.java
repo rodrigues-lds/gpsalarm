@@ -20,8 +20,8 @@ import java.util.List;
  */
 class requestDataFromFirebase extends AsyncTask<String, Void, String> {
 
-    List<AddressToUse> addres_from_dafirebase;
-    List<AddressToUse> list_of_address_fromfirebase;
+    List<GPSAlarm> address_from_dafirebase;
+    List<GPSAlarm> list_of_address_fromfirebase;
     Gson gson=new Gson();
 
     @Override
@@ -31,7 +31,7 @@ class requestDataFromFirebase extends AsyncTask<String, Void, String> {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                addres_from_dafirebase= (List<AddressToUse>) dataSnapshot.getValue();
+                address_from_dafirebase= (List<GPSAlarm>) dataSnapshot.getValue();
 
             }
 
@@ -41,7 +41,7 @@ class requestDataFromFirebase extends AsyncTask<String, Void, String> {
             }
         });
 
-        String result=gson.toJson(addres_from_dafirebase);
+        String result=gson.toJson(address_from_dafirebase);
 
 
         return result;
@@ -51,7 +51,7 @@ class requestDataFromFirebase extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        list_of_address_fromfirebase= gson.fromJson(s, new TypeToken<List<AddressToUse>>(){}.getType());
+        list_of_address_fromfirebase= gson.fromJson(s, new TypeToken<List<GPSAlarm>>(){}.getType());
 
 
 

@@ -1,20 +1,16 @@
 package com.cs246.gpsalarm;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.Telephony;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,9 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -38,7 +32,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,7 +42,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +53,7 @@ import java.util.List;
 public class WorkingAddresses extends AppCompatActivity {
     //Variables of the view part
     private ListView listView;
-    public static List<AddressToUse> the_list = new ArrayList<AddressToUse>();
+    public static List<GPSAlarm> the_list = new ArrayList<GPSAlarm>();
     public static String example;
 
 
@@ -82,9 +74,10 @@ public class WorkingAddresses extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
 
+        Bundle extras = getIntent().getExtras();
         //This is only for testing purposes, actually here should come the real Addresses of the user after requesting the data to Firebase
         for (int x=0; x<5; x++) {
-            the_list.add(new AddressToUse(new LatLng(-11.960517, -77.08517), 20000, "Lima. province of Lima, Peru, America #"+(x+1), null));
+            the_list.add(new GPSAlarm(new LatLng(-11.960517, -77.08517), 20000, "Lima. province of Lima, Peru, America #"+(x+1), null));
         }
 
         //Setting the LIstView of the activity
@@ -305,12 +298,12 @@ public class WorkingAddresses extends AppCompatActivity {
      */
     private class CustomAdapter extends BaseAdapter {
 
-        List<AddressToUse> the_list;
+        List<GPSAlarm> the_list;
         Context context;
         WorkingAddresses activity;
 
         //Constructor
-        public CustomAdapter(Context c, List<AddressToUse> my_list, WorkingAddresses act) {
+        public CustomAdapter(Context c, List<GPSAlarm> my_list, WorkingAddresses act) {
             context = c;
             this.the_list = my_list;
             this.activity = act;
@@ -339,7 +332,7 @@ public class WorkingAddresses extends AppCompatActivity {
                 convertView = LayoutInflater.from(context).inflate(R.layout.row, parent, false);
             }
 
-            final AddressToUse tempAddress = (AddressToUse) getItem(position);
+            final GPSAlarm tempAddress = (GPSAlarm) getItem(position);
 
             TextView desc = (TextView) convertView.findViewById(R.id.textView1);
             TextView view_latitude = (TextView) convertView.findViewById(R.id.textView2);

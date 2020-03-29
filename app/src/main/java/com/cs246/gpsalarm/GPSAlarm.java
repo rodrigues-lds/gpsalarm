@@ -3,14 +3,49 @@ package com.cs246.gpsalarm;
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
+import android.media.Ringtone;
 import android.os.IBinder;
 import androidx.annotation.Nullable;
+
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by Eduardo A Rodrigues on 2/24/2020.
  */
 @SuppressLint("Registered")
 public class GPSAlarm {
+
+    public LatLng coordinates;
+    public  int radius;
+    public String description;
+    public Ringtone ringtone;
+
+
+    //Constructor
+    public GPSAlarm(LatLng the_coordinates,
+                        int the_radius,
+                        String the_description,
+                        Ringtone the_ringtone) {
+
+        coordinates=the_coordinates;
+        radius=the_radius;
+        ringtone=the_ringtone;
+        description=the_description;
+
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LatLng getCoordinates() {
+        return coordinates;
+    }
+
+    public float getRadius() {
+        return (float) radius;
+    }
+
 
     /*
     This function converts the Radius to Kilometers.

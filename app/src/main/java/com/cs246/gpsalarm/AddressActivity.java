@@ -1,5 +1,6 @@
 package com.cs246.gpsalarm;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,17 +34,16 @@ public class AddressActivity extends AppCompatActivity {
     //These variables are used to create the AddresToUse object
     private LatLng the_address;
     private String description;
-    private AddressToUse addressToUse;          //The address that will be uploaded to Firebase
+    private GPSAlarm addressToUse;          //The address that will be uploaded to Firebase
     private int desired_radius;
 
     //These variables are from the view part
-    EditText user,email, address, radius;
+    EditText user, email, address, radius, latitude_txt, longitude_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
-
 
         //Not sure the purpose of the following (by Hernan)
         //user = (EditText)findViewById(R.id.txtName);
@@ -106,7 +106,7 @@ public class AddressActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            Toast.makeText(AddressActivity.this,"Looking the place", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddressActivity.this,"Looking up the place", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -144,8 +144,20 @@ public class AddressActivity extends AppCompatActivity {
                 Log.v("Main", "working---"+ temp_result);
                 Toast.makeText(AddressActivity.this, temp_result, Toast.LENGTH_SHORT).show();
 
+                latitude_txt = (EditText)findViewById(R.id.latitude);
+                longitude_txt = (EditText)findViewById(R.id.longitude);
+
+                latitude_txt.setText(lat+"");
+                longitude_txt.setText(lon+"");
+
+                double latitude = Double.parseDouble(latitude_txt.getText().toString());
+                double longitude = Double.parseDouble(longitude_txt.getText().toString());
+                Intent i = new Intent();
+                i.putExtra("alarm_location_latitude", latitude);
+                i.putExtra("alarm_location_longitude", longitude);
+
                 //The final new object created as result of all the previous code
-                addressToUse=new AddressToUse(the_address, desired_radius, description, null);
+                addressToUse = new GPSAlarm(the_address, desired_radius, description, null);
 
                 //Uploading the new object to firebase
                 mFirebaseDatabase.push().setValue(addressToUse);
