@@ -5,7 +5,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,10 +27,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.BindException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddressActivity extends AppCompatActivity {
 
     //These variables are from the view part
-    EditText user, email, address, radius, latitude_txt, longitude_txt;;
+    EditText user, email, address, radius, latitude_txt, longitude_txt;
+
+    //new changes
+    Spinner spinner;
+    ImageButton searchButtom;
+    JSONArray addressesInJASON;
+    List<String> possible_addresses=new ArrayList<String>();
+
+
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mAuth;
@@ -37,6 +53,7 @@ public class AddressActivity extends AppCompatActivity {
     private String description;
     private GPSAlarm addressToUse;          //The address that will be uploaded to Firebase
     private int desired_radius;
+
 
 
     @Override
@@ -50,6 +67,7 @@ public class AddressActivity extends AppCompatActivity {
 
         address = (EditText) findViewById(R.id.txtAddress);
         radius = (EditText) findViewById(R.id.txtRadius);
+        spinner=(Spinner) findViewById(R.id.view_spinner);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("Users");
 
@@ -89,7 +107,12 @@ public class AddressActivity extends AppCompatActivity {
 
     //For now we are using the switch of the miles_to_kilometers to test the functionality
     public void saveAddress(View view) {
-        createAddressToUse();
+        //createAddressToUse();
+        String radius_in_string = radius.getText().toString();
+        desired_radius = Integer.parseInt(radius_in_string);
+        addressToUse = new GPSAlarm(the_address, desired_radius, description, null);
+        mFirebaseDatabase.child(mAuth.getInstance().getUid()).child("Addresses").child("1").setValue(addressToUse);
+
     }
 
     /**
@@ -139,43 +162,83 @@ public class AddressActivity extends AppCompatActivity {
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                addressesInJASON=jsonArray;
+                possible_addresses.clear();
 
-                String lat = (String) jsonObject.get("lat").toString();
-                String lon = (String) jsonObject.get("lon").toString();
-                the_address = new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));   //Creating the coordinates to use from the latitude and longitude
-                description = (String) jsonObject.get("display_name");                        //Description of the place
+                for (int i=0;i<jsonArray.length();i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    description = (String) jsonObject.get("display_name");
+                    possible_addresses.add(description);
 
-                //Just for testing purposes:
-                String temp_result = "Latitude: " + lat + "Longitude: " + lon + description;
-                Log.v("Main", "working---" + temp_result);
-                Toast.makeText(AddressActivity.this, temp_result, Toast.LENGTH_SHORT).show();
+                }
 
-                latitude_txt = (EditText)findViewById(R.id.latitude);
-                longitude_txt = (EditText)findViewById(R.id.longitude);
-
-                latitude_txt.setText(lat+"");
-                longitude_txt.setText(lon+"");
-
-                double latitude = Double.parseDouble(latitude_txt.getText().toString());
-                double longitude = Double.parseDouble(longitude_txt.getText().toString());
-                Intent i = new Intent();
-                i.putExtra("alarm_location_latitude", latitude);
-                i.putExtra("alarm_location_longitude", longitude);
-
-                //The final new object created as result of all the previous code
-                addressToUse = new GPSAlarm(the_address, desired_radius, description, null);
-
-                //Uploading the new object to firebase
-                //mFirebaseDatabase.push().setValue(addressToUse);
-                // We need to retreive the number of addresses already saved on Firebase, save it in a variable and...
-                // ... replace the child("1") for that variable
-                mFirebaseDatabase.child(mAuth.getInstance().getUid()).child("Addresses").child("1").setValue(addressToUse);
+                createSpinner();
+                Toast.makeText(AddressActivity.this, "Select the address from the list", Toast.LENGTH_SHORT).show();
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
+    }
+
+    public void createSpinner() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,possible_addresses);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                setTheSelectedAddress(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+
+    public void lookAllPossibleAddresses(View view) {
+        String temp = address.getText().toString().replace(" ", "+");
+        new GetCoordinates().execute(temp);
+
+
+    }
+
+    public void setTheSelectedAddress(int index) {
+
+        try {
+            JSONObject jsonObjectTemp = addressesInJASON.getJSONObject(index);
+
+            String lat = (String) jsonObjectTemp.get("lat").toString();
+            String lon = (String) jsonObjectTemp.get("lon").toString();
+            the_address = new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));   //Creating the coordinates to use from the latitude and longitude
+            description = (String) jsonObjectTemp.get("display_name");                        //Description of the place
+
+            //Just for testing purposes:
+            String temp_result = "Latitude: " + lat + "Longitude: " + lon + description;
+            Log.v("Main", "working---" + temp_result);
+            Toast.makeText(AddressActivity.this, temp_result, Toast.LENGTH_SHORT).show();
+
+            latitude_txt = (EditText) findViewById(R.id.latitude);
+            longitude_txt = (EditText) findViewById(R.id.longitude);
+
+            latitude_txt.setText(lat + "");
+            longitude_txt.setText(lon + "");
+
+            double latitude = Double.parseDouble(latitude_txt.getText().toString());
+            double longitude = Double.parseDouble(longitude_txt.getText().toString());
+            Intent i = new Intent();
+            i.putExtra("alarm_location_latitude", latitude);
+            i.putExtra("alarm_location_longitude", longitude);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

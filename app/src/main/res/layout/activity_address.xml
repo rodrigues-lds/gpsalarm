@@ -41,19 +41,40 @@
                 android:textSize="26sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/txtAddress"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:fontFamily="casual"
-                android:hint="@string/hintAddress"
-                android:paddingBottom="15dp"
-                android:textColor="#0B7280"
-                android:textColorHighlight="#0B7280"
-                android:textColorHint="#0B7280"
-                android:textColorLink="#0B7280" />
+                android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/txtAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:fontFamily="casual"
+                    android:hint="@string/hintAddress"
+                    android:maxWidth="200dp"
+                    android:paddingBottom="15dp"
+                    android:textColor="#0B7280"
+                    android:textColorHighlight="#0B7280"
+                    android:textColorHint="#0B7280"
+                    android:textColorLink="#0B7280" />
+
+                <ImageButton
+                    android:id="@+id/search_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="lookAllPossibleAddresses"
+                    android:src="@drawable/ic_action_name" />
+
+
+            </LinearLayout>
+
+
+
+            <!--
             <EditText
                 android:id="@+id/txtZipcode"
                 android:layout_width="match_parent"
@@ -67,6 +88,12 @@
                 android:textColorHighlight="#0B7280"
                 android:textColorHint="#0B7280"
                 android:textColorLink="#0B7280" />
+                -->
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_spinner"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
