@@ -321,12 +321,6 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @return Geo request
      */
     private GeofencingRequest createGeoRequest(Geofence geofence) {
-<<<<<<< Updated upstream
-        return new GeofencingRequest.Builder()
-                .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-                .addGeofence(geofence)
-                .build();
-=======
         try {
             Log.i(TAG, "GPS LOG | Requesting Geofence.");
             return new GeofencingRequest.Builder()
@@ -337,7 +331,6 @@ public class ControlPanelActivity extends AppCompatActivity {
             Log.e(TAG, "GPS LOG | It was not possible to request the Geofence. " + ex.getMessage());
             return null;
         }
->>>>>>> Stashed changes
     }
 
     /**
@@ -346,27 +339,6 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @param geofence instance
      */
     private void addGeofence(final Geofence geofence) {
-<<<<<<< Updated upstream
-
-
-        this.geofencingClient.addGeofences(this.geoRequest, createGeofencingPendingIntent())
-                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        //Testing purposes only, to be erased at the end
-                        Toast.makeText(ControlPanelActivity.this, "Geofence created " + geofence.getRequestId(), Toast.LENGTH_SHORT).show();
-                    }
-                })
-
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // ******************** A LOG TAG TO BE IMPLEMENTED HERE ******************** //
-                    }
-                });
-
-        Log.v("Ups", "geofence added");
-=======
         try {
             Log.i(TAG, "GPS LOG | Adding Geofence to be managed.");
             this.geofencingClient.addGeofences(this.geoRequest, createGeofencingPendingIntent())
@@ -388,7 +360,6 @@ public class ControlPanelActivity extends AppCompatActivity {
         } catch (Exception ex) {
             Log.e(TAG, "GPS LOG | It was not possible to add the Geofence to be managed. " + ex.getMessage());
         }
->>>>>>> Stashed changes
     }
 
     /**
@@ -539,31 +510,6 @@ public class ControlPanelActivity extends AppCompatActivity {
             latitudeView.setText("Lat: " + String.valueOf(gpsAlarm.getLatitude()));
             longitudeView.setText("Long: " + String.valueOf(gpsAlarm.getLongitude()));
 
-<<<<<<< Updated upstream
-            final Switch gpsToggleButton = (Switch) convertView.findViewById(R.id.swtOnOff);
-            gpsToggleButton.setOnClickListener(new View.OnClickListener() {
-                /**
-                 * This function activates the GPS Address Geofence when it the toggle button is activated.
-                 * @param view
-                 */
-                @Override
-                public void onClick(View view) {
-                    if (gpsToggleButton.isChecked()) {        //When switch is on do this:
-
-                        // Testing purpose
-                        Toast.makeText(context, "Switch turned on", Toast.LENGTH_SHORT).show();
-
-                        // // ********************** MUST REPLACE GET COORDINATES BASED ON LAT AND LONG ********************** //
-                        // Calling the method to create the geofence of this address
-                        activity.startGeofence(new LatLng(gpsAlarm.getLatitude(), gpsAlarm.getLongitude()), gpsAlarm.getRadius());
-                        // // ********************** ************************************************** ********************** //
-
-                        // ********************** TO BE REMOVED ********************** //
-                        // Testing purposes only
-                        activity.example = "Hello world";
-                        activity.activateThisGeofence();
-                        // *********************************************************** //
-=======
             try {
                 final Switch gpsToggleButton = (Switch) convertView.findViewById(R.id.swtOnOff);
                 gpsToggleButton.setOnClickListener(new View.OnClickListener() {
@@ -586,7 +532,6 @@ public class ControlPanelActivity extends AppCompatActivity {
                             activity.activateThisGeofence();
                             // *********************************************************** //
                         }
->>>>>>> Stashed changes
                     }
                 });
             } catch (Exception ex) {
@@ -596,8 +541,6 @@ public class ControlPanelActivity extends AppCompatActivity {
 
             return convertView;
         }
-
-
     }
 
     @Override
@@ -605,5 +548,4 @@ public class ControlPanelActivity extends AppCompatActivity {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         super.onStop();
     }
-
 }
