@@ -23,9 +23,13 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
  * REGISTER | SING UP
  * It provides an interface and its logic for a user to create an account.
  *
- * @author Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
+ * @author Jose Paz & Eduardo Rodrigues
  * @version 1.2
  * @since 2020-03-06
+ * <p>
+ * This class is for the Activity that allows the user to sign up / create a new user.
+ * This activity must be visible only if the user is not logged in. Additionally, the Login screen
+ * must lead the user to this activity.
  */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextPasswordConfirmation = (EditText) findViewById(R.id.editTextConfirmPassword);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
-        // Initializing FirebaseAuth
+        // Initializing Firebase
         try {
             mAuth = FirebaseAuth.getInstance();
         } catch (Exception ex) {
