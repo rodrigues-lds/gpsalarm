@@ -15,6 +15,10 @@ import java.util.List;
  * @author Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
  * @version 1.1
  * @since 2020-03-10
+ * <p>
+ * This class provides all the attributes necessary to serialize and deserialize info
+ * from Firebase. It serves as an structure for all the main  data that will be
+ * manipulated in this application.
  */
 public class User {
 
@@ -22,7 +26,7 @@ public class User {
     public String userID;
     public String username;
     public String name;
-    public List<GPSAlarm> GPSAlarm;
+    private List<GPSAlarm> GPSAlarm;
 
     // The following properties will not be published at Firebase.
     private static final String TAG = "com.cs246.gpsalarm.TAG";
@@ -43,7 +47,7 @@ public class User {
     /**
      * Non-Default Constructor
      *
-     * @param name of the user
+     * @param name     of the user
      * @param username of the user
      */
     User(String name, String username) {
@@ -61,13 +65,22 @@ public class User {
     }
 
     /**
+     * This function returns the list of all GPS Alarm of the user
+     *
+     * @return a list of GPS Alarm
+     */
+    public List<GPSAlarm> getGPSAlarm() {
+        return this.GPSAlarm;
+    }
+
+    /**
      * This function creates the Firebase instance to save and retrieve data.
      */
     private void createFirebaseInstance() {
         try {
-            this.mFirebaseInstance = FirebaseDatabase.getInstance();
-            this.mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers");
             this.mAuth = FirebaseAuth.getInstance();
+            this.mFirebaseInstance = FirebaseDatabase.getInstance();
+            this.mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers/Users/" + this.mAuth.getCurrentUser().getUid());
             this.userID = mAuth.getCurrentUser().getUid();
             this.username = mAuth.getCurrentUser().getEmail().toString();
             Log.i(TAG, "GPS LOG | The Firebase instance was initiated.");
@@ -81,7 +94,7 @@ public class User {
      */
     public void createDatabase() {
         try {
-            mFirebaseDatabase.child("Users").child(this.userID).setValue(this);
+            mFirebaseDatabase.setValue(this);
             Log.i(TAG, "GPS LOG | The " + this.name + " database was created at Firebase.");
         } catch (Exception ex) {
             Log.e(TAG, "GPS LOG | The " + this.name + " instance had problems creating the database. " + ex.getMessage());
@@ -93,7 +106,7 @@ public class User {
      */
     public void updateData() {
         try {
-            mFirebaseDatabase.child("Users").child(this.userID).setValue(this);
+            mFirebaseDatabase.setValue(this);
         } catch (Exception ex) {
             Log.e(TAG, "GPS LOG | It was not possible to update the database. " + ex.getMessage());
         }

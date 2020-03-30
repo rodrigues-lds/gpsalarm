@@ -3,15 +3,12 @@ package com.cs246.gpsalarm;
 import android.annotation.SuppressLint;
 import android.media.Ringtone;
 
-import com.google.android.gms.maps.model.LatLng;
-
 /**
- * Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
+ * Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
  */
 @SuppressLint("Registered")
 public class GPSAlarm {
 
-    //public LatLng coordinates;
     double latitude;
     double longitude;
     public int radius;
@@ -32,19 +29,14 @@ public class GPSAlarm {
 
         this.latitude = latitude;
         this.longitude = longitude;
-        radius = the_radius;
-        ringtone = the_ringtone;
-        description = the_description;
+        this.radius = the_radius;
+        this.ringtone = the_ringtone;
+        this.description = the_description;
 
     }
 
     public String getDescription() {
         return description;
-    }
-
-
-    public LatLng getCoordinates() {
-       return new LatLng(this.latitude, this.longitude);
     }
 
     public double getLatitude()
@@ -67,6 +59,7 @@ public class GPSAlarm {
         return miles * 1.609344;
     }
 
+<<<<<<< Updated upstream
     /*
     This function checks if the User and Passwords have been filled, this should by itself
     take the Strings in the User and Passwords fields and return true if the have been filled,
@@ -109,4 +102,6 @@ public class GPSAlarm {
         return longitude;
     }
 
+=======
+>>>>>>> Stashed changes
 }

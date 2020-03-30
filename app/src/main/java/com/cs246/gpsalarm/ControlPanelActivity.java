@@ -48,25 +48,27 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * CONTROL PANEL | ADDRESS CONTROL
- * It provides an interface to manage the addresses
+ * It provides an interface to manage the addresses.
  *
- * @author Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
+ * @author Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
  * @version 1.2
  * @since 2020-03-06
- *
- *  This class is for the Activity that shows all the Addresses of the User that has been added
- *  This should be obtained by requesting the data to Firebase. Here is also checked the permission
- *  for Location and used to determine if we are entering or exiting a Geofence.
+ * <p>
+ * This class is for the Activity that shows all the Addresses of the User that has been added
+ * This should be obtained by requesting the data to Firebase. Here is also checked the permission
+ * for Location and used to determine if we are entering or exiting a Geofence.
  */
 public class ControlPanelActivity extends AppCompatActivity {
 
+    private static final String TAG = "com.cs246.gpsalarm.TAG";
+
     // Variables of the view
-    public static List<GPSAlarm> gpsAlarmList = new ArrayList<GPSAlarm>();
+    // public static List<GPSAlarm> gpsAlarmList = new ArrayList<GPSAlarm>();
+    public static List<GPSAlarm> gpsAlarmList;
     private ListView gpsAlarmListView;
 
     // Variables of the gps location part (Latitude, Longitude, etc...)
@@ -85,15 +87,13 @@ public class ControlPanelActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     // ********************** TO BE REMOVED ********************** //
-    public static String example;
-    // *********************************************************** //
-
-    // ********************** TO BE REMOVED ********************** //
     // Testing purposes only.
+    public static String example;
+
     public static void activateThisGeofence() {
-        Log.v("Ups", example);
-        Log.v("Ups", String.valueOf((float) 200));
-        Log.v("Ups", String.valueOf(200f));
+        Log.v(TAG, "GPS LOG | " + example);
+        Log.v(TAG, "GPS LOG | " + String.valueOf((float) 200));
+        Log.v(TAG, "GPS LOG | " + String.valueOf(200f));
     }
     // *********************************************************** //
 
@@ -107,31 +107,36 @@ public class ControlPanelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controlpanel);
 
-        // Get the logged user information from Firebase
-        this.mAuth = FirebaseAuth.getInstance();
-        this.mFirebaseInstance = FirebaseDatabase.getInstance();
-        this.mFirebaseDatabase = this.mFirebaseInstance.getReference("DataUsers/Users/" + this.mAuth.getCurrentUser().getUid());
+        // Firebase instance
+        createFirebaseInstance();
 
-        // Retrieve user data from Firebase. This function must be called each time this activity is created.
+        // Retrieve user addresses from Firebase. This function must be called each time this activity is created.
         this.mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                // Deserialize Firebase user data to User class
                 User users = new User();
-                users = dataSnapshot.getValue(User.class);
+                try {
+                    // Deserialize Firebase user data to User class
+                    users = dataSnapshot.getValue(User.class);
 
-                // Pass the serialized GPS data to a list of GPS Alarm
-                if(users.GPSAlarm != null) {
-                    gpsAlarmList = users.GPSAlarm;
-                    gpsAlarmList.remove(0);     // Firebase brings a null index by default
-                    setAdapter();
+                    // Pass the serialized GPS data to a list of GPS Alarm
+                    if (users.getGPSAlarm() != null) {
+                        gpsAlarmList = users.getGPSAlarm();
+                        gpsAlarmList.remove(0);     // Firebase brings a null index by default
+
+                        // Populate the list
+                        setAdapter();
+                    }
+                    Log.i(TAG, "GPS LOG | The user alarm address list was dematerialized from Firebase.");
+                } catch (Exception ex) {
+                    Log.e(TAG, "GPS LOG | It was not possible deserialize the address list from Firebase. " + ex.getMessage());
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // ******************** A LOG TAG TO BE IMPLEMENTED HERE ******************** //
+                Toast.makeText(ControlPanelActivity.this, "Connection error.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "GPS LOG | It was not possible to read the address list from Firebase.");
             }
         });
 
@@ -149,20 +154,26 @@ public class ControlPanelActivity extends AppCompatActivity {
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
-                        buildLocationRequest();
-                        buildLocationCallback();
-                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ControlPanelActivity.this);
-                        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+                        try {
+                            buildLocationRequest();
+                            buildLocationCallback();
+                            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ControlPanelActivity.this);
+                            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+                            Log.i(TAG, "GPS LOG | GPS Permission is properly set.");
+                        } catch (Exception ex) {
+                            Log.e(TAG, "GPS LOG | There was a problem managing gps permission on Control Panel. " + ex.getMessage());
+                        }
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(ControlPanelActivity.this, "You must enable permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ControlPanelActivity.this, "You must enable GPS permission!", Toast.LENGTH_SHORT).show();
+                        Log.w(TAG, "GPS LOG | The user had not conceded GPS permission.");
                     }
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                        // ******************** A LOG TAG TO BE IMPLEMENTED HERE ******************** //
+                        Log.e(TAG, "GPS LOG | The permission rational should be shown at Control Panel.");
                     }
                 }).check();
 
@@ -176,27 +187,54 @@ public class ControlPanelActivity extends AppCompatActivity {
         */
         // *********************************************************** //
 
-        // Checking the device permissions
-        if (this.fusedLocationProviderClient != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                        checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
+        try {
+            // Checking the device permissions
+            if (this.fusedLocationProviderClient != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                            checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
                 }
             }
-        }
 
-        // Using the "client" to ask the request in the locationCallback (like the listener) and a looper that makes it to repeat always.
-        this.fusedLocationProviderClient.requestLocationUpdates(this.locationRequest, this.locationCallback, Looper.myLooper());
+            // Using the "client" to ask the request in the locationCallback (like the listener) and a looper that makes it to repeat always.
+            this.fusedLocationProviderClient.requestLocationUpdates(this.locationRequest, this.locationCallback, Looper.myLooper());
+
+            Log.i(TAG, "GPS LOG | All GPS permissions are conceded.");
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | There is a problem checking the user gps permission. " + ex.getMessage());
+        }
+    }
+
+    /**
+     * This function creates the Firebase instance to retrieve data.
+     */
+    private void createFirebaseInstance() {
+        try {
+            // Initializing Firebase
+            this.mAuth = FirebaseAuth.getInstance();
+            this.mFirebaseInstance = FirebaseDatabase.getInstance();
+            this.mFirebaseDatabase = this.mFirebaseInstance.getReference("DataUsers/Users/" + this.mAuth.getCurrentUser().getUid());
+            Log.i(TAG, "GPS LOG | The Firebase instance was initiated at Control Panel screen.");
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | It was not possible to create the Firebase instance at Control Panel screen. " + ex.getMessage());
+        }
     }
 
     /**
      * This function sets the adapter for the list view element.
      */
     public void setAdapter() {
-        //Setting the LIstView of the activity
-        CustomAdapter adapter = new CustomAdapter(this, gpsAlarmList, this);
-        this.gpsAlarmListView.setAdapter(adapter);
+        try {
+            // Setting the ListView of the activity
+            CustomAdapter adapter = new CustomAdapter(this, gpsAlarmList, this);
+            this.gpsAlarmListView.setAdapter(adapter);
+
+            Log.i(TAG, "GPS LOG | The listview is set. ");
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | It was not possible to set the list to the activity. " + ex.getMessage());
+        }
     }
 
     /**
@@ -222,11 +260,17 @@ public class ControlPanelActivity extends AppCompatActivity {
      * This method is for detailing the request of the location services.
      */
     private void buildLocationRequest() {
-        this.locationRequest = new LocationRequest();
-        this.locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        this.locationRequest.setInterval(5000);
-        this.locationRequest.setFastestInterval(3000);
-        this.locationRequest.setSmallestDisplacement(10f);
+        try {
+            this.locationRequest = new LocationRequest();
+            this.locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            this.locationRequest.setInterval(5000);
+            this.locationRequest.setFastestInterval(3000);
+            this.locationRequest.setSmallestDisplacement(10f);
+
+            Log.i(TAG, "GPS LOG | The detail request for the location service in ok. ");
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | It was not possible to detail the request of the location services. " + ex.getMessage());
+        }
     }
 
     /**
@@ -237,9 +281,15 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @param radius      for the geo fences
      */
     private void startGeofence(LatLng coordinates, Float radius) {
-        Geofence geofence = createGeofence(coordinates, radius);
-        this.geoRequest = createGeoRequest(geofence);
-        addGeofence(geofence);
+        try {
+            Log.i(TAG, "GPS LOG | Starting Geofence.");
+            Geofence geofence = createGeofence(coordinates, radius);
+            this.geoRequest = createGeoRequest(geofence);
+            addGeofence(geofence);
+            Log.i(TAG, "GPS LOG | The Geofence is started.");
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | It was not possible to start Geofence. " + ex.getMessage());
+        }
     }
 
     /**
@@ -250,13 +300,18 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @return the Geofences
      */
     private Geofence createGeofence(LatLng position, float radius) {
-        Log.v("Ups", "geofence 2");
-        return new Geofence.Builder()
-                .setRequestId("My Geofence")
-                .setCircularRegion(position.latitude, position.longitude, radius)
-                .setExpirationDuration(60 * 60 * 1000)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
-                .build();
+        try {
+            Log.i(TAG, "GPS LOG | Creating Geofence.");
+            return new Geofence.Builder()
+                    .setRequestId("My Geofence")
+                    .setCircularRegion(position.latitude, position.longitude, radius)
+                    .setExpirationDuration(60 * 60 * 1000)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
+                    .build();
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | It was not possible to create the Geofence. " + ex.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -266,10 +321,23 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @return Geo request
      */
     private GeofencingRequest createGeoRequest(Geofence geofence) {
+<<<<<<< Updated upstream
         return new GeofencingRequest.Builder()
                 .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
                 .addGeofence(geofence)
                 .build();
+=======
+        try {
+            Log.i(TAG, "GPS LOG | Requesting Geofence.");
+            return new GeofencingRequest.Builder()
+                    .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+                    .addGeofence(geofence)
+                    .build();
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | It was not possible to request the Geofence. " + ex.getMessage());
+            return null;
+        }
+>>>>>>> Stashed changes
     }
 
     /**
@@ -278,6 +346,7 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @param geofence instance
      */
     private void addGeofence(final Geofence geofence) {
+<<<<<<< Updated upstream
 
 
         this.geofencingClient.addGeofences(this.geoRequest, createGeofencingPendingIntent())
@@ -297,6 +366,29 @@ public class ControlPanelActivity extends AppCompatActivity {
                 });
 
         Log.v("Ups", "geofence added");
+=======
+        try {
+            Log.i(TAG, "GPS LOG | Adding Geofence to be managed.");
+            this.geofencingClient.addGeofences(this.geoRequest, createGeofencingPendingIntent())
+                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //Testing purposes only, to be erased at the end
+                            Toast.makeText(ControlPanelActivity.this, "Geofence created " + geofence.getRequestId(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+
+                    .addOnFailureListener(this, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // ******************** A LOG TAG TO BE IMPLEMENTED HERE ******************** //
+                        }
+                    });
+            Log.i(TAG, "GPS LOG | The Geofence was properly added.");
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | It was not possible to add the Geofence to be managed. " + ex.getMessage());
+        }
+>>>>>>> Stashed changes
     }
 
     /**
@@ -305,12 +397,17 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @return the pending Geofences broadcast receiver
      */
     private PendingIntent createGeofencingPendingIntent() {
-        if (this.geofencePendingIntent != null) {
-            return this.geofencePendingIntent;
-        }
+        try {
+            if (this.geofencePendingIntent != null) {
+                return this.geofencePendingIntent;
+            }
 
-        Intent i = new Intent(this, GeofenceBroadcastReceiver.class);
-        return PendingIntent.getBroadcast(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
+            return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | There was a problem calling the Geofence Broadcast Receiver. " + ex.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -442,6 +539,7 @@ public class ControlPanelActivity extends AppCompatActivity {
             latitudeView.setText("Lat: " + String.valueOf(gpsAlarm.getLatitude()));
             longitudeView.setText("Long: " + String.valueOf(gpsAlarm.getLongitude()));
 
+<<<<<<< Updated upstream
             final Switch gpsToggleButton = (Switch) convertView.findViewById(R.id.swtOnOff);
             gpsToggleButton.setOnClickListener(new View.OnClickListener() {
                 /**
@@ -465,9 +563,37 @@ public class ControlPanelActivity extends AppCompatActivity {
                         activity.example = "Hello world";
                         activity.activateThisGeofence();
                         // *********************************************************** //
+=======
+            try {
+                final Switch gpsToggleButton = (Switch) convertView.findViewById(R.id.swtOnOff);
+                gpsToggleButton.setOnClickListener(new View.OnClickListener() {
+                    /**
+                     * This function activates the GPS Address Geofence when it the toggle button is activated.
+                     * @param view
+                     */
+                    @Override
+                    public void onClick(View view) {
+                        if (gpsToggleButton.isChecked()) {        //When switch is on do this:
+
+                            Log.i(TAG, "GPS LOG | Switch turned on. ");
+
+                            // Calling the method to create the Geofence of this address
+                            activity.startGeofence(new LatLng(gpsAlarm.getLatitude(), gpsAlarm.getLongitude()), gpsAlarm.getRadius());
+
+                            // ********************** TO BE REMOVED ********************** //
+                            // Testing purposes only
+                            activity.example = "Hello world";
+                            activity.activateThisGeofence();
+                            // *********************************************************** //
+                        }
+>>>>>>> Stashed changes
                     }
-                }
-            });
+                });
+            } catch (Exception ex) {
+                Log.e(TAG, "GPS LOG | There was a problem when starting to monitor the Geofence. " + ex.getMessage());
+                return null;
+            }
+
             return convertView;
         }
 
