@@ -25,6 +25,10 @@ import com.google.firebase.auth.FirebaseAuth;
  * @author Jose Paz & Eduardo Rodrigues
  * @version 1.1
  * @since 2020-03-04
+ * <p>
+ * This class is for the Activity to allow the user to login. The user must be previously created.
+ * If the user does not have an account, this activity leads the user to a form for register or
+ * sign up. Once the user is created, this activity is automatically initiated.
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,11 +52,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
-        // Initializing FirebaseAuth
+        // Initializing Firebase
         try {
             mAuth = FirebaseAuth.getInstance();
+            Log.i(TAG, "GPS LOG | Firebase initialized at Login screen! ");
         } catch (Exception ex) {
-            Log.e(TAG, "GPS LOG | It was not possible to get the instance from Firebase!" + ex.getMessage().toString());
+            Log.e(TAG, "GPS LOG | It was not possible to get the instance from Firebase at Login screen! " + ex.getMessage().toString());
         }
 
         // Hide keyboard when text boxes looses its focus.
