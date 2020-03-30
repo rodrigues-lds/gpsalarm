@@ -13,13 +13,11 @@
   <component name="ChangeListManager">
     <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivityOLD.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivityOLD.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GPSAlarm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GPSAlarm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_controlpanel_old.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_controlpanel_old.xml" afterDir="false" />
     </list>
     <list id="5c92c598-7792-4e95-a813-0f35089503f7" name="Adding a second maps-activity that uses Geofences Locally, not with Geofire." comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -386,10 +384,37 @@
           </properties>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GPSAlarm.java</url>
+          <line>18</line>
+          <properties class="com.cs246.gpsalarm.GPSAlarm" method="&lt;init&gt;" />
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java</url>
           <line>153</line>
           <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivity.java</url>
+          <line>360</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GPSAlarm.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GPSAlarm.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivity.java</url>
+          <line>353</line>
+          <properties field="the_list" class="com.cs246.gpsalarm.ControlPanelActivity.CustomAdapter" />
+          <option name="timeStamp" value="73" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

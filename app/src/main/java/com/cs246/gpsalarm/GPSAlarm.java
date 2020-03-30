@@ -16,6 +16,9 @@ public class GPSAlarm {
     public String description;
     public Ringtone ringtone;
 
+    public GPSAlarm() {
+
+    }
 
     //Constructor
     public GPSAlarm(LatLng the_coordinates,

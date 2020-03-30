@@ -22,7 +22,7 @@ public class User {
     public String userID;
     public String username;
     public String name;
-    public List<GPSAlarm> gpsAlarms;
+    public List<GPSAlarm> GPSAlarm;
 
     // The following properties will not be published at Firebase.
     private static final String TAG = "com.cs246.gpsalarm.TAG";
@@ -45,10 +45,10 @@ public class User {
         this.username = username;
     }
 
-    User(String name, String username, List<GPSAlarm> gpsAlarms){
+    User(String name, String username, List<GPSAlarm> GPSAlarms){
         this.name = name;
         this.username = username;
-        this.gpsAlarms = gpsAlarms;
+        this.GPSAlarm = GPSAlarms;
     }
 
     /**
