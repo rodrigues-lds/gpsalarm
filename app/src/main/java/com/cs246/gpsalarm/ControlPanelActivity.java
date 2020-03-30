@@ -67,7 +67,6 @@ public class ControlPanelActivity extends AppCompatActivity {
 
     // Variables of the view
     public static List<GPSAlarm> gpsAlarmList = new ArrayList<GPSAlarm>();
-    public static String example;
     private ListView gpsAlarmListView;
 
     // Variables of the gps location part (Latitude, Longitude, etc...)
@@ -84,6 +83,10 @@ public class ControlPanelActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mAuth;
+
+    // ********************** TO BE REMOVED ********************** //
+    public static String example;
+    // *********************************************************** //
 
     // ********************** TO BE REMOVED ********************** //
     // Testing purposes only.
@@ -107,7 +110,7 @@ public class ControlPanelActivity extends AppCompatActivity {
         // Get the logged user information from Firebase
         this.mAuth = FirebaseAuth.getInstance();
         this.mFirebaseInstance = FirebaseDatabase.getInstance();
-        this.mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers/Users/" + mAuth.getCurrentUser().getUid());
+        this.mFirebaseDatabase = this.mFirebaseInstance.getReference("DataUsers/Users/" + this.mAuth.getCurrentUser().getUid());
 
         // Retrieve user data from Firebase. This function must be called each time this activity is created.
         this.mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
@@ -133,26 +136,12 @@ public class ControlPanelActivity extends AppCompatActivity {
         });
 
         // Associating the element to the list
-        gpsAlarmListView = findViewById(R.id.lstGPSAlarm);
-
-        // ********************** TO BE REMOVED ********************** //
-        //*********** NOT NECESSARY - THE LIST IS NOW DYNAMICALLY CREATED ********************
-        //This is only for testing purposes, actually here should come the real Addresses of the user after requesting the data to Firebase
-        //for (int x = 0; x < 5; x++) {
-        //    the_list.add(new GPSAlarm(new LatLng(-11.960517, -77.08517), 20000, "Lima. province of Lima, Peru, America #" + (x + 1), null));
-        //}
-        // *********************************************************** //
-        // ********************** TO BE REMOVED ********************** //
-        //*********** THIS WAS MOVED TO A METHOD CALLED SET ADAPTER ********************
-        //Setting the LIstView of the activity
-        // CustomAdapter adapter = new CustomAdapter(this, the_list, this);
-        // listView.setAdapter(adapter);
-        // *********************************************************** //
+        this.gpsAlarmListView = findViewById(R.id.lstGPSAlarm);
 
         // Setting the location callback and its request
         buildLocationCallback();
         buildLocationRequest();
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        this.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Managing the permissions for location
         Dexter.withActivity(this)
@@ -173,11 +162,11 @@ public class ControlPanelActivity extends AppCompatActivity {
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-
+                        // ******************** A LOG TAG TO BE IMPLEMENTED HERE ******************** //
                     }
                 }).check();
 
-        geofencingClient = LocationServices.getGeofencingClient(this);
+        this.geofencingClient = LocationServices.getGeofencingClient(this);
 
         // ********************** TO BE REMOVED ********************** //
         //THis is for future testing, for the moment not useful and this should be erased at the end
@@ -188,7 +177,7 @@ public class ControlPanelActivity extends AppCompatActivity {
         // *********************************************************** //
 
         // Checking the device permissions
-        if (fusedLocationProviderClient != null) {
+        if (this.fusedLocationProviderClient != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                         checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -198,7 +187,7 @@ public class ControlPanelActivity extends AppCompatActivity {
         }
 
         // Using the "client" to ask the request in the locationCallback (like the listener) and a looper that makes it to repeat always.
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+        this.fusedLocationProviderClient.requestLocationUpdates(this.locationRequest, this.locationCallback, Looper.myLooper());
     }
 
     /**
@@ -207,14 +196,14 @@ public class ControlPanelActivity extends AppCompatActivity {
     public void setAdapter() {
         //Setting the LIstView of the activity
         CustomAdapter adapter = new CustomAdapter(this, gpsAlarmList, this);
-        gpsAlarmListView.setAdapter(adapter);
+        this.gpsAlarmListView.setAdapter(adapter);
     }
 
     /**
      * This method is used to define the LocationCallback, so we put here the actions that we want to perform when we have a response of the location.
      */
     private void buildLocationCallback() {
-        locationCallback = new LocationCallback() {
+        this.locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
@@ -233,11 +222,11 @@ public class ControlPanelActivity extends AppCompatActivity {
      * This method is for detailing the request of the location services.
      */
     private void buildLocationRequest() {
-        locationRequest = new LocationRequest();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(3000);
-        locationRequest.setSmallestDisplacement(10f);
+        this.locationRequest = new LocationRequest();
+        this.locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        this.locationRequest.setInterval(5000);
+        this.locationRequest.setFastestInterval(3000);
+        this.locationRequest.setSmallestDisplacement(10f);
     }
 
     /**
@@ -249,7 +238,7 @@ public class ControlPanelActivity extends AppCompatActivity {
      */
     private void startGeofence(LatLng coordinates, Float radius) {
         Geofence geofence = createGeofence(coordinates, radius);
-        geoRequest = createGeoRequest(geofence);
+        this.geoRequest = createGeoRequest(geofence);
         addGeofence(geofence);
     }
 
@@ -293,7 +282,7 @@ public class ControlPanelActivity extends AppCompatActivity {
 
         Log.v("Ups", "geofence 3");
 
-        geofencingClient.addGeofences(geoRequest, createGeofencingPendingIntent())
+        this.geofencingClient.addGeofences(this.geoRequest, createGeofencingPendingIntent())
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -318,8 +307,8 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @return the pending Geofences broadcast receiver
      */
     private PendingIntent createGeofencingPendingIntent() {
-        if (geofencePendingIntent != null) {
-            return geofencePendingIntent;
+        if (this.geofencePendingIntent != null) {
+            return this.geofencePendingIntent;
         }
 
         Intent i = new Intent(this, GeofenceBroadcastReceiver.class);
@@ -438,6 +427,7 @@ public class ControlPanelActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
+            // Convert the element
             if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.row, parent, false);
             }
@@ -467,10 +457,8 @@ public class ControlPanelActivity extends AppCompatActivity {
                         // Testing purpose
                         Toast.makeText(context, "Switch turned on", Toast.LENGTH_SHORT).show();
 
-                        // // ********************** MUST REPLACE GET COORDINATES BASED ON LAT AND LONG ********************** //
-                        // Calling the method to create the geofence of this address
-                        // activity.startGeofence(tempAddress.getCoordinates(), tempAddress.getRadius());
-                        // // ********************** ************************************************** ********************** //
+                        // Calling the method to create the Geofence of this address
+                        activity.startGeofence(gpsAlarm.getCoordinates(), gpsAlarm.getRadius());
 
                         // ********************** TO BE REMOVED ********************** //
                         // Testing purposes only
