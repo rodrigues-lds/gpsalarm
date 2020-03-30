@@ -2,7 +2,6 @@ package com.cs246.gpsalarm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * CONTROL PANEL
  * It provides an interface to control the address processes.
@@ -33,7 +36,10 @@ public class ControlPanelActivityOLD extends AppCompatActivity implements View.O
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mAuth;
-    private EditText name, username;
+    private EditText user, email;
+    private String UserId;
+
+    public static final String ADDRESS_POSITION = "com.cs246.gpsalarm";
 
     /**
      * This function is called each time this activity is created.
@@ -45,6 +51,8 @@ public class ControlPanelActivityOLD extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controlpanel_old);
 
+
+
         // These elements are being monitored. If they are clicked, an action is performed
         findViewById(R.id.editAddressOne).setOnClickListener(this);
         findViewById(R.id.editAddressTwo).setOnClickListener(this);
@@ -52,13 +60,23 @@ public class ControlPanelActivityOLD extends AppCompatActivity implements View.O
         findViewById(R.id.textAddressTwo).setOnClickListener(this);
 
         // TO BE REMOVED
-        //name = (EditText) findViewById(R.id.txtName);
-        //username = (EditText) findViewById(R.id.txtUsername);
+        user = (EditText) findViewById(R.id.txtName);
+        email = (EditText) findViewById(R.id.txtUsername);
 
         // TO BE REMOVED
+        this.mAuth = FirebaseAuth.getInstance();
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("Users");
-        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers/Users/" + mAuth.getCurrentUser().getUid());
+
+
+        //UserId = mFirebaseDatabase.push().getKey();
+        UserId = mAuth.getCurrentUser().getUid();
+
+        /*mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers");
+        mAuth = FirebaseAuth.getInstance();*/
+
+        //UserId = mFirebaseDatabase.push().getKey();
     }
 
     /**
@@ -68,18 +86,22 @@ public class ControlPanelActivityOLD extends AppCompatActivity implements View.O
      */
     @Override
     public void onClick(View view) {
+        String addressPosition = "-1";
+
         switch (view.getId()) {
             case R.id.editAddressOne:
             case R.id.textAddressOne:
-                openAddressActivity();
+                addressPosition = "1";
                 break;
             case R.id.editAddressTwo:
             case R.id.textAddressTwo:
-                openAddressActivity();
+                addressPosition = "2";
                 break;
             default:
                 break;
         }
+
+        openAddressActivity(addressPosition);
     }
 
     /**
@@ -136,40 +158,51 @@ public class ControlPanelActivityOLD extends AppCompatActivity implements View.O
     /**
      * This function opens the the address information
      */
-    private void openAddressActivity() {
+    private void openAddressActivity(String addressPosition) {
         Intent intent = new Intent(ControlPanelActivityOLD.this, AddressActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(ADDRESS_POSITION, addressPosition);
         startActivity(intent);
     }
 
 
-
-
-
-
     // TO BE REMOVED
-    public void updateData(View view) {
-        User user = new User();
-        user.setName(name.getText().toString().trim());
-        user.updateData();
+    public void addUser(String username, String email) {
+        User users = new User(username, email);
+
+        //mFirebaseDatabase.child(UserId).setValue(users);
+        mFirebaseDatabase.setValue(users);
     }
 
-    // TO BE REMOVED
+    public void updateUser(String username, String email) {
+        mFirebaseDatabase.child("name").setValue(username);
+        mFirebaseDatabase.child("username").setValue(email);
+    }
+
+    public void insertData(View view) {
+        addUser(user.getText().toString().trim(), email.getText().toString().trim());
+    }
+
+    public void updateData(View view) {
+        updateUser(user.getText().toString().trim(), email.getText().toString().trim());
+    }
+
     public void readData(View view) {
-        mFirebaseDatabase.child("Users").addValueEventListener(new ValueEventListener() {
+
+
+
+        mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+               User users = new User();
+               users = dataSnapshot.getValue(User.class);
 
-                        String dbuser = ds.child("username").getValue(String.class);
-                        String dbemail = ds.child("email").getValue(String.class);
-                        Log.d("TAG", dbuser + "/" + dbemail);
+                Map<String, Object> td = (HashMap<String,Object>) dataSnapshot.getValue();
+                List<GPSAlarm> tds = (List<GPSAlarm>) dataSnapshot.child("GPSAlarm").getValue();
 
-                    }
-                }
+                int bbb = 0;
+
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

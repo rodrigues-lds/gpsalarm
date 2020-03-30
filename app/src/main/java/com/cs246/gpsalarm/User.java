@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 /**
  * USER DATA
  * It provides the user definition.
@@ -20,6 +22,7 @@ public class User {
     public String userID;
     public String username;
     public String name;
+    public List<GPSAlarm> gpsAlarms;
 
     // The following properties will not be published at Firebase.
     private static final String TAG = "com.cs246.gpsalarm.TAG";
@@ -37,6 +40,17 @@ public class User {
         createFirebaseInstance();
     }
 
+    User(String name, String username){
+        this.name = name;
+        this.username = username;
+    }
+
+    User(String name, String username, List<GPSAlarm> gpsAlarms){
+        this.name = name;
+        this.username = username;
+        this.gpsAlarms = gpsAlarms;
+    }
+
     /**
      * This function sets the name of the user.
      *
@@ -52,7 +66,7 @@ public class User {
     private void createFirebaseInstance() {
         try {
             this.mFirebaseInstance = FirebaseDatabase.getInstance();
-            this.mFirebaseDatabase = mFirebaseInstance.getReference("Users");
+            this.mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers");
             this.mAuth = FirebaseAuth.getInstance();
             this.userID = mAuth.getCurrentUser().getUid();
             this.username = mAuth.getCurrentUser().getEmail().toString();
@@ -67,7 +81,7 @@ public class User {
      */
     public void createDatabase() {
         try {
-            mFirebaseDatabase.child(this.userID).setValue(this);
+            mFirebaseDatabase.child("Users").child(this.userID).setValue(this);
             Log.i(TAG, "GPS LOG | The " + this.name + " database was created at Firebase.");
         } catch (Exception ex) {
             Log.e(TAG, "GPS LOG | The " + this.name + " instance had problems creating the database. " + ex.getMessage());
