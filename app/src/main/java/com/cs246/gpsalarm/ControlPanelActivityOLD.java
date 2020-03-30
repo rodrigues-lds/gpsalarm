@@ -77,6 +77,8 @@ public class ControlPanelActivityOLD extends AppCompatActivity implements View.O
         mAuth = FirebaseAuth.getInstance();*/
 
         //UserId = mFirebaseDatabase.push().getKey();
+
+
     }
 
     /**
@@ -188,8 +190,6 @@ public class ControlPanelActivityOLD extends AppCompatActivity implements View.O
     }
 
     public void readData(View view) {
-
-
 
         mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override

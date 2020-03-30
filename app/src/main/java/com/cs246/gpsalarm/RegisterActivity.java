@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
  * REGISTER | SING UP
  * It provides an interface and its logic for a user to create an account.
  *
- * @author Jose Paz & Eduardo Rodrigues
+ * @author Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
  * @version 1.2
  * @since 2020-03-06
  */
@@ -213,7 +213,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             user.createDatabase();
 
                             // This line of code is necessary because the login is done when a user is created
-                            mAuth.signOut();
+                            //mAuth.signOut();
+                            user.logout();
 
                             // Ask the user to log in
                             openMainActivity();

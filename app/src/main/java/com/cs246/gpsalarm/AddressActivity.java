@@ -96,7 +96,7 @@ public class AddressActivity extends AppCompatActivity {
         String radius_in_string = radius.getText().toString();
         desired_radius = Integer.parseInt(radius_in_string);
         gpsAddress = new GPSAlarm(the_address, desired_radius, description, null);
-        mFirebaseDatabase.child(mAuth.getInstance().getUid()).child("Addresses").child("1").setValue(gpsAddress);
+        mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
 
     }
 

@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.finish();
 
         // Open the main menu (ControlPanelActivityOLD)
-        Intent intent = new Intent(MainActivity.this, ControlPanelActivityOLD.class);
+        Intent intent = new Intent(MainActivity.this, ControlPanelActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

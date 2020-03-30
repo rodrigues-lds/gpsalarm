@@ -12,7 +12,7 @@ import java.util.List;
  * USER DATA
  * It provides the user definition.
  *
- * @author Eduardo Rodrigues
+ * @author Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
  * @version 1.1
  * @since 2020-03-10
  */
@@ -22,7 +22,7 @@ public class User {
     public String userID;
     public String username;
     public String name;
-    public List<GPSAlarm> gpsAlarms;
+    public List<GPSAlarm> GPSAlarm;
 
     // The following properties will not be published at Firebase.
     private static final String TAG = "com.cs246.gpsalarm.TAG";
@@ -40,15 +40,15 @@ public class User {
         createFirebaseInstance();
     }
 
-    User(String name, String username){
+    /**
+     * Non-Default Constructor
+     *
+     * @param name of the user
+     * @param username of the user
+     */
+    User(String name, String username) {
         this.name = name;
         this.username = username;
-    }
-
-    User(String name, String username, List<GPSAlarm> gpsAlarms){
-        this.name = name;
-        this.username = username;
-        this.gpsAlarms = gpsAlarms;
     }
 
     /**
@@ -93,7 +93,7 @@ public class User {
      */
     public void updateData() {
         try {
-            mFirebaseDatabase.child(this.userID).child("name").setValue(this.name);
+            mFirebaseDatabase.child("Users").child(this.userID).setValue(this);
         } catch (Exception ex) {
             Log.e(TAG, "GPS LOG | It was not possible to update the database. " + ex.getMessage());
         }
