@@ -277,7 +277,6 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @return Geo request
      */
     private GeofencingRequest createGeoRequest(Geofence geofence) {
-        Log.v("Ups", "geofence 3");
         return new GeofencingRequest.Builder()
                 .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
                 .addGeofence(geofence)
@@ -291,7 +290,6 @@ public class ControlPanelActivity extends AppCompatActivity {
      */
     private void addGeofence(final Geofence geofence) {
 
-        Log.v("Ups", "geofence 3");
 
         geofencingClient.addGeofences(geoRequest, createGeofencingPendingIntent())
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
@@ -482,5 +480,14 @@ public class ControlPanelActivity extends AppCompatActivity {
             });
             return convertView;
         }
+
+
     }
+
+    @Override
+    public void onStop() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        super.onStop();
+    }
+
 }

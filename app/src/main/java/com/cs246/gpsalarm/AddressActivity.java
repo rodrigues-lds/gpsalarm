@@ -91,25 +91,43 @@ public class AddressActivity extends AppCompatActivity {
         });
     }
 
-    //For now we are using the switch of the miles_to_kilometers to test the functionality
+    /**
+     * This method takes all the data after the user selected one of the possibble directions, and creates the GPSAlarm class.
+     * After that it upload the class to firebase. This is activated  when the users clicks on the "Save" button.
+     * @param view
+     */
     public void saveAddress(View view) {
-        //createAddressToUse();
+        //createAddressToUse();             previous to the changes
+
+
         String radius_in_string = radius.getText().toString();
-        desired_radius = Integer.parseInt(radius_in_string);
-        gpsAddress = new GPSAlarm(the_latitude,the_logitude, desired_radius, description, null);
-        mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
+
+        if (radius_in_string.length()<1) {
+            Toast.makeText(this, "You must enter the radius",Toast.LENGTH_SHORT).show();
+        } else {
+            desired_radius = Integer.parseInt(radius_in_string);
+
+            //Creating the new GPSAlarm class with all the information
+            gpsAddress = new GPSAlarm(the_latitude, the_logitude, desired_radius, description, null);
+            mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
+
+            //Finishing this activity and passing to the Control Panel Activity
+            this.finish();
+            Intent intent = new Intent(AddressActivity.this, ControlPanelActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
 
     }
 
-    /**
-     * This methods creates the new object Address to use that contains all the information of the desired area and preferred settings
-     */
+    /*
+    *************************TO ERRASE BECAUSE WE ARE NOT USING THIS ANYMORE*********************
     private void createAddressToUse() {
         String temp = address.getText().toString().replace(" ", "+");
         String radius_in_string = radius.getText().toString();
         desired_radius = Integer.parseInt(radius_in_string);     //It has to have a value, if its null it will not works, Be careful!!
         new GetCoordinates().execute(temp);
-    }
+    }******************************************************************************************/
 
     /**
      * This class makes an asynchronous activity to request the information of the string given
@@ -166,6 +184,10 @@ public class AddressActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method sets all the data to the spinner and updates the data each time it changes.
+     * When clicked in a item it sets the selected address in all the textViews of the layout to show the user the selected address.
+     */
     public void createSpinner() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,possible_addresses);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -187,6 +209,11 @@ public class AddressActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * It takes the string of the Address Edit Text and pass that to the GetCoordinates class that recieves the information from the Geocoding API
+     * This is used each time the user clicks on the search image of the layout.
+     * @param view
+     */
     public void lookAllPossibleAddresses(View view) {
         String temp = address.getText().toString().replace(" ", "+");
         new GetCoordinates().execute(temp);
@@ -194,6 +221,11 @@ public class AddressActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This takes the JSONArray that was received after calling the GetCoordinates class, and pass all the information from the item clicked to the layout
+     * The information is showed in the Edit Texts.
+     * @param index
+     */
     public void setTheSelectedAddress(int index) {
 
         try {

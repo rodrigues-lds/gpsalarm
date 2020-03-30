@@ -144,7 +144,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:onClick="saveAddress"
                     android:textColor="#0B7280"
                     android:textColorHighlight="#0B7280"
                     android:textColorHint="#0B7280"
