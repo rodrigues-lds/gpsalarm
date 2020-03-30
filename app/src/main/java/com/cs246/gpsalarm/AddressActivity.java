@@ -50,6 +50,7 @@ public class AddressActivity extends AppCompatActivity {
 
     //These variables are used to create the AddressToUse object
     private LatLng the_address;
+    private double the_latitude, the_logitude;
     private String description;
     private GPSAlarm gpsAddress;          //The address that will be uploaded to Firebase
     private int desired_radius;
@@ -95,7 +96,7 @@ public class AddressActivity extends AppCompatActivity {
         //createAddressToUse();
         String radius_in_string = radius.getText().toString();
         desired_radius = Integer.parseInt(radius_in_string);
-        gpsAddress = new GPSAlarm(the_address, desired_radius, description, null);
+        gpsAddress = new GPSAlarm(the_latitude,the_logitude, desired_radius, description, null);
         mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
 
     }
@@ -216,9 +217,15 @@ public class AddressActivity extends AppCompatActivity {
 
             double latitude = Double.parseDouble(latitude_txt.getText().toString());
             double longitude = Double.parseDouble(longitude_txt.getText().toString());
+
+            the_latitude=latitude;
+            the_logitude=longitude;
+
             Intent i = new Intent();
             i.putExtra("alarm_location_latitude", latitude);
             i.putExtra("alarm_location_longitude", longitude);
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();

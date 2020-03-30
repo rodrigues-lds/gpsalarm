@@ -3,6 +3,8 @@ package com.cs246.gpsalarm;
 import android.annotation.SuppressLint;
 import android.media.Ringtone;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
  */
@@ -106,4 +108,5 @@ public class GPSAlarm {
     public double convertAddressToLongitude(String address, double longitude) {
         return longitude;
     }
+
 }

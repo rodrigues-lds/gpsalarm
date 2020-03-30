@@ -469,7 +469,7 @@ public class ControlPanelActivity extends AppCompatActivity {
 
                         // // ********************** MUST REPLACE GET COORDINATES BASED ON LAT AND LONG ********************** //
                         // Calling the method to create the geofence of this address
-                        // activity.startGeofence(tempAddress.getCoordinates(), tempAddress.getRadius());
+                        activity.startGeofence(new LatLng(gpsAlarm.getLatitude(), gpsAlarm.getLongitude()), gpsAlarm.getRadius());
                         // // ********************** ************************************************** ********************** //
 
                         // ********************** TO BE REMOVED ********************** //
