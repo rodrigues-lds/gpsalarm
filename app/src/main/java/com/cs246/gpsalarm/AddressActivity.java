@@ -51,8 +51,10 @@ public class AddressActivity extends AppCompatActivity {
     //These variables are used to create the AddressToUse object
     private LatLng the_address;
     private String description;
-    private GPSAlarm addressToUse;          //The address that will be uploaded to Firebase
+    private GPSAlarm gpsAddress;          //The address that will be uploaded to Firebase
     private int desired_radius;
+    private String addressPosition;
+    long nextGPSAlarmID;
 
 
 
@@ -61,41 +63,24 @@ public class AddressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
-        //Not sure the purpose of the following (by Hernan)
-        //user = (EditText)findViewById(R.id.txtName);
-        //email = (EditText)findViewById(R.id.txtUsername);
+        // Get the Intent that started this activity and extract the string
+        Intent intent = getIntent();
+
+        // Getting the data inserted in the Main Activity
+        this.addressPosition = intent.getStringExtra(ControlPanelActivityOLD.ADDRESS_POSITION);
 
         address = (EditText) findViewById(R.id.txtAddress);
         radius = (EditText) findViewById(R.id.txtRadius);
+
+        this.mAuth = FirebaseAuth.getInstance();
         spinner=(Spinner) findViewById(R.id.view_spinner);
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("Users");
+        mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers/Users/" + mAuth.getCurrentUser().getUid());
 
-        UserId = mFirebaseDatabase.push().getKey();
-    }
-
-    public void updateUser(String username, String email) {
-        mFirebaseDatabase.child("Users").child(UserId).child("username").setValue(username);
-        mFirebaseDatabase.child("Users").child(UserId).child("email").setValue(email);
-    }
-
-    public void updateData(View view) {
-        updateUser(user.getText().toString().trim(), email.getText().toString().trim());
-    }
-
-    public void readData(View view) {
-        mFirebaseDatabase.child("Users").addValueEventListener(new ValueEventListener() {
+        mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                        String dbuser = ds.child("username").getValue(String.class);
-                        String dbemail = ds.child("email").getValue(String.class);
-                        Log.d("TAG", dbuser + "/" + dbemail);
-
-                    }
-                }
+                nextGPSAlarmID = dataSnapshot.child("GPSAlarm").getChildrenCount();
             }
 
             @Override
@@ -110,8 +95,8 @@ public class AddressActivity extends AppCompatActivity {
         //createAddressToUse();
         String radius_in_string = radius.getText().toString();
         desired_radius = Integer.parseInt(radius_in_string);
-        addressToUse = new GPSAlarm(the_address, desired_radius, description, null);
-        mFirebaseDatabase.child(mAuth.getInstance().getUid()).child("Addresses").child("1").setValue(addressToUse);
+        gpsAddress = new GPSAlarm(the_address, desired_radius, description, null);
+        mFirebaseDatabase.child(mAuth.getInstance().getUid()).child("Addresses").child("1").setValue(gpsAddress);
 
     }
 
@@ -135,8 +120,7 @@ public class AddressActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            Toast.makeText(AddressActivity.this,"Looking up the place", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddressActivity.this, "Looking up the place", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -158,7 +142,6 @@ public class AddressActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
 
             try {
                 JSONArray jsonArray = new JSONArray(s);

@@ -111,7 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mAuth.getCurrentUser() != null) {
             Log.i(TAG, "GPS LOG | The user is already logged in.");
             finish();
-            startActivity(new Intent(this, ControlPanelActivity.class));
+            //startActivity(new Intent(this, ControlPanelActivityOLD.class));
+            openControlPanelActivity();
         }
     }
 
@@ -200,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.finish();
 
         // Open the main menu (ControlPanelActivityOLD)
-        Intent intent = new Intent(MainActivity.this, ControlPanelActivity.class);
+        Intent intent = new Intent(MainActivity.this, ControlPanelActivityOLD.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

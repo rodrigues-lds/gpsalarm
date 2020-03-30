@@ -1,11 +1,7 @@
 package com.cs246.gpsalarm;
 
 import android.annotation.SuppressLint;
-import android.app.Service;
-import android.content.Intent;
 import android.media.Ringtone;
-import android.os.IBinder;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -16,21 +12,21 @@ import com.google.android.gms.maps.model.LatLng;
 public class GPSAlarm {
 
     public LatLng coordinates;
-    public  int radius;
+    public int radius;
     public String description;
     public Ringtone ringtone;
 
 
     //Constructor
     public GPSAlarm(LatLng the_coordinates,
-                        int the_radius,
-                        String the_description,
-                        Ringtone the_ringtone) {
+                    int the_radius,
+                    String the_description,
+                    Ringtone the_ringtone) {
 
-        coordinates=the_coordinates;
-        radius=the_radius;
-        ringtone=the_ringtone;
-        description=the_description;
+        coordinates = the_coordinates;
+        radius = the_radius;
+        ringtone = the_ringtone;
+        description = the_description;
 
     }
 
@@ -61,7 +57,7 @@ public class GPSAlarm {
      */
     public boolean validatingUserPassword(String userAndPassword) { //For test purpuses we are giving an input, but this should take that informatio by itself
 
-        if (userAndPassword.length() >1) {//with this we can say that at least there are two characters in the user and password.
+        if (userAndPassword.length() > 1) {//with this we can say that at least there are two characters in the user and password.
             return true;
         } else {
             return false;
@@ -70,7 +66,7 @@ public class GPSAlarm {
 
     public boolean validatingUser(String user) { //For test purpuses we are giving an input, but this should take that informatio by itself
 
-        if (user.length() >1) {//with this we can say that at least there are two characters in the user and password.
+        if (user.length() > 1) {//with this we can say that at least there are two characters in the user and password.
             return true;
         } else {
             return false;
@@ -79,16 +75,20 @@ public class GPSAlarm {
 
     public boolean checksIfTheGPSisActivated() {
 
-        boolean GPSstate=true; //This should be replaced in a future with the real logic of the method and as a result we will obtain true or false
+        boolean GPSstate = true; //This should be replaced in a future with the real logic of the method and as a result we will obtain true or false
 
         if (GPSstate) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
 
-    public double convertAddressToLatitude(String address, double latitude) {return latitude;}
+    public double convertAddressToLatitude(String address, double latitude) {
+        return latitude;
+    }
 
-    public double convertAddressToLongitude(String address, double longitude) {return longitude;}
+    public double convertAddressToLongitude(String address, double longitude) {
+        return longitude;
+    }
 }
