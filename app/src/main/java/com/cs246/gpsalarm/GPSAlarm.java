@@ -42,10 +42,10 @@ public class GPSAlarm {
         return description;
     }
 
-    // ************************** WE HAVE TO THINK HOW TO CREATE THE LATLON INSTANCE BASED ON THE ATTRIBUTES OF THIS CLASS
-    //public LatLng getCoordinates() {
-     //   return coordinates;
-    //}
+
+    public LatLng getCoordinates() {
+       return new LatLng(this.latitude, this.longitude);
+    }
 
     public double getLatitude()
     {
