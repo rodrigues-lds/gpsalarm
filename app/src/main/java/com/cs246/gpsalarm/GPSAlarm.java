@@ -108,4 +108,5 @@ public class GPSAlarm {
     public double convertAddressToLongitude(String address, double longitude) {
         return longitude;
     }
+
 }

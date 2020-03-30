@@ -266,7 +266,6 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @return Geo request
      */
     private GeofencingRequest createGeoRequest(Geofence geofence) {
-        Log.v("Ups", "geofence 3");
         return new GeofencingRequest.Builder()
                 .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
                 .addGeofence(geofence)
@@ -280,7 +279,6 @@ public class ControlPanelActivity extends AppCompatActivity {
      */
     private void addGeofence(final Geofence geofence) {
 
-        Log.v("Ups", "geofence 3");
 
         this.geofencingClient.addGeofences(this.geoRequest, createGeofencingPendingIntent())
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
@@ -457,8 +455,10 @@ public class ControlPanelActivity extends AppCompatActivity {
                         // Testing purpose
                         Toast.makeText(context, "Switch turned on", Toast.LENGTH_SHORT).show();
 
-                        // Calling the method to create the Geofence of this address
-                        activity.startGeofence(gpsAlarm.getCoordinates(), gpsAlarm.getRadius());
+                        // // ********************** MUST REPLACE GET COORDINATES BASED ON LAT AND LONG ********************** //
+                        // Calling the method to create the geofence of this address
+                        activity.startGeofence(new LatLng(gpsAlarm.getLatitude(), gpsAlarm.getLongitude()), gpsAlarm.getRadius());
+                        // // ********************** ************************************************** ********************** //
 
                         // ********************** TO BE REMOVED ********************** //
                         // Testing purposes only
@@ -470,5 +470,14 @@ public class ControlPanelActivity extends AppCompatActivity {
             });
             return convertView;
         }
+
+
     }
+
+    @Override
+    public void onStop() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        super.onStop();
+    }
+
 }
