@@ -3,30 +3,33 @@ package com.cs246.gpsalarm;
 import android.annotation.SuppressLint;
 import android.media.Ringtone;
 
-import com.google.android.gms.maps.model.LatLng;
-
 /**
- * Created by Eduardo A Rodrigues on 2/24/2020.
+ * Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
  */
 @SuppressLint("Registered")
 public class GPSAlarm {
 
-    public LatLng coordinates;
+    //public LatLng coordinates;
+    double latitude;
+    double longitude;
     public int radius;
     public String description;
     public Ringtone ringtone;
+
+
 
     public GPSAlarm() {
 
     }
 
     //Constructor
-    public GPSAlarm(LatLng the_coordinates,
+    public GPSAlarm(Double latitude, Double longitude,
                     int the_radius,
                     String the_description,
                     Ringtone the_ringtone) {
 
-        coordinates = the_coordinates;
+        this.latitude = latitude;
+        this.longitude = longitude;
         radius = the_radius;
         ringtone = the_ringtone;
         description = the_description;
@@ -37,14 +40,23 @@ public class GPSAlarm {
         return description;
     }
 
-    public LatLng getCoordinates() {
-        return coordinates;
+    // ************************** WE HAVE TO THINK HOW TO CREATE THE LATLON INSTANCE BASED ON THE ATTRIBUTES OF THIS CLASS
+    //public LatLng getCoordinates() {
+     //   return coordinates;
+    //}
+
+    public double getLatitude()
+    {
+        return this.latitude;
+    }
+
+    public double getLongitude(){
+        return this.longitude;
     }
 
     public float getRadius() {
         return (float) radius;
     }
-
 
     /*
     This function converts the Radius to Kilometers.

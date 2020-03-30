@@ -148,7 +148,7 @@ public class AddressActivity extends AppCompatActivity {
                 i.putExtra("alarm_location_longitude", longitude);
 
                 //The final new object created as result of all the previous code
-                gpsAddress = new GPSAlarm(the_address, desired_radius, description, null);
+                gpsAddress = new GPSAlarm(latitude, longitude, desired_radius, description, null);
 
                 //Uploading the new object to firebase
                 mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
