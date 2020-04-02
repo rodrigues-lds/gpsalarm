@@ -68,7 +68,7 @@ public class AddressActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         // Getting the data inserted in the Main Activity
-        this.addressPosition = intent.getStringExtra(ControlPanelActivity.ADDRESS_POSITION);
+        this.addressPosition = intent.getStringExtra(ControlPanelActivityOLD.ADDRESS_POSITION);
 
         address = (EditText) findViewById(R.id.txtAddress);
         radius = (EditText) findViewById(R.id.txtRadius);

@@ -62,7 +62,7 @@
                     android:textColorLink="#0B7280"/>
 
                 <ImageButton
-                    android:id="@+id/view_spinner"
+                    android:id="@+id/search_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
