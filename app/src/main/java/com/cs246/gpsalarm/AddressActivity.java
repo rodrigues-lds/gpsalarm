@@ -258,6 +258,10 @@ public class AddressActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is used when the users wants to use the maps to the the address, instead of giving it to the geocoder
+     * @param view Called with the button
+     */
     public void useMaps(View view) {
         this.finish();
         Intent intent = new Intent(AddressActivity.this, MapsActivity2.class);

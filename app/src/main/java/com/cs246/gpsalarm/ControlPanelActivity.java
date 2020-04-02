@@ -104,7 +104,6 @@ public class ControlPanelActivity extends AppCompatActivity {
 
     /**
      * This function is called each time this activity is created.
-     *
      * @param savedInstanceState It is a reference to a Bundle object that is passed into the onCreate.
      */
     @Override
@@ -361,6 +360,10 @@ public class ControlPanelActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This is used when the users want to remove a geofence or when the user has arrived and want to deactivate the alarm
+     * @param idnumber
+     */
     private void removeGeofence(final int idnumber) {
         try {
             Log.i(TAG, "GPS LOG | Removing Geofence.");
