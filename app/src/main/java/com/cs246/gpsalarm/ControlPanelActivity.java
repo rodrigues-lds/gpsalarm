@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.common.internal.Objects;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -48,7 +51,9 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * CONTROL PANEL | ADDRESS CONTROL
@@ -179,13 +184,6 @@ public class ControlPanelActivity extends AppCompatActivity {
 
         this.geofencingClient = LocationServices.getGeofencingClient(this);
 
-        // ********************** TO BE REMOVED ********************** //
-        //THis is for future testing, for the moment not useful and this should be erased at the end
-        /*
-        startGeofence(new LatLng(-11.960517, -77.08517), 20000f);
-        Log.v("Ups", "geofence 1");
-        */
-        // *********************************************************** //
 
         try {
             // Checking the device permissions
@@ -280,10 +278,10 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @param coordinates of the user location
      * @param radius      for the geo fences
      */
-    private void startGeofence(LatLng coordinates, Float radius) {
+    private void startGeofence(LatLng coordinates, Float radius, int idnumber) {
         try {
             Log.i(TAG, "GPS LOG | Starting Geofence.");
-            Geofence geofence = createGeofence(coordinates, radius);
+            Geofence geofence = createGeofence(coordinates, radius, idnumber);
             this.geoRequest = createGeoRequest(geofence);
             addGeofence(geofence);
             Log.i(TAG, "GPS LOG | The Geofence is started.");
@@ -299,11 +297,11 @@ public class ControlPanelActivity extends AppCompatActivity {
      * @param radius   of the Geofences
      * @return the Geofences
      */
-    private Geofence createGeofence(LatLng position, float radius) {
+    private Geofence createGeofence(LatLng position, float radius, int IDnumber) {
         try {
             Log.i(TAG, "GPS LOG | Creating Geofence.");
             return new Geofence.Builder()
-                    .setRequestId("My Geofence")
+                    .setRequestId("My Geofence "+IDnumber)
                     .setCircularRegion(position.latitude, position.longitude, radius)
                     .setExpirationDuration(60 * 60 * 1000)
                     .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
@@ -346,19 +344,45 @@ public class ControlPanelActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             //Testing purposes only, to be erased at the end
-                            Toast.makeText(ControlPanelActivity.this, "Geofence created " + geofence.getRequestId(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ControlPanelActivity.this, "Geofence created ", Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, "GPS LOG | The Geofence was properly added.");
                         }
                     })
 
                     .addOnFailureListener(this, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            // ******************** A LOG TAG TO BE IMPLEMENTED HERE ******************** //
+                            Log.i(TAG, "GPS LOG | The Geofence was not added.");
                         }
                     });
-            Log.i(TAG, "GPS LOG | The Geofence was properly added.");
+            ;
         } catch (Exception ex) {
             Log.e(TAG, "GPS LOG | It was not possible to add the Geofence to be managed. " + ex.getMessage());
+        }
+    }
+
+    private void removeGeofence(final int idnumber) {
+        try {
+            Log.i(TAG, "GPS LOG | Removing Geofence.");
+            this.geofencingClient.removeGeofences(Collections.singletonList("My Geofence "+idnumber))
+                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(ControlPanelActivity.this, "Geofence " + idnumber+" removed", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(this, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // ******************** A LOG TAG TO BE IMPLEMENTED HERE ******************** //
+
+                        }
+                    });
+            Log.i(TAG, "GPS LOG | The Geofence was properly removed.");
+
+        } catch (Exception ex) {
+            Log.e(TAG, "GPS LOG | It was not possible to remove the Geofence. " + ex.getMessage());
+
         }
     }
 
@@ -491,7 +515,7 @@ public class ControlPanelActivity extends AppCompatActivity {
          * @return converted view
          */
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             // Convert the element
             if (convertView == null) {
@@ -504,33 +528,48 @@ public class ControlPanelActivity extends AppCompatActivity {
             TextView titleView = (TextView) convertView.findViewById(R.id.txtTitle);
             TextView latitudeView = (TextView) convertView.findViewById(R.id.txtLatitude);
             TextView longitudeView = (TextView) convertView.findViewById(R.id.txtLongitude);
+            ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.imgEdit);
+            final Switch gpsToggleButton = (Switch) convertView.findViewById(R.id.swtOnOff);
 
             // Populate the elements
             titleView.setText(gpsAlarm.getDescription());
             latitudeView.setText("Lat: " + String.valueOf(gpsAlarm.getLatitude()));
             longitudeView.setText("Long: " + String.valueOf(gpsAlarm.getLongitude()));
 
+            //To make sure that the switch is in the right position
+            if (gpsAlarm.wasActivated==true) {
+                gpsToggleButton.setChecked(true);
+            } else {
+                gpsToggleButton.setChecked(false);
+            }
+
+            //When we click in the switch
             try {
-                final Switch gpsToggleButton = (Switch) convertView.findViewById(R.id.swtOnOff);
                 gpsToggleButton.setOnClickListener(new View.OnClickListener() {
-                    /**
-                     * This function activates the GPS Address Geofence when it the toggle button is activated.
-                     * @param view
-                     */
                     @Override
                     public void onClick(View view) {
-                        if (gpsToggleButton.isChecked()) {        //When switch is on do this:
+                        gpsAlarm.counter*=-1;
+
+
+                        if (gpsAlarm.counter<0) {           //When switch is on do this:
+                            gpsToggleButton.setChecked(true);
+                            gpsAlarm.wasActivated=true;
+                            startGeofence(new LatLng(gpsAlarm.getLatitude(), gpsAlarm.getLongitude()), gpsAlarm.getRadius(),position);
+
+
+                        } else {
+                            gpsToggleButton.setChecked(false);
+                            gpsAlarm.wasActivated=false;
+                        }
+
+                        if (gpsAlarm.wasActivated) {        //When switch is on do this:
 
                             Log.i(TAG, "GPS LOG | Switch turned on. ");
 
-                            // Calling the method to create the Geofence of this address
-                            activity.startGeofence(new LatLng(gpsAlarm.getLatitude(), gpsAlarm.getLongitude()), gpsAlarm.getRadius());
+                        }
 
-                            // ********************** TO BE REMOVED ********************** //
-                            // Testing purposes only
-                            activity.example = "Hello world";
-                            activity.activateThisGeofence();
-                            // *********************************************************** //
+                        if (!gpsAlarm.wasActivated) {
+                            removeGeofence(position);
                         }
                     }
                 });
@@ -539,13 +578,45 @@ public class ControlPanelActivity extends AppCompatActivity {
                 return null;
             }
 
+            //When the user wants to check the address in the map
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(ControlPanelActivity.this, MapsActivity.class);
+                    intent.putExtra("latitude", String.valueOf(gpsAlarm.getLatitude()));
+                    intent.putExtra("longitude", String.valueOf(gpsAlarm.getLongitude()));
+                    intent.putExtra("radius", String.valueOf(gpsAlarm.getRadius()));
+                    startActivity(intent);
+
+                    Toast.makeText(ControlPanelActivity.this, gpsAlarm.getDescription(),Toast.LENGTH_SHORT).show();
+                }
+            });
+
             return convertView;
         }
+
     }
 
+    /**
+     * THis method is executed when the activity is stopped
+     * Here we are saving the information of which geofences are activated
+     */
     @Override
     public void onStop() {
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+
+
+        int idx=1;
+
+        for (GPSAlarm x:gpsAlarmList) {
+
+            mFirebaseDatabase.child("GPSAlarm").child(Long.toString(idx)).setValue(x);
+
+            idx++;
+        }
+
+        Log.e(TAG, "GPS LOG | Information successfully saved on Firebase");
+
         super.onStop();
     }
 }

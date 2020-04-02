@@ -72,9 +72,10 @@ public class AddressActivity extends AppCompatActivity {
 
         address = (EditText) findViewById(R.id.txtAddress);
         radius = (EditText) findViewById(R.id.txtRadius);
+        spinner=(Spinner) findViewById(R.id.view_spinner);
+
 
         this.mAuth = FirebaseAuth.getInstance();
-        spinner=(Spinner) findViewById(R.id.view_spinner);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers/Users/" + mAuth.getCurrentUser().getUid());
 
@@ -83,6 +84,8 @@ public class AddressActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 nextGPSAlarmID = dataSnapshot.child("GPSAlarm").getChildrenCount();
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -119,15 +122,6 @@ public class AddressActivity extends AppCompatActivity {
         }
 
     }
-
-    /*
-    *************************TO ERRASE BECAUSE WE ARE NOT USING THIS ANYMORE*********************
-    private void createAddressToUse() {
-        String temp = address.getText().toString().replace(" ", "+");
-        String radius_in_string = radius.getText().toString();
-        desired_radius = Integer.parseInt(radius_in_string);     //It has to have a value, if its null it will not works, Be careful!!
-        new GetCoordinates().execute(temp);
-    }******************************************************************************************/
 
     /**
      * This class makes an asynchronous activity to request the information of the string given
@@ -167,7 +161,7 @@ public class AddressActivity extends AppCompatActivity {
                 addressesInJASON=jsonArray;
                 possible_addresses.clear();
 
-                for (int i=0;i<jsonArray.length();i++) {
+                for (int i=0;i<10;i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     description = (String) jsonObject.get("display_name");
                     possible_addresses.add(description);
@@ -262,5 +256,12 @@ public class AddressActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void useMaps(View view) {
+        this.finish();
+        Intent intent = new Intent(AddressActivity.this, MapsActivity2.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

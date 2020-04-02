@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -21,6 +22,8 @@ import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryDataEventListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -29,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -49,9 +53,10 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * For testing purposes only. A previous version of the MapsActivity using geofire.
+ * This activity is used when the user wants to check where the position of the address in a map and
+ * when the user wants to see a reference of its position from the address.
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GeoQueryDataEventListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     /*
     THis class uses the Location services of Google to obtain location, not worker thread or Handler was needed
@@ -64,39 +69,56 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker currentUser;
 
 
-    private DatabaseReference myLocationRef;
-    private GeoFire geoFire;
-    private List<LatLng> desiredArea;
+    //widgets
+    private EditText mSearchText;
+
+    //GPSAlarm items from previous activity
+    private Float the_latitude, the_longitude;
+    private float the_radius;
+
+    //Object to draw the address and its limits
+    private LatLng requestedAddress;
+    private Circle geoFenceLimits;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        //Getting the information from the previous activity and convertig to the appropriate object
+        String latitude_fromIntent=getIntent().getExtras().getString("latitude");
+        the_latitude=Float.valueOf(latitude_fromIntent);
 
+        String longitude_fromIntent=getIntent().getExtras().getString("longitude");
+        the_longitude=Float.valueOf(longitude_fromIntent);
+
+        String radius_fromIntent=getIntent().getExtras().getString("radius");
+        the_radius=Float.parseFloat(radius_fromIntent);
+
+
+
+
+        //With dexter we manage the permissions of the application, in this case the Location permission
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
-                        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
                         buildLocationRequest();
                         buildLocationCallback();
-                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);
+                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);  //getting the client of the LocationServices
 
+                        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
                         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                                 .findFragmentById(R.id.map);
                         mapFragment.getMapAsync(MapsActivity.this);
-
-                        initArea();
-                        settingGeoFire();
-
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(MapsActivity.this, "You must enable GPS", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MapsActivity.this, "You must enable permission", Toast.LENGTH_SHORT);
                     }
 
                     @Override
@@ -105,54 +127,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }).check();
 
-    }
-
-    private void initArea() {
-        /*
-        The following list contains all the geofences or active points that the user wants the app to advise him when he is near to the radious
-        This is a simple way, however, by using firebase we should in a future obtain this form the database.
-         */
-        desiredArea = new ArrayList<>();
-        desiredArea.add(new LatLng(-11.9302,-77.296));
-        desiredArea.add(new LatLng(-11.963, -77.100));
-        desiredArea.add(new LatLng(-11.963, -76.920));
-    }
-
-    private void settingGeoFire() {
-
-        myLocationRef = FirebaseDatabase.getInstance().getReference("MyLocation");
-        geoFire=new GeoFire(myLocationRef);
 
     }
 
+    /**
+     *This method is used to define the LocationCallback, so we put here the actions that we want to perform when we have a response of the location
+     */
     private void buildLocationCallback() {
         locationCallback = new LocationCallback() {
+
+            //Setting a marker to know our location in the map
             @Override
-            public  void onLocationResult (final LocationResult locationResult) {
-                if (mMap!=null) {
+            public void onLocationResult(LocationResult locationResult) {
+                if (mMap != null) {
+                    if (currentUser != null) currentUser.remove();
+                    currentUser = mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude()))
+                            .title("You"));
 
-                    geoFire.setLocation("You", new GeoLocation(locationResult.getLastLocation().getLatitude(),
-                            locationResult.getLastLocation().getLongitude()), new GeoFire.CompletionListener() {
-                        @Override
-                        public void onComplete(String key, DatabaseError error) {
-                            if (currentUser!=null) currentUser.remove();
-                            currentUser= mMap.addMarker(new MarkerOptions()
-                                    .position(new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude()))
-                                    .title("You"));
-
-                            //After have added the marker, we move the camera
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUser.getPosition(),12.0f));
-
-                        }
-                    });
+                    //moving camera
+                    mMap.animateCamera(CameraUpdateFactory
+                            .newLatLngZoom(currentUser.getPosition(), 12.07f));
                 }
-
-
             }
         };
     }
 
-    //This makes the request to the location Services of Google about the location
+    /**
+     *This method is for detailing the request of the location services
+     */
     private void buildLocationRequest() {
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -161,105 +164,57 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationRequest.setSmallestDisplacement(10f);
     }
 
-
+    /**
+     * When the map is ready this creates the marker of the actual location and the marker of the address.
+     * @param googleMap The map we are using
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //Creating the LatLong that will serve as a reference for the marker
+        requestedAddress=new LatLng(the_latitude, the_longitude);
+        //Adding the marker to the map
+        mMap.addMarker(new MarkerOptions().position(requestedAddress).title("Your address"));
+
+        drawGeofence();
+
+        //Zoom settings
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        if(fusedLocationProviderClient !=null)
+
+        if (fusedLocationProviderClient != null)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) !=PackageManager.PERMISSION_GRANTED) {
+                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
             }
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper());
 
-        //Adding a cicle to the desired Area in the map
-        for (LatLng latLng:desiredArea) {
-            mMap.addCircle(new CircleOptions().center(latLng)
-                    .radius(1000)                    //This is 1000 metres, can be changed
-                    .strokeColor(Color.BLUE)
-                    .fillColor(0x220000FF)         //Giving transparency to the circle
-                    .strokeWidth(5.0f)
-            );
 
-            //Creating a GeoQuery when user in desired Area
-            GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(latLng.latitude, latLng.longitude), 1); //500 meters of radius
-            geoQuery.addGeoQueryDataEventListener(MapsActivity.this);
-        }
-
+        //Using the "client" to ask the request in the locationCallback(like the listener) and a looper that makes it to repeat always.
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
-
     @Override
-    protected void onStop() {
+    public void onStop() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         super.onStop();
     }
 
-    @Override
-    public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
-        sendNotification("GPS Alarm", String.format("%s entered the desired Area", dataSnapshot.getKey()));
-    }
+    /**
+     * This method draws the limits of the geofences that the users has selected
+     */
+    private void drawGeofence() {
 
-    @Override
-    public void onDataExited(DataSnapshot dataSnapshot) {
-        sendNotification("GPS Alarm", String.format("%s went out of the desired Area", dataSnapshot.getKey()));
-    }
+        CircleOptions circleOptions = new CircleOptions()
+                .center(requestedAddress)
+                .strokeColor(Color.argb(50,70,70,70))
+                .fillColor(Color.argb(100,150,150,150))
+                .radius(the_radius);
 
-    @Override
-    public void onDataMoved(DataSnapshot dataSnapshot, GeoLocation location) {
-        sendNotification("GPS Alarm", String.format("%s moved in the desired Area", dataSnapshot.getKey()));
-    }
-
-    @Override
-    public void onDataChanged(DataSnapshot dataSnapshot, GeoLocation location) {
-
-    }
-
-    @Override
-    public void onGeoQueryReady() {
-
-    }
-
-    @Override
-    public void onGeoQueryError(DatabaseError error) {
-        Toast.makeText(this, ""+error.getMessage(),Toast.LENGTH_SHORT).show();
-    }
-
-    private void sendNotification(String title, String format) {
-        String NOTIFICATION_CHANNEL_ID="edmt_multiple_location";
-
-        NotificationManager notificationManager=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notification",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-
-            //Config the notification
-            notificationChannel.setDescription("Channel description");
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.setVibrationPattern(new long[] {0,1000,500,1000});
-            notificationChannel.enableVibration(true);
-
-            //Creating the notification with the previous configuration
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
-        builder.setContentTitle(title)
-                .setContentText(format)
-                .setAutoCancel(false)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-
-        Notification notification = builder.build();
-        notificationManager.notify(new Random().nextInt(), notification);
-
+        geoFenceLimits = mMap.addCircle(circleOptions);
 
 
     }
+
 }

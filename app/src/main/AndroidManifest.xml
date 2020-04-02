@@ -65,7 +65,11 @@
                 android:value=".ControlPanelActivity" />
         </activity>
 
-        <activity android:name=".MapsActivity2"></activity>
+        <activity android:name=".MapsActivity2">
+
+        </activity>
+
+        <activity android:name=".MapsActivity"></activity>
 
     </application>
 

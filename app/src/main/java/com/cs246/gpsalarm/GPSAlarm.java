@@ -14,6 +14,8 @@ public class GPSAlarm {
     public int radius;
     public String description;
     public Ringtone ringtone;
+    public boolean wasActivated;
+    public int counter;
 
 
 
@@ -32,6 +34,9 @@ public class GPSAlarm {
         this.radius = the_radius;
         this.ringtone = the_ringtone;
         this.description = the_description;
+        this.wasActivated=false;
+        this.counter=1;
+
 
     }
 
