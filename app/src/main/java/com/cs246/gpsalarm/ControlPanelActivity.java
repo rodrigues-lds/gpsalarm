@@ -70,6 +70,7 @@ import java.util.ResourceBundle;
 public class ControlPanelActivity extends AppCompatActivity {
 
     private static final String TAG = "com.cs246.gpsalarm.TAG";
+    public static final String ADDRESS_POSITION = "com.cs246.gpsalarm";
 
     // Variables of the view
     // public static List<GPSAlarm> gpsAlarmList = new ArrayList<GPSAlarm>();
