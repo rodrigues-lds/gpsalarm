@@ -1,5 +1,6 @@
 package com.cs246.gpsalarm;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.Ringtone;
@@ -7,6 +8,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +46,7 @@ public class AddressActivity extends AppCompatActivity {
     EditText address, radius, latitude_txt, longitude_txt;
     Button ringtone;
     Ringtone mRingtone;
+    TextView output;
 
     //new changes
     Spinner spinner;
@@ -82,21 +86,10 @@ public class AddressActivity extends AppCompatActivity {
         radius = (EditText) findViewById(R.id.txtRadius);
         spinner=(Spinner) findViewById(R.id.view_spinner);
         ringtone = (Button) findViewById(R.id.ringtone);
+        output = (TextView) findViewById(R.id.output);
 
-        ringtone.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View arg0) {
-                final Uri currentTone= RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this, RingtoneManager.TYPE_ALARM);
-                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentTone);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-                startActivityForResult(intent, 999);
-            }
-
-        });
+        setRingtone(ringtone);
+        displayRingtone(output);
 
         this.mAuth = FirebaseAuth.getInstance();
         mFirebaseInstance = FirebaseDatabase.getInstance();
@@ -118,15 +111,68 @@ public class AddressActivity extends AppCompatActivity {
     }
 
     /**
+     * This method creates and sets the ringtone and in the bundle
+     * @param ring passes button to setOnClickListener
+     */
+    public void setRingtone(Button ring) {
+        ring.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                final Uri currentTone= RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this, RingtoneManager.TYPE_ALARM);
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentTone);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+                startActivityForResult(intent, 999);
+            }
+        });
+    }
+
+    /**
+     * This method retrieves the ringtone and changes the output in the addressActivity
+     * @param output passes text to be changed
+     */
+    @SuppressLint("SetTextI18n")
+    public void displayRingtone(TextView output) {
+
+        //get current ringtone
+        Uri currentRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this
+                .getApplicationContext(), RingtoneManager.TYPE_RINGTONE);
+        mRingtone = RingtoneManager.getRingtone(AddressActivity.this, currentRingtoneUri);
+
+        //display ringtone title to addressActivity
+        output.setText("Current Ringtone: " + mRingtone.getTitle(AddressActivity.this));
+
+        //log if successful
+        Log.e("Ringtone", "Ringtone: " + mRingtone);
+
+    }
+    /**
+     * This method retrieves the ringtone and changes the output in the addressActivity
+     * specific to passing info to firebase
+     * @param view
+     */
+    public Ringtone getRingtoneFB(View view) {
+
+        //get current ringtone
+        Uri currentRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this
+                .getApplicationContext(), RingtoneManager.TYPE_RINGTONE);
+        mRingtone = RingtoneManager.getRingtone(AddressActivity.this, currentRingtoneUri);
+
+        //log if successful
+        Log.e("Ringtone", "Ringtone: " + mRingtone);
+
+        return mRingtone;
+    }
+
+    /**
      * This method takes all the data after the user selected one of the possibble directions, and creates the GPSAlarm class.
      * After that it upload the class to firebase. This is activated  when the users clicks on the "Save" button.
      * @param view
      */
     public void saveAddress(View view) {
-
-        Uri currentRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this
-                .getApplicationContext(), RingtoneManager.TYPE_RINGTONE);
-        mRingtone = RingtoneManager.getRingtone(AddressActivity.this, currentRingtoneUri);
 
         String radius_in_string = radius.getText().toString();
 
@@ -136,7 +182,7 @@ public class AddressActivity extends AppCompatActivity {
             desired_radius = Integer.parseInt(radius_in_string);
 
             //Creating the new GPSAlarm class with all the information
-            gpsAddress = new GPSAlarm(the_latitude, the_longitude, desired_radius, description, mRingtone);
+            gpsAddress = new GPSAlarm(the_latitude, the_longitude, desired_radius, description, getRingtoneFB(view));
             mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
 
             //Finishing this activity and passing to the Control Panel Activity

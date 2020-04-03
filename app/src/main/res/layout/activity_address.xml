@@ -212,6 +212,18 @@
                 android:textColorHighlight="#0B7280"
                 android:textColorHint="#0B7280"
                 android:textColorLink="#0B7280" />
+            <TextView
+                android:id="@+id/output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:layout_gravity="center"
+                android:textColor="#0B7280"
+                android:textColorHighlight="#0B7280"
+                android:textColorHint="#0B7280"
+                android:textColorLink="#0B7280"
+                android:textSize="20sp" />
+
 
             <Button
                 android:id="@+id/buttonSave"
