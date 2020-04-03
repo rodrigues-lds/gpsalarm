@@ -229,11 +229,6 @@
                 android:textColor="#0B7280"
                 android:textCursorDrawable="@drawable/rounded_button_transparent"
                 android:textSize="15sp" />
-            <fragment
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                class="com.cs246.gpsalarm.AddressActivity"
-                android:id="@+id/output"/>
 
             <ScrollView
                 android:layout_width="wrap_content"
