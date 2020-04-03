@@ -10,8 +10,11 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="Maps possible solution">
+    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="Possible solution to the maps">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/release/res/values/google_maps_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/release/res/values/google_maps_api.xml" afterDir="false" />
     </list>
     <list id="5c92c598-7792-4e95-a813-0f35089503f7" name="Adding a second maps-activity that uses Geofences Locally, not with Geofire." comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,9 +45,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile" />
-        <option value="valueResourceFile" />
         <option value="Class" />
         <option value="resourceFile" />
+        <option value="valueResourceFile" />
       </list>
     </option>
   </component>
@@ -55,7 +58,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Escritorio" />
     <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -396,7 +399,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585860846847</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="After pulling">
+      <created>1585861554334</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1585861554334</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -444,6 +454,8 @@
     <MESSAGE value="New maps options added. Switch problem solved" />
     <MESSAGE value="More comments added to the program." />
     <MESSAGE value="Maps possible solution" />
-    <option name="LAST_COMMIT_MESSAGE" value="Maps possible solution" />
+    <MESSAGE value="After pulling" />
+    <MESSAGE value="Possible solution to the maps" />
+    <option name="LAST_COMMIT_MESSAGE" value="Possible solution to the maps" />
   </component>
 </project>

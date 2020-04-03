@@ -155,13 +155,18 @@ public class AddressActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            int limit=10;
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
                 addressesInJASON=jsonArray;
                 possible_addresses.clear();
 
-                for (int i=0;i<10;i++) {
+                if (jsonArray.length()<10) {
+                    limit=jsonArray.length();
+                }
+
+                for (int i=0;i<limit;i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     description = (String) jsonObject.get("display_name");
                     possible_addresses.add(description);
