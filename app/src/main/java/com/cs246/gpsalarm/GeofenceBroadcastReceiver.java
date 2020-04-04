@@ -14,6 +14,8 @@ import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.ArrayDeque;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This class receives the information of the geofence and is activated when the user enters or exits the area.
@@ -64,8 +66,16 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
             // adds link to ringtone and sends toast message indicating arrival
             Toast.makeText(context , "Your are at Desired Location",Toast.LENGTH_LONG).show();
             Uri notification = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
-            Ringtone r = RingtoneManager.getRingtone(context, notification);
+            final Ringtone r = RingtoneManager.getRingtone(context, notification);
             r.play();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    r.stop();
+                }
+            };
+            Timer timer = new Timer();
+            timer.schedule(task, 15000);
 
 
         } else if (geofenceTransition==Geofence.GEOFENCE_TRANSITION_EXIT) {
