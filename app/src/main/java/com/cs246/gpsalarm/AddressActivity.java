@@ -203,7 +203,7 @@ public class AddressActivity extends AppCompatActivity {
             desired_radius = Float.parseFloat(radius_in_string);
 
             if (unit_switch.isChecked()) {
-                desired_radius=GPSAlarm.convertRadiusToKilometers(desired_radius);
+                desired_radius=GPSAlarm.convertRadiusToMiles(desired_radius);
             }
 
             //Creating the new GPSAlarm class with all the information
