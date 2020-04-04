@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
-import java.util.ArrayDeque;
 import java.util.List;
 
 /**
@@ -47,10 +46,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
             //This is the id of the geofence that is activated when we enter the area
             String geofence_id=triggeringGeofences.get(0).getRequestId();
 
-
-
             Log.i(TAG,"Entering or exiting");
-
 
         } else {
             Log.e(TAG, "Error again");
@@ -71,7 +67,5 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         } else if (geofenceTransition==Geofence.GEOFENCE_TRANSITION_EXIT) {
             Toast.makeText(context,"I am exiting the desired area", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }

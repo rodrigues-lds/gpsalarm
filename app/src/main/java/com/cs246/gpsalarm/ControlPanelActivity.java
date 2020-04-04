@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
@@ -29,7 +28,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.common.internal.Objects;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -56,7 +54,6 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * CONTROL PANEL | ADDRESS CONTROL
@@ -76,7 +73,6 @@ public class ControlPanelActivity extends AppCompatActivity {
     public static final String ADDRESS_POSITION = "com.cs246.gpsalarm";
 
     // Variables of the view
-    // public static List<GPSAlarm> gpsAlarmList = new ArrayList<GPSAlarm>();
     public static List<GPSAlarm> gpsAlarmList;
     private ListView gpsAlarmListView;
 
@@ -95,7 +91,6 @@ public class ControlPanelActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mAuth;
 
-
     /**
      * This function is called each time this activity is created.
      *
@@ -111,8 +106,6 @@ public class ControlPanelActivity extends AppCompatActivity {
 
         //This checks if the GPS is activated
         checkGPSActivated();
-
-
 
         // Retrieve user addresses from Firebase. This function must be called each time this activity is created.
         this.mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
@@ -183,9 +176,6 @@ public class ControlPanelActivity extends AppCompatActivity {
 
         this.geofencingClient = LocationServices.getGeofencingClient(this);
 
-
-
-
         try {
             // Checking the device permissions
             if (this.fusedLocationProviderClient != null) {
@@ -226,6 +216,15 @@ public class ControlPanelActivity extends AppCompatActivity {
             }
         }
         super.onStop();
+    }
+
+    /**
+     * This function is called when this activity is destroyed.
+     */
+    @Override
+    protected void onDestroy() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        super.onDestroy();
     }
 
     /**
@@ -352,6 +351,38 @@ public class ControlPanelActivity extends AppCompatActivity {
             Log.e(TAG, "GPS LOG | It was not possible to request the Geofence. " + ex.getMessage());
             return null;
         }
+    }
+
+    /**
+     * This function checks if the GPS is activated.
+     */
+    public void checkGPSActivated() {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }
+    }
+
+    /**
+     * This function build an alert for Message No GPS.
+     */
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     /**
@@ -616,38 +647,5 @@ public class ControlPanelActivity extends AppCompatActivity {
 
             return convertView;
         }
-    }
-
-    public void checkGPSActivated() {
-        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-            buildAlertMessageNoGps();
-        }
-    }
-
-    private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-        super.onDestroy();
     }
 }
