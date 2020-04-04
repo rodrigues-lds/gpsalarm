@@ -1,10 +1,6 @@
 package com.cs246.gpsalarm;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.Presentation;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -28,7 +24,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
@@ -337,8 +332,6 @@ public class AddressActivity extends AppCompatActivity {
     public void lookAllPossibleAddresses(View view) {
         String temp = address.getText().toString().replace(" ", "+");
         new GetCoordinates().execute(temp);
-
-
     }
 
     /**
