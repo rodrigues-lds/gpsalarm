@@ -207,6 +207,7 @@
                 android:hint="@string/hintRingtone"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:onClick="setRingtone"
                 android:paddingBottom="15dp"
                 android:textColor="#0B7280"
                 android:textColorHighlight="#0B7280"
