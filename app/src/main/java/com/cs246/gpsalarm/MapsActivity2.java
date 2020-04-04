@@ -57,7 +57,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     private Marker geofenceMarker;
 
     //new changes
-    private float radius;
+    private double radius;
     EditText radius_from_layout, description_from_layout;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
@@ -257,7 +257,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
             Toast.makeText(this, "Enter a description of the place", Toast.LENGTH_SHORT).show();
         } else {
             //Creating the GPSAlarm object based on the marker from maps and the radius entered
-            GPSAlarm the_gpsalarm = new GPSAlarm(geofenceMarker.getPosition().latitude, geofenceMarker.getPosition().longitude, (int) radius, the_description, null);
+            GPSAlarm the_gpsalarm = new GPSAlarm(geofenceMarker.getPosition().latitude, geofenceMarker.getPosition().longitude, radius, the_description, null);
             //mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(the_gpsalarm);
 
             //Finishing this activity and passing to the next activity
