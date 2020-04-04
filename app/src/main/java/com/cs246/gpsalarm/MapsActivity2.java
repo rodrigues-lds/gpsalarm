@@ -230,7 +230,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 .center(geofenceMarker.getPosition())
                 .strokeColor(Color.argb(50,70,70,70))
                 .fillColor(Color.argb(100,150,150,150))
-                .radius(radius);
+                .radius(radius*1000);           //Because the radius is given in meters, here we are converting from kilometers to meters
 
         geoFenceLimits = mMap.addCircle(circleOptions);
 

@@ -12,7 +12,7 @@ public class GPSAlarm {
 
     double latitude;
     double longitude;
-    public int radius;
+    private int radius;
     public String description;
     public String ringtone;
     public boolean wasActivated;
@@ -32,7 +32,7 @@ public class GPSAlarm {
 
         this.latitude = latitude;
         this.longitude = longitude;
-        this.radius = the_radius;
+        this.radius = the_radius*1000;
         this.ringtone = the_ringtone;
         this.description = the_description;
         this.wasActivated=false;
