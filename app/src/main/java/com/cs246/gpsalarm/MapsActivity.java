@@ -144,6 +144,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     currentUser = mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude()))
                             .title("You"));
+                    currentUser.showInfoWindow();
 
                     //moving camera
                     mMap.animateCamera(CameraUpdateFactory
@@ -179,6 +180,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         drawGeofence();
 
+
         //Zoom settings
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
@@ -196,9 +198,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onStop() {
+    protected void onDestroy() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-        super.onStop();
+        super.onDestroy();
     }
 
     /**

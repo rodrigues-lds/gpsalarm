@@ -1,11 +1,14 @@
 package com.cs246.gpsalarm;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -92,16 +95,6 @@ public class ControlPanelActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mAuth;
 
-    // ********************** TO BE REMOVED ********************** //
-    // Testing purposes only.
-    public static String example;
-
-    public static void activateThisGeofence() {
-        Log.v(TAG, "GPS LOG | " + example);
-        Log.v(TAG, "GPS LOG | " + String.valueOf((float) 200));
-        Log.v(TAG, "GPS LOG | " + String.valueOf(200f));
-    }
-    // *********************************************************** //
 
     /**
      * This function is called each time this activity is created.
@@ -114,6 +107,11 @@ public class ControlPanelActivity extends AppCompatActivity {
 
         // Firebase instance
         createFirebaseInstance();
+
+        //This checks if the GPS is activated
+        checkGPSActivated();
+
+
 
         // Retrieve user addresses from Firebase. This function must be called each time this activity is created.
         this.mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
@@ -148,7 +146,7 @@ public class ControlPanelActivity extends AppCompatActivity {
         // Associating the element to the list
         this.gpsAlarmListView = findViewById(R.id.lstGPSAlarm);
 
-        // Setting the location callback and its request
+        // Setting the location callback and its request for the geofence
         buildLocationCallback();
         buildLocationRequest();
         this.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -183,6 +181,8 @@ public class ControlPanelActivity extends AppCompatActivity {
                 }).check();
 
         this.geofencingClient = LocationServices.getGeofencingClient(this);
+
+
 
 
         try {
@@ -612,15 +612,50 @@ public class ControlPanelActivity extends AppCompatActivity {
 
         int idx=1;
 
-        for (GPSAlarm x:gpsAlarmList) {
+        if (gpsAlarmList!=null) {
+            for (GPSAlarm x : gpsAlarmList) {
 
-            mFirebaseDatabase.child("GPSAlarm").child(Long.toString(idx)).setValue(x);
+                mFirebaseDatabase.child("GPSAlarm").child(Long.toString(idx)).setValue(x);
 
-            idx++;
+                idx++;
+            }
         }
 
         Log.e(TAG, "GPS LOG | Information successfully saved on Firebase");
 
         super.onStop();
+    }
+
+    public void checkGPSActivated() {
+        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            buildAlertMessageNoGps();
+        }
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        super.onDestroy();
     }
 }

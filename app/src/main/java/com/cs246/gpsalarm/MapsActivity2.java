@@ -104,9 +104,6 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                     }
                 }).check();
 
-        setFirebaseConfig();
-
-
 
     }
     /**
@@ -245,40 +242,15 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         return false;
     }
 
-    /**
-     * This method sets all the configuration to save an address in firebase in the correct place with the correct index
-     */
-    public void setFirebaseConfig() {
-
-        this.mAuth = FirebaseAuth.getInstance();
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers/Users/" + mAuth.getCurrentUser().getUid());
-
-
-        mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                nextGPSAlarmID = dataSnapshot.child("GPSAlarm").getChildrenCount();
-            }
-
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     /**
      * This method takes all the data from the map and creates a new GPSAlarm item.
-     * Then it uploads the object to firebase and exits from the activity, returning to the control panel
+     * Then it passes the data to the control panel activity.
      * @param view The save button calls this method
      */
     public void saveAddressFromMaps(View view) {
 
-        String the_description=description_from_layout.getText().toString();
+        String the_description = description_from_layout.getText().toString();
 
         //Checking if there is a description of the place before saving the address
         if (the_description.length()<1) {
@@ -286,13 +258,22 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         } else {
             //Creating the GPSAlarm object based on the marker from maps and the radius entered
             GPSAlarm the_gpsalarm = new GPSAlarm(geofenceMarker.getPosition().latitude, geofenceMarker.getPosition().longitude, (int) radius, the_description, null);
-            mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(the_gpsalarm);
+            //mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(the_gpsalarm);
 
             //Finishing this activity and passing to the next activity
-            this.finish();
-            Intent intent = new Intent(MapsActivity2.this, ControlPanelActivity.class);
+            Intent intent = new Intent(MapsActivity2.this, AddressActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("Status", "Returning with data from maps");
+            intent.putExtra("Latitude", String.valueOf(the_gpsalarm.getLatitude()));
+            intent.putExtra("Longitude", String.valueOf(the_gpsalarm.getLongitude()));
+            intent.putExtra("Radius", String.valueOf(radius));
+            intent.putExtra("Description", the_description);
+
             startActivity(intent);
+            this.finish();
+
+
+
         }
 
 

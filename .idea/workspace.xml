@@ -10,11 +10,14 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="Possible solution to the maps">
+    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/ControlPanelActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity2.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_controlpanel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_controlpanel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/release/res/values/google_maps_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/release/res/values/google_maps_api.xml" afterDir="false" />
     </list>
     <list id="5c92c598-7792-4e95-a813-0f35089503f7" name="Adding a second maps-activity that uses Geofences Locally, not with Geofire." comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -406,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585861554334</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Possible solution to the maps, looking addresses solved">
+      <created>1585873091804</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1585873091804</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -456,6 +466,7 @@
     <MESSAGE value="Maps possible solution" />
     <MESSAGE value="After pulling" />
     <MESSAGE value="Possible solution to the maps" />
-    <option name="LAST_COMMIT_MESSAGE" value="Possible solution to the maps" />
+    <MESSAGE value="Possible solution to the maps, looking addresses solved" />
+    <option name="LAST_COMMIT_MESSAGE" value="Possible solution to the maps, looking addresses solved" />
   </component>
 </project>

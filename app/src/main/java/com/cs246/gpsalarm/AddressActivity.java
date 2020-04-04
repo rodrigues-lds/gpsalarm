@@ -73,6 +73,8 @@ public class AddressActivity extends AppCompatActivity {
         address = (EditText) findViewById(R.id.txtAddress);
         radius = (EditText) findViewById(R.id.txtRadius);
         spinner=(Spinner) findViewById(R.id.view_spinner);
+        latitude_txt = (EditText) findViewById(R.id.latitude);
+        longitude_txt = (EditText) findViewById(R.id.longitude);
 
 
         this.mAuth = FirebaseAuth.getInstance();
@@ -92,7 +94,29 @@ public class AddressActivity extends AppCompatActivity {
 
             }
         });
+
+        String the_Status;
+        try {
+            the_Status = getIntent().getExtras().getString("Status");
+        } catch (Exception e) {
+            the_Status = null;
+        }
+
+        if (the_Status!=null) {
+            String lat_temp=getIntent().getExtras().getString("Latitude");
+            String lng_temp=getIntent().getExtras().getString("Longitude");
+            String dscrptn=getIntent().getExtras().getString("Description");
+            String local_radius=getIntent().getExtras().getString("Radius");
+
+            address.setText(dscrptn);
+            radius.setText(local_radius);
+            latitude_txt.setText(lat_temp+"");
+            longitude_txt.setText(lng_temp+"");
+
+        }
+
     }
+
 
     /**
      * This method takes all the data after the user selected one of the possibble directions, and creates the GPSAlarm class.
@@ -102,13 +126,16 @@ public class AddressActivity extends AppCompatActivity {
     public void saveAddress(View view) {
         //createAddressToUse();             previous to the changes
 
+        the_latitude=Double.valueOf(latitude_txt.getText().toString());
+        the_logitude=Double.valueOf(longitude_txt.getText().toString());
+        description=address.getText().toString();
 
         String radius_in_string = radius.getText().toString();
 
         if (radius_in_string.length()<1) {
             Toast.makeText(this, "You must enter the radius",Toast.LENGTH_SHORT).show();
         } else {
-            desired_radius = Integer.parseInt(radius_in_string);
+            desired_radius = (int) Float.parseFloat(radius_in_string);
 
             //Creating the new GPSAlarm class with all the information
             gpsAddress = new GPSAlarm(the_latitude, the_logitude, desired_radius, description, null);
@@ -239,9 +266,6 @@ public class AddressActivity extends AppCompatActivity {
             String temp_result = "Latitude: " + lat + "Longitude: " + lon + description;
             Log.v("Main", "working---" + temp_result);
             Toast.makeText(AddressActivity.this, temp_result, Toast.LENGTH_SHORT).show();
-
-            latitude_txt = (EditText) findViewById(R.id.latitude);
-            longitude_txt = (EditText) findViewById(R.id.longitude);
 
             latitude_txt.setText(lat + "");
             longitude_txt.setText(lon + "");
