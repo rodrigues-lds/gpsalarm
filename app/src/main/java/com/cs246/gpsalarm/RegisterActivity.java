@@ -123,6 +123,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             default:
                 break;
         }
+        Log.i(TAG,"Inside onClick Method");
     }
 
     /**
@@ -254,6 +255,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Creating a new instance of the intent
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+
+        Log.i(TAG, "Inside openMainActivity Method");
     }
 
     /**
@@ -267,5 +270,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+        Log.i (TAG, "Inside hideKeyboard Method");
     }
 }
