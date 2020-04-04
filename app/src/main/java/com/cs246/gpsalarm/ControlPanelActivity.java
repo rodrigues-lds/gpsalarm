@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,7 +25,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.common.internal.Objects;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -53,7 +51,6 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * CONTROL PANEL | ADDRESS CONTROL
@@ -105,6 +102,7 @@ public class ControlPanelActivity extends AppCompatActivity {
 
     /**
      * This function is called each time this activity is created.
+     *
      * @param savedInstanceState It is a reference to a Bundle object that is passed into the onCreate.
      */
     @Override
@@ -206,6 +204,28 @@ public class ControlPanelActivity extends AppCompatActivity {
     }
 
     /**
+     * This method is executed when the activity is stopped.
+     * Here we are saving the information of which geofences are activated.
+     */
+    @Override
+    public void onStop() {
+
+        int idx = 1;
+        if (gpsAlarmList != null) {
+            try {
+                for (GPSAlarm x : gpsAlarmList) {
+                    mFirebaseDatabase.child("GPSAlarm").child(Long.toString(idx)).setValue(x);
+                    idx++;
+                }
+                Log.i(TAG, "GPS LOG | Information of Geofences on/off successfully saved on Firebase.");
+            } catch (Exception ex) {
+                Log.e(TAG, "GPS LOG | Problem saving the Geofences status to Firebase. " + ex.toString());
+            }
+        }
+        super.onStop();
+    }
+
+    /**
      * This function creates the Firebase instance to retrieve data.
      */
     private void createFirebaseInstance() {
@@ -301,7 +321,7 @@ public class ControlPanelActivity extends AppCompatActivity {
         try {
             Log.i(TAG, "GPS LOG | Creating Geofence.");
             return new Geofence.Builder()
-                    .setRequestId("My Geofence "+IDnumber)
+                    .setRequestId("My Geofence " + IDnumber)
                     .setCircularRegion(position.latitude, position.longitude, radius)
                     .setExpirationDuration(60 * 60 * 1000)
                     .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
@@ -363,30 +383,29 @@ public class ControlPanelActivity extends AppCompatActivity {
 
     /**
      * This is used when the users want to remove a geofence or when the user has arrived and want to deactivate the alarm
+     *
      * @param idnumber
      */
     private void removeGeofence(final int idnumber) {
         try {
             Log.i(TAG, "GPS LOG | Removing Geofence.");
-            this.geofencingClient.removeGeofences(Collections.singletonList("My Geofence "+idnumber))
+            this.geofencingClient.removeGeofences(Collections.singletonList("My Geofence " + idnumber))
                     .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(ControlPanelActivity.this, "Geofence " + idnumber+" removed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ControlPanelActivity.this, "Geofence " + idnumber + " removed", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(this, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            // ******************** A LOG TAG TO BE IMPLEMENTED HERE ******************** //
-
+                            Log.w(TAG, "GPS LOG | Remove Geofence Failure Listener added.");
                         }
                     });
             Log.i(TAG, "GPS LOG | The Geofence was properly removed.");
 
         } catch (Exception ex) {
             Log.e(TAG, "GPS LOG | It was not possible to remove the Geofence. " + ex.getMessage());
-
         }
     }
 
@@ -540,36 +559,31 @@ public class ControlPanelActivity extends AppCompatActivity {
             latitudeView.setText("Lat: " + String.valueOf(gpsAlarm.getLatitude()));
             longitudeView.setText("Long: " + String.valueOf(gpsAlarm.getLongitude()));
 
-            //To make sure that the switch is in the right position
-            if (gpsAlarm.wasActivated==true) {
+            // To make sure that the switch is in the right position
+            if (gpsAlarm.wasActivated == true) {
                 gpsToggleButton.setChecked(true);
             } else {
                 gpsToggleButton.setChecked(false);
             }
 
-            //When we click in the switch
+            // When we click in the switch
             try {
                 gpsToggleButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        gpsAlarm.counter*=-1;
+                        gpsAlarm.counter *= -1;
 
-
-                        if (gpsAlarm.counter<0) {           //When switch is on do this:
+                        if (gpsAlarm.counter < 0) {           //When switch is on do this:
                             gpsToggleButton.setChecked(true);
-                            gpsAlarm.wasActivated=true;
-                            startGeofence(new LatLng(gpsAlarm.getLatitude(), gpsAlarm.getLongitude()), gpsAlarm.getRadius(),position);
-
-
+                            gpsAlarm.wasActivated = true;
+                            startGeofence(new LatLng(gpsAlarm.getLatitude(), gpsAlarm.getLongitude()), gpsAlarm.getRadius(), position);
                         } else {
                             gpsToggleButton.setChecked(false);
-                            gpsAlarm.wasActivated=false;
+                            gpsAlarm.wasActivated = false;
                         }
 
                         if (gpsAlarm.wasActivated) {        //When switch is on do this:
-
                             Log.i(TAG, "GPS LOG | Switch turned on. ");
-
                         }
 
                         if (!gpsAlarm.wasActivated) {
@@ -593,34 +607,11 @@ public class ControlPanelActivity extends AppCompatActivity {
                     intent.putExtra("radius", String.valueOf(gpsAlarm.getRadius()));
                     startActivity(intent);
 
-                    Toast.makeText(ControlPanelActivity.this, gpsAlarm.getDescription(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ControlPanelActivity.this, gpsAlarm.getDescription(), Toast.LENGTH_SHORT).show();
                 }
             });
 
             return convertView;
         }
-
-    }
-
-    /**
-     * THis method is executed when the activity is stopped
-     * Here we are saving the information of which geofences are activated
-     */
-    @Override
-    public void onStop() {
-
-
-        int idx=1;
-
-        for (GPSAlarm x:gpsAlarmList) {
-
-            mFirebaseDatabase.child("GPSAlarm").child(Long.toString(idx)).setValue(x);
-
-            idx++;
-        }
-
-        Log.e(TAG, "GPS LOG | Information successfully saved on Firebase");
-
-        super.onStop();
     }
 }

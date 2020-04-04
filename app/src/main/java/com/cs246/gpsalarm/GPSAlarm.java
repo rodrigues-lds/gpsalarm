@@ -1,8 +1,6 @@
 package com.cs246.gpsalarm;
 
 import android.annotation.SuppressLint;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
 
 /**
  * Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
@@ -17,8 +15,6 @@ public class GPSAlarm {
     public String ringtone;
     public boolean wasActivated;
     public int counter;
-
-
 
     public GPSAlarm() {
 
@@ -35,22 +31,19 @@ public class GPSAlarm {
         this.radius = the_radius;
         this.ringtone = the_ringtone;
         this.description = the_description;
-        this.wasActivated=false;
-        this.counter=1;
-
-
+        this.wasActivated = false;
+        this.counter = 1;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public double getLatitude()
-    {
+    public double getLatitude() {
         return this.latitude;
     }
 
-    public double getLongitude(){
+    public double getLongitude() {
         return this.longitude;
     }
 
@@ -64,6 +57,4 @@ public class GPSAlarm {
     public double convertRadiusToKilometers(double miles) {
         return miles * 1.609344;
     }
-
-
 }
