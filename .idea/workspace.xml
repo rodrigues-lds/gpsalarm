@@ -6,25 +6,23 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="Now, user has to use kilometers only">
+    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GPSAlarm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GPSAlarm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GeofenceBroadcastReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GeofenceBroadcastReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_address.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_address.xml" afterDir="false" />
     </list>
-    <list id="5c92c598-7792-4e95-a813-0f35089503f7" name="Adding a second maps-activity that uses Geofences Locally, not with Geofire." comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="MRMRBMAYSWAULJB6" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_API_29" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -33,12 +31,7 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <projects_view>
-          <tree_state>
-            <expand />
-            <select />
-          </tree_state>
-        </projects_view>
+        <projects_view />
       </state>
     </system>
   </component>
@@ -46,9 +39,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile" />
-        <option value="Class" />
-        <option value="resourceFile" />
         <option value="valueResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -57,13 +49,12 @@
   </component>
   <component name="ProjectId" id="1YMxb12usKSLC0y5bgnncwdjv8o" />
   <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Escritorio" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="PsdUISettings">
     <option name="LAST_EDITED_BUILD_TYPE" value="release" />
@@ -330,105 +321,7 @@
       <option name="project" value="LOCAL" />
       <updated>1585093536938</updated>
     </task>
-    <task id="LOCAL-00019" summary="Before pulling">
-      <created>1585157298998</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1585157298998</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Before pulling">
-      <created>1585515849119</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1585515849119</updated>
-    </task>
-    <task id="LOCAL-00021" summary="The user can select one of the addresses from a list of possible addresses. The logic of save address was changed to accomplish this.">
-      <created>1585535982264</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1585535982264</updated>
-    </task>
-    <task id="LOCAL-00022" summary="After merge">
-      <created>1585537409797</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1585537409797</updated>
-    </task>
-    <task id="LOCAL-00023" summary="After merge, and with the spinner added.">
-      <created>1585594784083</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1585594784083</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Now the radius is checked before trying to upload the data to firebase. The onStop method was added in ControlPanelActivity.">
-      <created>1585604205057</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1585604205057</updated>
-    </task>
-    <task id="LOCAL-00025" summary="After pulling and merging">
-      <created>1585604635454</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1585604635454</updated>
-    </task>
-    <task id="LOCAL-00026" summary="New maps options added. Switch problem solved">
-      <created>1585857699577</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1585857699577</updated>
-    </task>
-    <task id="LOCAL-00027" summary="More comments added to the program.">
-      <created>1585858191622</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1585858191622</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Maps possible solution">
-      <created>1585860846847</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1585860846847</updated>
-    </task>
-    <task id="LOCAL-00029" summary="After pulling">
-      <created>1585861554334</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1585861554334</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Possible solution to the maps, looking addresses solved">
-      <created>1585873091804</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1585873091804</updated>
-    </task>
-    <task id="LOCAL-00031" summary="MapsActiviy2 now returns the information to the address activity, where the user can modify the last values of description and save the address. The problem of onStop() in Control Panel is solved.">
-      <created>1586012999969</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1586012999969</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Now, user has to use kilometers only">
-      <created>1586015926976</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1586015926976</updated>
-    </task>
-    <option name="localTasksCounter" value="33" />
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -455,6 +348,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Adding a method to test the checkifGPSisActivated method" />
     <MESSAGE value="Adding a method to test the checkifGPSisActivated method and simplifying the test methods." />
     <MESSAGE value="The moment when the repository was working and testing" />
     <MESSAGE value="Before uploading the GPS part" />
@@ -462,24 +356,27 @@
     <MESSAGE value="Before pulling. Without changes." />
     <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire." />
     <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
+    <MESSAGE value="Before pulling" />
     <MESSAGE value="The Geocoder was implemented in the Address activity. New classes were created to accomplish this. It isn't pushed to firebase yet." />
     <MESSAGE value="WorkingAddresses added with the ListView of the user's addresses. Also, geofence is working, but not with the ListView. It still have to request Firebase data and be able to activate many Geofences at the same time." />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;app/src/main/AndroidManifest.xml&#10;#&#9;app/src/main/java/com/cs246/gpsalarm/AddressActivity.java&#10;&#10;After pulling the new changes and merging with my local changes" />
     <MESSAGE value="Working Addresses with a better design an with some navigation functionality. No firebase connection yet." />
-    <MESSAGE value="Before pulling" />
-    <MESSAGE value="The user can select one of the addresses from a list of possible addresses. The logic of save address was changed to accomplish this." />
-    <MESSAGE value="After merge" />
-    <MESSAGE value="After merge, and with the spinner added." />
-    <MESSAGE value="Now the radius is checked before trying to upload the data to firebase. The onStop method was added in ControlPanelActivity." />
-    <MESSAGE value="After pulling and merging" />
-    <MESSAGE value="New maps options added. Switch problem solved" />
-    <MESSAGE value="More comments added to the program." />
-    <MESSAGE value="Maps possible solution" />
-    <MESSAGE value="After pulling" />
-    <MESSAGE value="Possible solution to the maps" />
-    <MESSAGE value="Possible solution to the maps, looking addresses solved" />
-    <MESSAGE value="MapsActiviy2 now returns the information to the address activity, where the user can modify the last values of description and save the address. The problem of onStop() in Control Panel is solved." />
-    <MESSAGE value="Now, user has to use kilometers only" />
-    <option name="LAST_COMMIT_MESSAGE" value="Now, user has to use kilometers only" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working Addresses with a better design an with some navigation functionality. No firebase connection yet." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java</url>
+          <line>190</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="gpsalarm-app">
+        <watch expression="mFirebaseDatabase.shadow$_klass_" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
