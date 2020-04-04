@@ -1,15 +1,10 @@
 package com.cs246.gpsalarm;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.Random;
-
 /**
  * Created by Eduardo A Rodrigues on 2/24/2020.
  */
 public class GpsAlarmUnitTests {
-    @Test
+    /*@Test
     public void ConvertRadiusToKilometersTest() {
         // Pre Conditions
         GPSAlarm gpsAlarm = new GPSAlarm();
@@ -76,10 +71,11 @@ public class GpsAlarmUnitTests {
         // Check Expected Results
         Assert.assertEquals(latitude, 0, 0);
     }
-    /*
-    This function is checking if the checkifTheGPSisActivated method is working as it should be, providing boolean data
 
-     */
+    *//*
+    This function is checking if the check if TheGPSisActivated method is working as it should be, providing boolean data
+
+     *//*
     @Test
     public void CheckGPSActivated() {
         //Check if the GPS is activated
@@ -92,5 +88,5 @@ public class GpsAlarmUnitTests {
         }
 
 
-    }
+    }*/
 }

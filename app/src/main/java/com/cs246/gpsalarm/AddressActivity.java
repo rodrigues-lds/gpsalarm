@@ -329,8 +329,6 @@ public class AddressActivity extends AppCompatActivity {
     public void lookAllPossibleAddresses(View view) {
         String temp = address.getText().toString().replace(" ", "+");
         new GetCoordinates().execute(temp);
-
-
     }
 
     /**
