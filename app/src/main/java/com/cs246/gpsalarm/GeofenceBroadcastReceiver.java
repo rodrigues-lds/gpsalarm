@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
+import java.util.ArrayDeque;
 import java.util.List;
 
 /**
@@ -65,6 +66,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
             Uri notification = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
             Ringtone r = RingtoneManager.getRingtone(context, notification);
             r.play();
+
 
         } else if (geofenceTransition==Geofence.GEOFENCE_TRANSITION_EXIT) {
             Toast.makeText(context,"I am exiting the desired area", Toast.LENGTH_SHORT).show();
