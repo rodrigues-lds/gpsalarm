@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+        Log.i(TAG, "Inside on Click Method");
     }
 
     /**
@@ -209,6 +210,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(MainActivity.this, ControlPanelActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+
+        Log.i(TAG, "Inside openControl Activity");
     }
 
     /**
@@ -222,5 +225,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+        Log.i(TAG, "Inside hideKeyboard Method");
     }
 }
