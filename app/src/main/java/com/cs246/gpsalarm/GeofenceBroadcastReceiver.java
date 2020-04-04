@@ -54,7 +54,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
             // adds link to ringtone and sends toast message indicating arrival
             Toast.makeText(context , "Your are at Desired Location",Toast.LENGTH_LONG).show();
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            Uri notification = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
             Ringtone r = RingtoneManager.getRingtone(context, notification);
             r.play();
 
