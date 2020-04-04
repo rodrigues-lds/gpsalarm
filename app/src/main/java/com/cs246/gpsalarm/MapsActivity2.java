@@ -4,11 +4,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +44,10 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * This class is used when the user wants to add an address using the maps.
  * This activity provides the Edit Texts and tools needed to set the radius and a description of the address.
@@ -49,25 +56,26 @@ import com.karumi.dexter.listener.single.PermissionListener;
  */
 public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
 
+    // Maps related variables
     private GoogleMap mMap;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Marker currentUser;
     private Marker geofenceMarker;
-
-    //new changes
-    private double radius;
-    EditText radius_from_layout, description_from_layout;
-    private DatabaseReference mFirebaseDatabase;
-    private FirebaseDatabase mFirebaseInstance;
-    private FirebaseAuth mAuth;
-    long nextGPSAlarmID;
-
     private Circle geoFenceLimits;
 
+    // Layout related variables
+    private double radius;
+    EditText radius_from_layout, description_from_layout;
+    ImageButton search_on_maps;
 
 
+
+    /**
+     * This activity is used when the activity is created, sets all the variables with their values and obtains the location of the user.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +83,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
         radius_from_layout=(EditText) findViewById(R.id.address_txt_on_maps);
         description_from_layout=(EditText)findViewById(R.id.description_txt_on_maps);
+        search_on_maps=(ImageButton) findViewById(R.id.search_button_maps);
 
 
         //With dexter we manage the permissions of the application, in this case the Location permission
@@ -251,10 +260,14 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     public void saveAddressFromMaps(View view) {
 
         String the_description = description_from_layout.getText().toString();
+        radius=Float.parseFloat(radius_from_layout.getText().toString());
+
 
         //Checking if there is a description of the place before saving the address
         if (the_description.length()<1) {
             Toast.makeText(this, "Enter a description of the place", Toast.LENGTH_SHORT).show();
+        } else if (geofenceMarker==null) {
+            Toast.makeText(this, "Touch the map to add the address", Toast.LENGTH_SHORT).show();
         } else {
             //Creating the GPSAlarm object based on the marker from maps and the radius entered
             GPSAlarm the_gpsalarm = new GPSAlarm(geofenceMarker.getPosition().latitude, geofenceMarker.getPosition().longitude, radius, the_description, null);
@@ -271,11 +284,75 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
             startActivity(intent);
             this.finish();
-
-
-
         }
 
+    }
+
+    /**
+     * This class is used when we want to use the description of the address and see it in the map with the geofence limits
+     * This request information from internet in a different thread.
+     */
+    public class GetCoordinates extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String response;
+            try {
+                String address = strings[0];
+                HttpDataHandler http = new HttpDataHandler();
+                String url = String.format("https://us1.locationiq.com/v1/search.php?key=6463f683fa0be5&q=%s&format=json", address);
+                response = http.getHTTPData(url);
+                return response;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (radius_from_layout.length()<1){
+                Toast.makeText(MapsActivity2.this, "Enter the radius in km before", Toast.LENGTH_SHORT).show();
+            } else {
+                try {
+                    JSONArray jsonArray = new JSONArray(s);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    Double lat_temp = Double.valueOf((String) jsonObject.get("lat"));
+                    Double long_temp = Double.valueOf((String) jsonObject.get("lon"));
+                    String temp_description = (String) jsonObject.get("display_name");
+
+                    LatLng possible_address_on_maps = new LatLng(lat_temp, long_temp);
+
+                    if (geofenceMarker != null) {
+                        geofenceMarker.remove();
+                    }
+
+                    geofenceMarker=mMap.addMarker(new MarkerOptions().position(possible_address_on_maps).title("Address"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(possible_address_on_maps));
+
+                    description_from_layout.setText(temp_description);
+
+                    drawGeofence();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    /**
+     * This is activated when the button is clicked
+     * It converts the address to latitude and longitude that appears as a marker in the map
+     * @param view
+     */
+    public void goToAddressOnMaps(View view) {
+        String temp=description_from_layout.getText().toString();
+        new MapsActivity2.GetCoordinates().execute(temp);
 
 
     }

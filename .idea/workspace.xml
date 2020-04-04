@@ -6,14 +6,16 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
+    <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="Implemented the conversion from miles to kilometers, after pulling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/AddressActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GPSAlarm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/GPSAlarm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity2.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_address.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_address.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_maps2.xml" afterDir="false" />
     </list>
     <list id="5c92c598-7792-4e95-a813-0f35089503f7" name="Adding a second maps-activity that uses Geofences Locally, not with Geofire." comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -433,7 +435,21 @@
       <option name="project" value="LOCAL" />
       <updated>1586027368017</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Implemented the conversion from miles to kilometers">
+      <created>1586037489457</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1586037489457</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Implemented the conversion from miles to kilometers, after pulling">
+      <created>1586037814113</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1586037814113</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -460,8 +476,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="The moment when the repository was working and testing" />
-    <MESSAGE value="Before uploading the GPS part" />
     <MESSAGE value="Adding the part of the GPS, able to test." />
     <MESSAGE value="Before pulling. Without changes." />
     <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire." />
@@ -485,6 +499,8 @@
     <MESSAGE value="MapsActiviy2 now returns the information to the address activity, where the user can modify the last values of description and save the address. The problem of onStop() in Control Panel is solved." />
     <MESSAGE value="Now, user has to use kilometers only" />
     <MESSAGE value="Geofence ID in BroadcastReceiver" />
-    <option name="LAST_COMMIT_MESSAGE" value="Geofence ID in BroadcastReceiver" />
+    <MESSAGE value="Implemented the conversion from miles to kilometers" />
+    <MESSAGE value="Implemented the conversion from miles to kilometers, after pulling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented the conversion from miles to kilometers, after pulling" />
   </component>
 </project>

@@ -222,7 +222,7 @@ public class AddressActivity extends AppCompatActivity {
      * This class makes an asynchronous activity to request the information of the string given
      * It returns the Latitude, Longitude and Descriptions of the place
      */
-    private class GetCoordinates extends AsyncTask<String, Void, String> {
+    public class GetCoordinates extends AsyncTask<String, Void, String> {
         //ProgressDialog dialog = new ProgressDialog(AddressActivity.this);
 
         @Override
