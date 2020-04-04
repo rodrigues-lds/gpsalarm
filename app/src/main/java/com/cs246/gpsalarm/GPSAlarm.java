@@ -54,7 +54,7 @@ public class GPSAlarm {
     /*
     This function converts the Radius to Kilometers.
      */
-    public double convertRadiusToKilometers(double miles) {
-        return miles * 1.609344;
+    public static double convertRadiusToKilometers(double miles) {
+        return miles * 0.621371;
     }
 }

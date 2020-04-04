@@ -20,6 +20,7 @@ import java.util.List;
  * @author Hernan Yupanqui, Robert Hampton
  */
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
+
     private String TAG="GeofenceBroadcastReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,8 +37,15 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
                 geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
 
-
+            // This is the list that contains all the geofences that are activated at the same time
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
+            //Testing purposes
+            Log.v(TAG, ""+triggeringGeofences.size());
+            Log.v(TAG,""+triggeringGeofences.get(0).getRequestId());
+
+            //This is the id of the geofence that is activated when we enter the area
+            String geofence_id=triggeringGeofences.get(0).getRequestId();
+
 
 
             Log.i(TAG,"Entering or exiting");

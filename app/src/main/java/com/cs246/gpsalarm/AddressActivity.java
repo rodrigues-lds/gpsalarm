@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class AddressActivity extends AppCompatActivity {
     Button ringtone;
     Ringtone mRingtone;
     TextView output;
+    Switch unit_switch;
 
     //new changes
     Spinner spinner;
@@ -83,6 +85,7 @@ public class AddressActivity extends AppCompatActivity {
         spinner=(Spinner) findViewById(R.id.view_spinner);
         ringtone = (Button) findViewById(R.id.ringtone);
         output = (TextView) findViewById(R.id.output);
+        unit_switch=(Switch) findViewById(R.id.switchUnitDistance);
 
         latitude_txt = (EditText) findViewById(R.id.latitude);
         longitude_txt = (EditText) findViewById(R.id.longitude);
@@ -187,6 +190,10 @@ public class AddressActivity extends AppCompatActivity {
             Toast.makeText(this, "You must enter the radius",Toast.LENGTH_SHORT).show();
         } else {
             desired_radius = (int) Float.parseFloat(radius_in_string);
+            /*
+            if (unit_switch.isChecked()) {
+                desired_radius=GPSAlarm.convertRadiusToKilometers(desired_radius);
+            }*/
 
             //Creating the new GPSAlarm class with all the information
             gpsAddress = new GPSAlarm(the_latitude, the_longitude, desired_radius, description, mRingtone.getTitle(AddressActivity.this));

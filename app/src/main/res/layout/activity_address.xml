@@ -126,7 +126,7 @@
 
                 <EditText
                     android:id="@+id/txtRadius"
-                    android:layout_width="100sp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
                     android:importantForAutofill="no"
@@ -135,7 +135,9 @@
                     android:textColor="#0B7280"
                     android:textColorHighlight="#0B7280"
                     android:textColorHint="#0B7280"
-                    android:textColorLink="#0B7280" />
+                    android:textColorLink="#0B7280"
+                    android:minWidth="30dp"
+                    android:maxWidth="80dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -235,13 +237,14 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="100dp"
-                android:background="#FFFFFF"
+                android:background="#0B7280"
                 android:onClick="saveAddress"
                 android:text="@string/btnSave"
                 android:textAllCaps="true"
-                android:textColor="#0B7280"
+                android:textColor="#FFFFFF"
                 android:textCursorDrawable="@drawable/rounded_button_transparent"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                />
 
             <ScrollView
                 android:layout_width="wrap_content"
