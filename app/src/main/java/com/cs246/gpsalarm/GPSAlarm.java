@@ -10,7 +10,7 @@ public class GPSAlarm {
 
     double latitude;
     double longitude;
-    public int radius;
+    private int radius;
     public String description;
     public String ringtone;
     public boolean wasActivated;
@@ -28,7 +28,7 @@ public class GPSAlarm {
 
         this.latitude = latitude;
         this.longitude = longitude;
-        this.radius = the_radius;
+        this.radius = the_radius*1000;
         this.ringtone = the_ringtone;
         this.description = the_description;
         this.wasActivated = false;
@@ -54,7 +54,7 @@ public class GPSAlarm {
     /*
     This function converts the Radius to Kilometers.
      */
-    public double convertRadiusToKilometers(double miles) {
-        return miles * 1.609344;
+    public static double convertRadiusToKilometers(double miles) {
+        return miles * 0.621371;
     }
 }

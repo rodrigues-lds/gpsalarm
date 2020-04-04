@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class AddressActivity extends AppCompatActivity {
     Button ringtone;
     Ringtone mRingtone;
     TextView output;
+    Switch unit_switch;
 
     //new changes
     Spinner spinner;
@@ -83,7 +85,10 @@ public class AddressActivity extends AppCompatActivity {
         spinner=(Spinner) findViewById(R.id.view_spinner);
         ringtone = (Button) findViewById(R.id.ringtone);
         output = (TextView) findViewById(R.id.output);
+        unit_switch=(Switch) findViewById(R.id.switchUnitDistance);
 
+        latitude_txt = (EditText) findViewById(R.id.latitude);
+        longitude_txt = (EditText) findViewById(R.id.longitude);
 
 
         this.mAuth = FirebaseAuth.getInstance();
@@ -101,7 +106,29 @@ public class AddressActivity extends AppCompatActivity {
 
             }
         });
+
+        String the_Status;
+        try {
+            the_Status = getIntent().getExtras().getString("Status");
+        } catch (Exception e) {
+            the_Status = null;
+        }
+
+        if (the_Status!=null) {
+            String lat_temp=getIntent().getExtras().getString("Latitude");
+            String lng_temp=getIntent().getExtras().getString("Longitude");
+            String dscrptn=getIntent().getExtras().getString("Description");
+            String local_radius=getIntent().getExtras().getString("Radius");
+
+            address.setText(dscrptn);
+            radius.setText(local_radius);
+            latitude_txt.setText(lat_temp+"");
+            longitude_txt.setText(lng_temp+"");
+
+        }
+
     }
+
 
     /**
      * This method creates the ringtone manager activity and allows user to choose a ringtone
@@ -151,13 +178,22 @@ public class AddressActivity extends AppCompatActivity {
      * @param view
      */
     public void saveAddress(View view) {
+        //createAddressToUse();             previous to the changes
+
+        the_latitude=Double.valueOf(latitude_txt.getText().toString());
+        the_longitude=Double.valueOf(longitude_txt.getText().toString());
+        description=address.getText().toString();
 
         String radius_in_string = radius.getText().toString();
 
         if (radius_in_string.length()<1) {
             Toast.makeText(this, "You must enter the radius",Toast.LENGTH_SHORT).show();
         } else {
-            desired_radius = Integer.parseInt(radius_in_string);
+            desired_radius = (int) Float.parseFloat(radius_in_string);
+            /*
+            if (unit_switch.isChecked()) {
+                desired_radius=GPSAlarm.convertRadiusToKilometers(desired_radius);
+            }*/
 
             //Creating the new GPSAlarm class with all the information
             gpsAddress = new GPSAlarm(the_latitude, the_longitude, desired_radius, description, mRingtone.getTitle(AddressActivity.this));
@@ -286,9 +322,6 @@ public class AddressActivity extends AppCompatActivity {
             String temp_result = "Latitude: " + lat + "Longitude: " + lon + description;
             Log.v("Main", "working---" + temp_result);
             Toast.makeText(AddressActivity.this, temp_result, Toast.LENGTH_SHORT).show();
-
-            latitude_txt = (EditText) findViewById(R.id.latitude);
-            longitude_txt = (EditText) findViewById(R.id.longitude);
 
             latitude_txt.setText(lat + "");
             longitude_txt.setText(lon + "");
