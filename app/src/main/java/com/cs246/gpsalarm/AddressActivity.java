@@ -89,7 +89,6 @@ public class AddressActivity extends AppCompatActivity {
         output = (TextView) findViewById(R.id.output);
 
         setRingtone(ringtone);
-        displayRingtone(output);
 
         this.mAuth = FirebaseAuth.getInstance();
         mFirebaseInstance = FirebaseDatabase.getInstance();
@@ -118,35 +117,34 @@ public class AddressActivity extends AppCompatActivity {
         ring.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                final Uri currentTone= RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this, RingtoneManager.TYPE_ALARM);
-                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+                final Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                final Uri currentTone= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentTone);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-                startActivityForResult(intent, 999);
+                startActivityForResult(intent, 0);
+                displayRingtone(intent);
             }
         });
     }
 
     /**
      * This method retrieves the ringtone and changes the output in the addressActivity
-     * @param output passes text to be changed
+     * @param intent passes text to be changed
      */
     @SuppressLint("SetTextI18n")
-    public void displayRingtone(TextView output) {
+    public void displayRingtone(Intent intent) {
 
-        //get current ringtone
-        Uri currentRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this
-                .getApplicationContext(), RingtoneManager.TYPE_RINGTONE);
-        mRingtone = RingtoneManager.getRingtone(AddressActivity.this, currentRingtoneUri);
-
-        //display ringtone title to addressActivity
-        output.setText("Current Ringtone: " + mRingtone.getTitle(AddressActivity.this));
-
-        //log if successful
-        Log.e("Ringtone", "Ringtone: " + mRingtone);
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            for (String key : bundle.keySet()) {
+                Log.e("Ringtone", key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
+            }
+        }
+        final Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+        final Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
+        output.setText("Current Ringtone: " + ringtone.getTitle(this));
 
     }
     /**
@@ -154,7 +152,7 @@ public class AddressActivity extends AppCompatActivity {
      * specific to passing info to firebase
      * @param view
      */
-    public Ringtone getRingtoneFB(View view) {
+    public String getRingtoneFB(View view) {
 
         //get current ringtone
         Uri currentRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this
@@ -164,11 +162,11 @@ public class AddressActivity extends AppCompatActivity {
         //log if successful
         Log.e("Ringtone", "Ringtone: " + mRingtone);
 
-        return mRingtone;
+        return mRingtone.getTitle(AddressActivity.this);
     }
 
     /**
-     * This method takes all the data after the user selected one of the possibble directions, and creates the GPSAlarm class.
+     * This method takes all the data after the user selected one of the possible directions, and creates the GPSAlarm class.
      * After that it upload the class to firebase. This is activated  when the users clicks on the "Save" button.
      * @param view
      */
