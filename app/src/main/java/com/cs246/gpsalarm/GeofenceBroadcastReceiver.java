@@ -46,10 +46,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
             //This is the id of the geofence that is activated when we enter the area
             String geofence_id=triggeringGeofences.get(0).getRequestId();
 
-
-
             Log.i(TAG,"Entering or exiting");
-
 
         } else {
             Log.e(TAG, "Error again");
@@ -62,14 +59,13 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
             // adds link to ringtone and sends toast message indicating arrival
             Toast.makeText(context , "Your are at Desired Location",Toast.LENGTH_LONG).show();
-            Uri notification = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+            Uri notification = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
             Ringtone r = RingtoneManager.getRingtone(context, notification);
             r.play();
+
 
         } else if (geofenceTransition==Geofence.GEOFENCE_TRANSITION_EXIT) {
             Toast.makeText(context,"I am exiting the desired area", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }

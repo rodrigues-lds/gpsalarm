@@ -6,7 +6,9 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -49,15 +50,12 @@ public class AddressActivity extends AppCompatActivity {
 
     //new changes
     Spinner spinner;
-    ImageButton searchButton;
     JSONArray addressesInJASON;
     List<String> possible_addresses=new ArrayList<String>();
-
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mAuth;
-    private String UserId;
 
     //These variables are used to create the AddressToUse object
     private LatLng the_address;
@@ -68,8 +66,6 @@ public class AddressActivity extends AppCompatActivity {
     private String addressPosition;
     long nextGPSAlarmID;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +73,18 @@ public class AddressActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
+
+        // Get permission write for changing default ringtone
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Settings.System.canWrite(this)) {
+                // Do stuff here
+            } else {
+                Intent mIntent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                mIntent.setData(Uri.parse("package:" + this.getPackageName()));
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(mIntent);
+            }
+        }
 
         // Getting the data inserted in the Main Activity
         this.addressPosition = intent.getStringExtra(ControlPanelActivity.ADDRESS_POSITION);
@@ -149,9 +157,10 @@ public class AddressActivity extends AppCompatActivity {
     public void setRingtone(View view) {
         //create new intent and uri to save info on phone
         final Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-        final Uri currentTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        final Uri currentTone= RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this, RingtoneManager.TYPE_ALARM);
+
         //add settings to ringtone manager to allow user to pick from alarms on phone
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentTone);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
@@ -170,13 +179,23 @@ public class AddressActivity extends AppCompatActivity {
         if (bundle != null) {
             for (String key : bundle.keySet()) {
                 Log.e("Ringtone", key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
+            }
 
-                super.onActivityResult(requestCode, resultCode, data);
+            super.onActivityResult(requestCode, resultCode, data);
 
-                //create uri from setRingtone and get the selected ringtone
-                Uri currentRingtoneUri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                mRingtone = RingtoneManager.getRingtone(AddressActivity.this, currentRingtoneUri);
+            //create uri from setRingtone and get the selected ringtone
+            if(requestCode == 1 && resultCode == RESULT_OK) {
+                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
 
+                //Set selected ringtone here.
+                RingtoneManager.setActualDefaultRingtoneUri(
+                        this,
+                        RingtoneManager.TYPE_ALARM,
+                        uri
+                );
+
+                uri = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM);
+                mRingtone = RingtoneManager.getRingtone(this, uri);
 
                 //change output in address_activity.xml to selected ringtone
                 output.setText("Current Ringtone: " + mRingtone.getTitle(this));
@@ -310,8 +329,6 @@ public class AddressActivity extends AppCompatActivity {
     public void lookAllPossibleAddresses(View view) {
         String temp = address.getText().toString().replace(" ", "+");
         new GetCoordinates().execute(temp);
-
-
     }
 
     /**
