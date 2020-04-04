@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -63,7 +64,7 @@ public class AddressActivity extends AppCompatActivity {
     private double the_latitude, the_longitude;
     private String description;
     private GPSAlarm gpsAddress;          //The address that will be uploaded to Firebase
-    private int desired_radius;
+    private double desired_radius;
     private String addressPosition;
     long nextGPSAlarmID;
 
@@ -127,6 +128,17 @@ public class AddressActivity extends AppCompatActivity {
 
         }
 
+        unit_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (unit_switch.isChecked()) {
+                    Toast.makeText(AddressActivity.this, "The distance's unit is miles",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddressActivity.this, "The distance's unit is kilometers",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
 
@@ -178,7 +190,6 @@ public class AddressActivity extends AppCompatActivity {
      * @param view
      */
     public void saveAddress(View view) {
-        //createAddressToUse();             previous to the changes
 
         the_latitude=Double.valueOf(latitude_txt.getText().toString());
         the_longitude=Double.valueOf(longitude_txt.getText().toString());
@@ -189,11 +200,11 @@ public class AddressActivity extends AppCompatActivity {
         if (radius_in_string.length()<1) {
             Toast.makeText(this, "You must enter the radius",Toast.LENGTH_SHORT).show();
         } else {
-            desired_radius = (int) Float.parseFloat(radius_in_string);
-            /*
+            desired_radius = Float.parseFloat(radius_in_string);
+
             if (unit_switch.isChecked()) {
                 desired_radius=GPSAlarm.convertRadiusToKilometers(desired_radius);
-            }*/
+            }
 
             //Creating the new GPSAlarm class with all the information
             gpsAddress = new GPSAlarm(the_latitude, the_longitude, desired_radius, description, mRingtone.getTitle(AddressActivity.this));
