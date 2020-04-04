@@ -1,15 +1,24 @@
 package com.cs246.gpsalarm;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,11 +43,14 @@ import java.util.List;
 public class AddressActivity extends AppCompatActivity {
 
     //These variables are from the view part
-    EditText user, email, address, radius, latitude_txt, longitude_txt;
+    EditText address, radius, latitude_txt, longitude_txt;
+    Button ringtone;
+    Ringtone mRingtone;
+    TextView output;
 
     //new changes
     Spinner spinner;
-    ImageButton searchButtom;
+    ImageButton searchButton;
     JSONArray addressesInJASON;
     List<String> possible_addresses=new ArrayList<String>();
 
@@ -50,7 +62,7 @@ public class AddressActivity extends AppCompatActivity {
 
     //These variables are used to create the AddressToUse object
     private LatLng the_address;
-    private double the_latitude, the_logitude;
+    private double the_latitude, the_longitude;
     private String description;
     private GPSAlarm gpsAddress;          //The address that will be uploaded to Firebase
     private int desired_radius;
@@ -73,6 +85,9 @@ public class AddressActivity extends AppCompatActivity {
         address = (EditText) findViewById(R.id.txtAddress);
         radius = (EditText) findViewById(R.id.txtRadius);
         spinner=(Spinner) findViewById(R.id.view_spinner);
+        ringtone = (Button) findViewById(R.id.ringtone);
+        output = (TextView) findViewById(R.id.output);
+
         latitude_txt = (EditText) findViewById(R.id.latitude);
         longitude_txt = (EditText) findViewById(R.id.longitude);
 
@@ -86,8 +101,6 @@ public class AddressActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 nextGPSAlarmID = dataSnapshot.child("GPSAlarm").getChildrenCount();
             }
-
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -119,7 +132,49 @@ public class AddressActivity extends AppCompatActivity {
 
 
     /**
-     * This method takes all the data after the user selected one of the possibble directions, and creates the GPSAlarm class.
+     * This method creates the ringtone manager activity and allows user to choose a ringtone
+     * @param view
+     */
+    public void setRingtone(View view) {
+        //create new intent and uri to save info on phone
+        final Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        final Uri currentTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        //add settings to ringtone manager to allow user to pick from alarms on phone
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentTone);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+        startActivityForResult(intent, 1);
+    }
+
+    /**
+     * This method creates the ringtone manager activity and allows user to choose a ringtone
+     * @param data sends intent from ringtone picker activity
+     */
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //debug see what's inside bundle created in setRingtone
+        Bundle bundle = data.getExtras();
+        if (bundle != null) {
+            for (String key : bundle.keySet()) {
+                Log.e("Ringtone", key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
+
+                super.onActivityResult(requestCode, resultCode, data);
+
+                //create uri from setRingtone and get the selected ringtone
+                Uri currentRingtoneUri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                mRingtone = RingtoneManager.getRingtone(AddressActivity.this, currentRingtoneUri);
+
+
+                //change output in address_activity.xml to selected ringtone
+                output.setText("Current Ringtone: " + mRingtone.getTitle(this));
+            }
+        }
+    }
+
+    /**
+     * This method takes all the data after the user selected one of the possible directions, and creates the GPSAlarm class.
      * After that it upload the class to firebase. This is activated  when the users clicks on the "Save" button.
      * @param view
      */
@@ -127,7 +182,7 @@ public class AddressActivity extends AppCompatActivity {
         //createAddressToUse();             previous to the changes
 
         the_latitude=Double.valueOf(latitude_txt.getText().toString());
-        the_logitude=Double.valueOf(longitude_txt.getText().toString());
+        the_longitude=Double.valueOf(longitude_txt.getText().toString());
         description=address.getText().toString();
 
         String radius_in_string = radius.getText().toString();
@@ -138,7 +193,7 @@ public class AddressActivity extends AppCompatActivity {
             desired_radius = (int) Float.parseFloat(radius_in_string);
 
             //Creating the new GPSAlarm class with all the information
-            gpsAddress = new GPSAlarm(the_latitude, the_logitude, desired_radius, description, null);
+            gpsAddress = new GPSAlarm(the_latitude, the_longitude, desired_radius, description, mRingtone.getTitle(AddressActivity.this));
             mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
 
             //Finishing this activity and passing to the Control Panel Activity
@@ -160,7 +215,7 @@ public class AddressActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(AddressActivity.this, "Looking up the place", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddressActivity.this, "Looking up the address", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -234,7 +289,6 @@ public class AddressActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * It takes the string of the Address Edit Text and pass that to the GetCoordinates class that recieves the information from the Geocoding API
      * This is used each time the user clicks on the search image of the layout.
@@ -274,7 +328,7 @@ public class AddressActivity extends AppCompatActivity {
             double longitude = Double.parseDouble(longitude_txt.getText().toString());
 
             the_latitude=latitude;
-            the_logitude=longitude;
+            the_longitude=longitude;
 
             Intent i = new Intent();
             i.putExtra("alarm_location_latitude", latitude);

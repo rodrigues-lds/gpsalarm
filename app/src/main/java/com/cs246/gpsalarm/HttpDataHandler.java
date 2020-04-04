@@ -17,7 +17,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class HttpDataHandler {
 
     public HttpDataHandler() {
-        //contructor
+        //constructor
     }
 
     public String getHTTPData(String requestURL) {

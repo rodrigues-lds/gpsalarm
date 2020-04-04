@@ -199,19 +199,32 @@
                 android:textColorHint="#0B7280"
                 android:textColorLink="#0B7280" />
 
-            <EditText
-                android:id="@+id/txtRingtone"
+            <Button
+                android:id="@+id/ringtone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:hint="@string/hintRingtone"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:onClick="setRingtone"
                 android:paddingBottom="15dp"
                 android:textColor="#0B7280"
                 android:textColorHighlight="#0B7280"
                 android:textColorHint="#0B7280"
                 android:textColorLink="#0B7280" />
+            <TextView
+                android:id="@+id/output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:layout_gravity="center"
+                android:textColor="#0B7280"
+                android:textColorHighlight="#0B7280"
+                android:textColorHint="#0B7280"
+                android:textColorLink="#0B7280"
+                android:textSize="20sp" />
+
 
             <Button
                 android:id="@+id/buttonSave"

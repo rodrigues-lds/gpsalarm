@@ -2,6 +2,7 @@ package com.cs246.gpsalarm;
 
 import android.annotation.SuppressLint;
 import android.media.Ringtone;
+import android.media.RingtoneManager;
 
 /**
  * Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
@@ -13,7 +14,7 @@ public class GPSAlarm {
     double longitude;
     public int radius;
     public String description;
-    public Ringtone ringtone;
+    public String ringtone;
     public boolean wasActivated;
     public int counter;
 
@@ -27,7 +28,7 @@ public class GPSAlarm {
     public GPSAlarm(Double latitude, Double longitude,
                     int the_radius,
                     String the_description,
-                    Ringtone the_ringtone) {
+                    String the_ringtone) {
 
         this.latitude = latitude;
         this.longitude = longitude;
