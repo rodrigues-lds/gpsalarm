@@ -1,15 +1,7 @@
 package com.cs246.gpsalarm;
 
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,13 +9,9 @@ import android.os.Looper;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQuery;
-import com.firebase.geofire.GeoQueryDataEventListener;
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.Geofence;
-import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -37,10 +25,6 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -48,13 +32,17 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 /**
- * This activity is used when the user wants to check where the position of the address in a map and
- * when the user wants to see a reference of its position from the address.
+ * MAPS ACTIVITY | 1
+ * It provides the edit text and tools for the address.
+ *
+ * @author Hernan Yupanqui
+ * @version 1.2
+ * @since 2020-03-06
+ * <p>
+ * This class is used when the user wants to add an address using the maps.
+ * This activity provides the Edit Texts and tools needed to set the radius and a description of the address.
+ * Then, the new address is added to Firebase and the user is returned to Control Panel Activity
  */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -64,7 +52,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationCallback locationCallback;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Marker currentUser;
-
 
     //widgets
     private EditText mSearchText;
@@ -77,10 +64,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng requestedAddress;
     private Circle geoFenceLimits;
 
-
     /**
      * When we create the activity it sets the variables to their values
      * Also, it obtains the information form the previous activity and creates the marker in the map based on that.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -89,17 +76,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
         //Getting the information from the previous activity and convertig to the appropriate object
-        String latitude_fromIntent=getIntent().getExtras().getString("latitude");
-        the_latitude=Float.valueOf(latitude_fromIntent);
+        String latitude_fromIntent = getIntent().getExtras().getString("latitude");
+        the_latitude = Float.valueOf(latitude_fromIntent);
 
-        String longitude_fromIntent=getIntent().getExtras().getString("longitude");
-        the_longitude=Float.valueOf(longitude_fromIntent);
+        String longitude_fromIntent = getIntent().getExtras().getString("longitude");
+        the_longitude = Float.valueOf(longitude_fromIntent);
 
-        String radius_fromIntent=getIntent().getExtras().getString("radius");
-        the_radius=Float.parseFloat(radius_fromIntent);
-
-
-
+        String radius_fromIntent = getIntent().getExtras().getString("radius");
+        the_radius = Float.parseFloat(radius_fromIntent);
 
         //With dexter we manage the permissions of the application, in this case the Location permission
         Dexter.withActivity(this)
@@ -127,12 +111,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     }
                 }).check();
-
-
     }
 
     /**
-     *This method is used to define the LocationCallback, so we put here the actions that we want to perform when we have a response of the location
+     * This method is used to define the LocationCallback, so we put here the actions that we want to perform when we have a response of the location
      */
     private void buildLocationCallback() {
         locationCallback = new LocationCallback() {
@@ -156,7 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     *This method is for detailing the request of the location services
+     * This method is for detailing the request of the location services
      */
     private void buildLocationRequest() {
         locationRequest = new LocationRequest();
@@ -168,6 +150,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * When the map is ready this creates the marker of the actual location and the marker of the address.
+     *
      * @param googleMap The map we are using
      */
     @Override
@@ -175,7 +158,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         //Creating the LatLong that will serve as a reference for the marker
-        requestedAddress=new LatLng(the_latitude, the_longitude);
+        requestedAddress = new LatLng(the_latitude, the_longitude);
         //Adding the marker to the map
         mMap.addMarker(new MarkerOptions().position(requestedAddress).title("Your address"));
 
@@ -198,6 +181,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
+    /**
+     * This method is called when this class is destroyed.
+     */
     @Override
     protected void onDestroy() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
@@ -211,13 +197,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         CircleOptions circleOptions = new CircleOptions()
                 .center(requestedAddress)
-                .strokeColor(Color.argb(50,70,70,70))
-                .fillColor(Color.argb(100,150,150,150))
+                .strokeColor(Color.argb(50, 70, 70, 70))
+                .fillColor(Color.argb(100, 150, 150, 150))
                 .radius(the_radius);
 
         geoFenceLimits = mMap.addCircle(circleOptions);
-
-
     }
-
 }
