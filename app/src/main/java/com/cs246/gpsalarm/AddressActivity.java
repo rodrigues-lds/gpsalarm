@@ -196,13 +196,6 @@ public class AddressActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //debug see what's inside bundle created in setRingtone
-        Bundle bundle = data.getExtras();
-        if (bundle != null) {
-            for (String key : bundle.keySet()) {
-                Log.e("Ringtone", key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
-            }
-
             super.onActivityResult(requestCode, resultCode, data);
 
             //create uri from setRingtone and get the selected ringtone
