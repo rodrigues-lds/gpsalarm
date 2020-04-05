@@ -35,6 +35,10 @@ public class GpsAlarmUnitTests {
         Assert.assertEquals(km * 0.621371, miles, 0);
     }
 
+    public void deva(){
+        RegisterActivity ra = new RegisterActivity();
+        ra.validateUserInformation("", "", "", "");
+    }
 
     /*
     @Test
