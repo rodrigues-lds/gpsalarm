@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="vertical"
-            android:paddingLeft="35dp"
-            android:paddingRight="35dp">
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp">
 
             <TextView
                 android:id="@+id/textViewAddress"

@@ -6,25 +6,37 @@ import org.junit.Test;
 import java.util.Random;
 
 /**
- * Created by Eduardo A Rodrigues on 2/24/2020.
+ * GPS ALARM | TEST CASES
+ * It provides the test cases to validate some aspects of the app.
+ *
+ * @author Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
+ * @version 1.2
+ * @since 2020-03-06
+ * <p>
+ * This class provides all test cases necessary to validate the application.
  */
 public class GpsAlarmUnitTests {
+
+    /**
+     * This test case validates if radius can be converted to miles.
+     */
     @Test
-    public void ConvertRadiusToKilometersTest() {
+    public void ConvertRadiusToMilesTest() {
         // Pre Conditions
-        GPSAlarm gpsAlarm = new GPSAlarm();
         Random rd = new Random();
 
         // Data Mass
-        double miles = rd.nextDouble() * 100;
+        double km = rd.nextDouble() * 100;
 
         // Test Steps
-        double kilometers = gpsAlarm.convertRadiusToKilometers(miles);
+        double miles = GPSAlarm.convertRadiusToMiles(km);
 
         // Check Expected Results
-        Assert.assertEquals(miles * 1.609344, kilometers, 0);
+        Assert.assertEquals(km * 0.621371, miles, 0);
     }
 
+
+    /*
     @Test
     public void CheckThePassword() {
 
@@ -76,10 +88,11 @@ public class GpsAlarmUnitTests {
         // Check Expected Results
         Assert.assertEquals(latitude, 0, 0);
     }
-    /*
-    This function is checking if the checkifTheGPSisActivated method is working as it should be, providing boolean data
 
-     */
+    *//*
+    This function is checking if the check if TheGPSisActivated method is working as it should be, providing boolean data
+
+     *//*
     @Test
     public void CheckGPSActivated() {
         //Check if the GPS is activated
@@ -92,5 +105,5 @@ public class GpsAlarmUnitTests {
         }
 
 
-    }
+    }*/
 }

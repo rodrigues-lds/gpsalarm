@@ -6,14 +6,16 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -48,15 +50,12 @@ public class AddressActivity extends AppCompatActivity {
 
     //new changes
     Spinner spinner;
-    ImageButton searchButton;
     JSONArray addressesInJASON;
     List<String> possible_addresses=new ArrayList<String>();
-
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseAuth mAuth;
-    private String UserId;
 
     //These variables are used to create the AddressToUse object
     private LatLng the_address;
@@ -67,8 +66,6 @@ public class AddressActivity extends AppCompatActivity {
     private String addressPosition;
     long nextGPSAlarmID;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +73,18 @@ public class AddressActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
+
+        // Get permission write for changing default ringtone
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Settings.System.canWrite(this)) {
+                // Do stuff here
+            } else {
+                Intent mIntent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                mIntent.setData(Uri.parse("package:" + this.getPackageName()));
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(mIntent);
+            }
+        }
 
         // Getting the data inserted in the Main Activity
         this.addressPosition = intent.getStringExtra(ControlPanelActivity.ADDRESS_POSITION);
@@ -127,6 +136,17 @@ public class AddressActivity extends AppCompatActivity {
 
         }
 
+        unit_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (unit_switch.isChecked()) {
+                    Toast.makeText(AddressActivity.this, "The distance's unit is miles",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddressActivity.this, "The distance's unit is kilometers",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
 
@@ -137,9 +157,10 @@ public class AddressActivity extends AppCompatActivity {
     public void setRingtone(View view) {
         //create new intent and uri to save info on phone
         final Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-        final Uri currentTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        final Uri currentTone= RingtoneManager.getActualDefaultRingtoneUri(AddressActivity.this, RingtoneManager.TYPE_ALARM);
+
         //add settings to ringtone manager to allow user to pick from alarms on phone
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentTone);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
@@ -158,13 +179,23 @@ public class AddressActivity extends AppCompatActivity {
         if (bundle != null) {
             for (String key : bundle.keySet()) {
                 Log.e("Ringtone", key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
+            }
 
-                super.onActivityResult(requestCode, resultCode, data);
+            super.onActivityResult(requestCode, resultCode, data);
 
-                //create uri from setRingtone and get the selected ringtone
-                Uri currentRingtoneUri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                mRingtone = RingtoneManager.getRingtone(AddressActivity.this, currentRingtoneUri);
+            //create uri from setRingtone and get the selected ringtone
+            if(requestCode == 1 && resultCode == RESULT_OK) {
+                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
 
+                //Set selected ringtone here.
+                RingtoneManager.setActualDefaultRingtoneUri(
+                        this,
+                        RingtoneManager.TYPE_ALARM,
+                        uri
+                );
+
+                uri = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM);
+                mRingtone = RingtoneManager.getRingtone(this, uri);
 
                 //change output in address_activity.xml to selected ringtone
                 output.setText("Current Ringtone: " + mRingtone.getTitle(this));
@@ -178,21 +209,28 @@ public class AddressActivity extends AppCompatActivity {
      * @param view
      */
     public void saveAddress(View view) {
-        //createAddressToUse();             previous to the changes
 
-        the_latitude=Double.valueOf(latitude_txt.getText().toString());
-        the_longitude=Double.valueOf(longitude_txt.getText().toString());
+        String lat_temp=latitude_txt.getText().toString();
+        String long_temp=longitude_txt.getText().toString();
+
+
         description=address.getText().toString();
 
         String radius_in_string = radius.getText().toString();
 
         if (radius_in_string.length()<1) {
             Toast.makeText(this, "You must enter the radius",Toast.LENGTH_SHORT).show();
+        } else if(latitude_txt.length()<1||longitude_txt.length()<1){
+            Toast.makeText(AddressActivity.this, "Enter the latitude and longitude", Toast.LENGTH_SHORT).show();
+        } else if (address.getText().toString().length()<1) {
+            Toast.makeText(AddressActivity.this, "You must enter a description", Toast.LENGTH_SHORT).show();
         } else {
-            desired_radius = (double) Float.parseFloat(radius_in_string);
+            the_latitude=Double.valueOf(lat_temp);
+            the_longitude=Double.valueOf(long_temp);
+            desired_radius = Float.parseFloat(radius_in_string);
 
             if (unit_switch.isChecked()) {
-                desired_radius = (desired_radius * 0.621371);
+                desired_radius=GPSAlarm.convertRadiusToMiles(desired_radius);
             }
 
             //Creating the new GPSAlarm class with all the information
@@ -211,7 +249,7 @@ public class AddressActivity extends AppCompatActivity {
      * This class makes an asynchronous activity to request the information of the string given
      * It returns the Latitude, Longitude and Descriptions of the place
      */
-    private class GetCoordinates extends AsyncTask<String, Void, String> {
+    public class GetCoordinates extends AsyncTask<String, Void, String> {
         //ProgressDialog dialog = new ProgressDialog(AddressActivity.this);
 
         @Override
@@ -299,8 +337,6 @@ public class AddressActivity extends AppCompatActivity {
     public void lookAllPossibleAddresses(View view) {
         String temp = address.getText().toString().replace(" ", "+");
         new GetCoordinates().execute(temp);
-
-
     }
 
     /**
