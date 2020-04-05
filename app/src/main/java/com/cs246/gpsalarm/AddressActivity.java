@@ -16,13 +16,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,9 +31,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -236,6 +239,8 @@ public class AddressActivity extends AppCompatActivity {
         // Get longitude and latitude from activity and convert to string for usage in Firebase
         the_latitude=Double.valueOf(latitude_txt.getText().toString());
         the_longitude=Double.valueOf(longitude_txt.getText().toString());
+        String lat_temp=latitude_txt.getText().toString();
+        String long_temp=longitude_txt.getText().toString();
         description=address.getText().toString();
 
         String radius_in_string = radius.getText().toString();

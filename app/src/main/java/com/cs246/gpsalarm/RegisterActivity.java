@@ -134,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      * @param passwordConfirmation is the password confirmation inserted by the user.
      * @return if the credentials are valid, it returns true. Otherwise, false.
      */
-    private boolean validateUserInformation(String name, String username, String password, String passwordConfirmation) {
+    public boolean validateUserInformation(String name, String username, String password, String passwordConfirmation) {
 
         // Check if name is empty
         if (name.isEmpty()) {
