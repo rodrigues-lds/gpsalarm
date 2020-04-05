@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.Random;
 
 /**
- * GPS ALARM | TEST CASES
+ * GPS ALARM UNIT TEST
  * It provides the test cases to validate some aspects of the app.
  *
  * @author Jose Paz, Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
@@ -21,7 +21,7 @@ public class GpsAlarmUnitTests {
      * This test case validates if radius can be converted to miles.
      */
     @Test
-    public void ConvertRadiusToMilesTest() {
+    public void convertRadiusToMilesTest() {
         // Pre Conditions
         Random rd = new Random();
 
@@ -35,79 +35,123 @@ public class GpsAlarmUnitTests {
         Assert.assertEquals(km * 0.621371, miles, 0);
     }
 
-    public void deva(){
+    /**
+     * This test case validates if all user register form is empty
+     */
+    @Test
+    public void validateUserRegisterFormAllEmpty(){
         RegisterActivity ra = new RegisterActivity();
-        ra.validateUserInformation("", "", "", "");
+        boolean result = ra.validateUserInformation("", "", "", "");
+        Assert.assertFalse (result);
     }
 
-    /*
+    /**
+     * This test case validates if all user register form is empty
+     */
     @Test
-    public void CheckThePassword() {
-
-        GPSAlarm gpsAlarm= new GPSAlarm();
-
-        String example= "User + Password";
-
-        Assert.assertTrue(gpsAlarm.validatingUserPassword(example));
-
+    public void validateUserRegisterEmailBadFormat(){
+        RegisterActivity ra = new RegisterActivity();
+        boolean result = ra.validateUserInformation("Eduardo", "badfFormat.com", "12345", "12345");
+        Assert.assertFalse (result);
     }
 
+    /**
+     * This test case validates if all the password does not fit the policies
+     */
     @Test
-    public void CheckTheUser() {
-
-        GPSAlarm gpsAlarm= new GPSAlarm();
-
-        String example= "User + Password";
-
-        Assert.assertTrue(gpsAlarm.validatingUser(example));
-
+    public void validateUserRegisterBadPassword(){
+        RegisterActivity ra = new RegisterActivity();
+        boolean result = ra.validateUserInformation("Eduardo", "aaa@uol.com", "126", "126");
+        Assert.assertFalse (result);
     }
 
+    /**
+     * This test case validates if all the username is empty
+     */
     @Test
-    public void ConvertAddressToLongitudeTest() {
-        // Pre Conditions
-        GPSAlarm gpsAlarm = new GPSAlarm();
-
-        // Data Mass
-        String address = "Address";
-
-        // Test Steps
-        double longitude = gpsAlarm.convertAddressToLongitude(address, 0);
-
-        // Check Expected Results
-        Assert.assertEquals(longitude, 0, 0);
+    public void validateUserRegisterUsernameEmpty(){
+        RegisterActivity ra = new RegisterActivity();
+        boolean result = ra.validateUserInformation("", "aaa@uol.com", "126", "126");
+        Assert.assertFalse (result);
     }
 
+    /**
+     * This test case validates if all the username is empty
+     */
     @Test
-    public void ConvertAddressToLatitudeTest() {
-        // Pre Conditions
-        GPSAlarm gpsAlarm = new GPSAlarm();
-
-        // Data Mass
-        String address = "Address";
-
-        // Test Steps
-        double latitude = gpsAlarm.convertAddressToLatitude(address, 0);
-
-        // Check Expected Results
-        Assert.assertEquals(latitude, 0, 0);
+    public void validateUserRegisterPasswordEmpty(){
+        RegisterActivity ra = new RegisterActivity();
+        boolean result = ra.validateUserInformation("Eduardo", "aaa@uol.com", "", "");
+        Assert.assertFalse (result);
     }
 
-    *//*
-    This function is checking if the check if TheGPSisActivated method is working as it should be, providing boolean data
-
-     *//*
+    /**
+     * This test case validates if password dont macthes
+     */
     @Test
-    public void CheckGPSActivated() {
-        //Check if the GPS is activated
-        GPSAlarm gpsAlarm=new GPSAlarm();
+    public void validateUserRegisterPasswordDontMatch(){
+        RegisterActivity ra = new RegisterActivity();
+        boolean result = ra.validateUserInformation("Eduardo", "aaa@uol.com", "123456", "aaaaaa");
+        Assert.assertFalse (result);
+    }
 
-        if (gpsAlarm.checksIfTheGPSisActivated()){
-            Assert.assertEquals(true , gpsAlarm.checksIfTheGPSisActivated());
-        } else {
-            Assert.assertEquals(false, gpsAlarm.checksIfTheGPSisActivated());
-        }
+    /**
+     * This test case validates if password matches
+     */
+    @Test
+    public void validateUserRegisterPasswordMatches(){
+        RegisterActivity ra = new RegisterActivity();
+        boolean result = ra.validateUserInformation("Eduardo", "aaa@uol.com", "123456", "123456");
+        Assert.assertTrue (result);
+    }
 
+    /**
+     * This test case validates the register form is ok
+     */
+    @Test
+    public void validateUserRegisterFromOK(){
+        RegisterActivity ra = new RegisterActivity();
+        boolean result = ra.validateUserInformation("Eduardo Rodrigues", "rodrigues.lds@uol.com", "123456", "123456");
+        Assert.assertTrue (result);
+    }
 
-    }*/
+    /**
+     * This test case checks the missing infos on User Login
+     */
+    @Test
+    public void checkUserLoginMissingInfo(){
+        MainActivity ma = new MainActivity();
+        boolean result = ma.validateCredentials("", "");
+        Assert.assertFalse (result);
+    }
+
+    /**
+     * This test case checks the missing username on User Login
+     */
+    @Test
+    public void checkUserLoginMissingUsername(){
+        MainActivity ma = new MainActivity();
+        boolean result = ma.validateCredentials("", "123456");
+        Assert.assertFalse (result);
+    }
+
+    /**
+     * This test case checks the missing password on User Login
+     */
+    @Test
+    public void checkUserLoginMissingPassword(){
+        MainActivity ma = new MainActivity();
+        boolean result = ma.validateCredentials("rodrigues.lds@gmail.com", "");
+        Assert.assertFalse (result);
+    }
+
+    /**
+     * This test case checks user credentials on login
+     */
+    @Test
+    public void checkUserLoginFormOK(){
+        MainActivity ma = new MainActivity();
+        boolean result = ma.validateCredentials("rodrigues.lds@gmail.com", "123455");
+        Assert.assertTrue (result);
+    }
 }

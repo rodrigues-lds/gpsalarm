@@ -138,55 +138,93 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         // Check if name is empty
         if (name.isEmpty()) {
-            editTextName.setError("Name is required.");
-            editTextName.requestFocus();
+            try {
+                editTextName.setError("Name is required.");
+                editTextName.requestFocus();
+            }catch (Exception ex){
+                String error = ex.toString();
+            }
             return false;
         }
 
         // Check if username is empty
         if (username.isEmpty()) {
-            editTextUsername.setError("Email is required.");
-            editTextUsername.requestFocus();
-            return false;
-        }
-
-        // Check if username is valid
-        if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
-            editTextUsername.setError("Please enter a valid email.");
-            editTextUsername.requestFocus();
+            try {
+                editTextUsername.setError("Email is required.");
+                editTextUsername.requestFocus();
+            }catch (Exception ex){
+                String error = ex.toString();
+            }
             return false;
         }
 
         // Check if password is empty
         if (password.isEmpty()) {
-            editTextPassword.setError("Password is required.");
-            editTextPassword.requestFocus();
+            try {
+                editTextPassword.setError("Password is required.");
+                editTextPassword.requestFocus();
+            }catch (Exception ex){
+                String error = ex.toString();
+            }
+
             return false;
         }
 
         // Check if password is valid
         if (password.length() < 6) {
-            editTextPassword.setError("Password length should be 6 char at least.");
-            editTextPassword.requestFocus();
+            try {
+                editTextPassword.setError("Password length should be 6 char at least.");
+                editTextPassword.requestFocus();
+            }catch (Exception ex){
+                String error = ex.toString();
+            }
             return false;
         }
 
         // Check if confirm password is empty
         if (passwordConfirmation.isEmpty()) {
-            editTextPasswordConfirmation.setError("Password confirmation is required.");
-            editTextPasswordConfirmation.requestFocus();
+            try {
+                editTextPasswordConfirmation.setError("Password confirmation is required.");
+                editTextPasswordConfirmation.requestFocus();
+            }catch (Exception ex){
+                String error = ex.toString();
+            }
             return false;
         }
 
         // Check if passwords matches
         if (!password.equals(passwordConfirmation)) {
-            editTextPasswordConfirmation.setError("Passwords do not match!");
-            editTextPasswordConfirmation.requestFocus();
+            try {
+                editTextPasswordConfirmation.setError("Passwords do not match!");
+                editTextPasswordConfirmation.requestFocus();
+            }catch (Exception ex){
+                String error = ex.toString();
+            }
             return false;
         }
 
+        try {
+            // Check if username is valid
+            if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+                try {
+                    editTextUsername.setError("Please enter a valid email.");
+                    editTextUsername.requestFocus();
+                }catch (Exception ex){
+                    String error = ex.toString();
+                }
+                return false;
+            }
+        }catch (Exception ex){
+            String error = ex.toString();
+        }
+
         // Credentials are validated
-        Log.i(TAG, "GPS LOG | The inserted data are valid in the register form.");
+        try {
+            Log.i(TAG, "GPS LOG | The inserted data are valid in the register form.");
+        }catch (Exception ex) {
+            String error = ex.toString();
+        }
+
         return true;
     }
 
