@@ -234,8 +234,8 @@ public class AddressActivity extends AppCompatActivity {
     public void saveAddress(View view) {
 
         // Get longitude and latitude from activity and convert to string for usage in Firebase
-        the_latitude=Double.valueOf(latitude_txt.getText().toString());
-        the_longitude=Double.valueOf(longitude_txt.getText().toString());
+        String lat_temp=latitude_txt.getText().toString();
+        String long_temp=longitude_txt.getText().toString();
         description=address.getText().toString();
 
         String radius_in_string = radius.getText().toString();
