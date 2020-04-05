@@ -16,13 +16,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,9 +31,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -238,7 +241,7 @@ public class AddressActivity extends AppCompatActivity {
         if (radius_in_string.length()<1) {
             Toast.makeText(this, "You must enter the radius",Toast.LENGTH_SHORT).show();
         } else if(latitude_txt.length()<1||longitude_txt.length()<1){
-            Toast.makeText(AddressActivity.this, "Enter the latitude and longitude", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddressActivity.this, "Enter the latitude and longitude or tap on search button to find it for you.", Toast.LENGTH_SHORT).show();
         } else if (address.getText().toString().length()<1) {
             Toast.makeText(AddressActivity.this, "You must enter a description", Toast.LENGTH_SHORT).show();
         } else {
