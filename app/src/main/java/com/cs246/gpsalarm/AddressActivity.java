@@ -36,6 +36,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ADDRESS | DATA ENTRY
+ * It provides an interface for creating a new address with parameters.
+ *
+ * @author Hernan Yupanqui, Eduardo Rodrigues, Jose Paz, & Robert Hampton
+ * @version 1.2
+ * @since 2020-03-06
+ * <p>
+ * This class is for the Activity that creates a new address. It passes the information to
+ * Firebase and GPSalarm. Has an interface that allows user to choose the address via map or
+ * separate line entry, the radius for the geofence, and the ringtone to be played with desired
+ * address.
+ */
 public class AddressActivity extends AppCompatActivity {
 
     //These variables are from the view part
@@ -65,7 +78,11 @@ public class AddressActivity extends AppCompatActivity {
     long nextGPSAlarmID;
 
 
-
+    /**
+     * This function is called each time this activity is created.
+     *
+     * @param savedInstanceState It is a reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,21 +106,23 @@ public class AddressActivity extends AppCompatActivity {
         // Getting the data inserted in the Main Activity
         this.addressPosition = intent.getStringExtra(ControlPanelActivity.ADDRESS_POSITION);
 
+
+        // Get data from activity that the user enters
         address = (EditText) findViewById(R.id.txtAddress);
         radius = (EditText) findViewById(R.id.txtRadius);
         spinner=(Spinner) findViewById(R.id.view_spinner);
         ringtone = (Button) findViewById(R.id.ringtone);
         output = (TextView) findViewById(R.id.output);
         unit_switch=(Switch) findViewById(R.id.switchUnitDistance);
-
         latitude_txt = (EditText) findViewById(R.id.latitude);
         longitude_txt = (EditText) findViewById(R.id.longitude);
 
-
+        // Create initial Firebase instance and pass user authentication to database
         this.mAuth = FirebaseAuth.getInstance();
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("DataUsers/Users/" + mAuth.getCurrentUser().getUid());
 
+        // Listens for data changes and sends to database
         mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -122,7 +141,7 @@ public class AddressActivity extends AppCompatActivity {
         } catch (Exception e) {
             the_Status = null;
         }
-
+        // Sets local data
         if (the_Status!=null) {
             String lat_temp=getIntent().getExtras().getString("Latitude");
             String lng_temp=getIntent().getExtras().getString("Longitude");
@@ -136,6 +155,7 @@ public class AddressActivity extends AppCompatActivity {
 
         }
 
+        // Debug material
         unit_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -152,6 +172,7 @@ public class AddressActivity extends AppCompatActivity {
 
     /**
      * This method creates the ringtone manager activity and allows user to choose a ringtone
+     * via the ringtone picker activity and sends info to onActivityResult
      * @param view
      */
     public void setRingtone(View view) {
@@ -170,6 +191,8 @@ public class AddressActivity extends AppCompatActivity {
     /**
      * This method creates the ringtone manager activity and allows user to choose a ringtone
      * @param data sends intent from ringtone picker activity
+     * @param requestCode gets requestCode from setRingtone
+     * @param resultCode gets resultCode from activity
      */
     @SuppressLint("SetTextI18n")
     @Override
@@ -194,6 +217,7 @@ public class AddressActivity extends AppCompatActivity {
                         uri
                 );
 
+                // Set uri to new default ringtone to be called by geofence and sent to Firebase
                 uri = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM);
                 mRingtone = RingtoneManager.getRingtone(this, uri);
 
@@ -210,6 +234,7 @@ public class AddressActivity extends AppCompatActivity {
      */
     public void saveAddress(View view) {
 
+        // Get longitude and latitude from activity and convert to string for usage in Firebase
         the_latitude=Double.valueOf(latitude_txt.getText().toString());
         the_longitude=Double.valueOf(longitude_txt.getText().toString());
         description=address.getText().toString();
@@ -224,10 +249,15 @@ public class AddressActivity extends AppCompatActivity {
             if (unit_switch.isChecked()) {
                 desired_radius=GPSAlarm.convertRadiusToMiles(desired_radius);
             }
-
-            //Creating the new GPSAlarm class with all the information
-            gpsAddress = new GPSAlarm(the_latitude, the_longitude, desired_radius, description, mRingtone.getTitle(AddressActivity.this));
-            mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
+            if(mRingtone == null){
+                gpsAddress = new GPSAlarm(the_latitude, the_longitude, desired_radius, description, null);
+                mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
+            }
+            else {
+                //Creating the new GPSAlarm class with all the information
+                gpsAddress = new GPSAlarm(the_latitude, the_longitude, desired_radius, description, mRingtone.getTitle(AddressActivity.this));
+                mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(gpsAddress);
+            }
 
             //Finishing this activity and passing to the Control Panel Activity
             this.finish();
