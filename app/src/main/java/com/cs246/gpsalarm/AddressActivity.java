@@ -210,15 +210,23 @@ public class AddressActivity extends AppCompatActivity {
      */
     public void saveAddress(View view) {
 
-        the_latitude=Double.valueOf(latitude_txt.getText().toString());
-        the_longitude=Double.valueOf(longitude_txt.getText().toString());
+        String lat_temp=latitude_txt.getText().toString();
+        String long_temp=longitude_txt.getText().toString();
+
+
         description=address.getText().toString();
 
         String radius_in_string = radius.getText().toString();
 
         if (radius_in_string.length()<1) {
             Toast.makeText(this, "You must enter the radius",Toast.LENGTH_SHORT).show();
+        } else if(latitude_txt.length()<1||longitude_txt.length()<1){
+            Toast.makeText(AddressActivity.this, "Enter the latitude and longitude", Toast.LENGTH_SHORT).show();
+        } else if (address.getText().toString().length()<1) {
+            Toast.makeText(AddressActivity.this, "You must enter a description", Toast.LENGTH_SHORT).show();
         } else {
+            the_latitude=Double.valueOf(lat_temp);
+            the_longitude=Double.valueOf(long_temp);
             desired_radius = Float.parseFloat(radius_in_string);
 
             if (unit_switch.isChecked()) {
