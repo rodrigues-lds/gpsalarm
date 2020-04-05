@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 /**
- * REGISTER | SING UP
+ * REGISTER | SIGN UP
  * It provides an interface and its logic for a user to create an account.
  *
  * @author Jose Paz & Eduardo Rodrigues

@@ -72,7 +72,7 @@ public class AddressActivity extends AppCompatActivity {
     private LatLng the_address;
     private double the_latitude, the_longitude;
     private String description;
-    private GPSAlarm gpsAddress;          //The address that will be uploaded to Firebase
+    private GPSAlarm gpsAddress;
     private double desired_radius;
     private String addressPosition;
     long nextGPSAlarmID;
@@ -168,7 +168,6 @@ public class AddressActivity extends AppCompatActivity {
         });
 
     }
-
 
     /**
      * This method creates the ringtone manager activity and allows user to choose a ringtone
