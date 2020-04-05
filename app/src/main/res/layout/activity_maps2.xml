@@ -49,6 +49,14 @@
             android:hint="Description"
             android:inputType="text"/>
 
+        <ImageButton
+            android:id="@+id/search_button_maps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:onClick="goToAddressOnMaps"
+            android:src="@drawable/ic_action_name" />
+
         <Button
             android:id="@+id/save_on_maps"
             android:layout_width="wrap_content"
