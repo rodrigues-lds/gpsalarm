@@ -220,7 +220,6 @@ public class AddressActivity extends AppCompatActivity {
                 return;
             }
         }
-    }
 
     /**
      * This method takes all the data after the user selected one of the possible directions, and creates the GPSAlarm class.
