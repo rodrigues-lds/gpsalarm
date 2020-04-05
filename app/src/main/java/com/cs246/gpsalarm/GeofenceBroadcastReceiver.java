@@ -71,7 +71,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 }
             };
             Timer timer = new Timer();
-            timer.schedule(task, 15000);
+            timer.schedule(task, 5000);
 
 
         } else if (geofenceTransition==Geofence.GEOFENCE_TRANSITION_EXIT) {
