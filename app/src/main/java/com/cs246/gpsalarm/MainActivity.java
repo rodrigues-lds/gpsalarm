@@ -129,38 +129,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param password This parameter is the password inserted by the user.
      * @return if the credentials are valid, it returns true. Otherwise, false.
      */
-    private boolean validateCredentials(String username, String password) {
+    public boolean validateCredentials(String username, String password) {
 
         // Check if username is empty
         if (username.isEmpty()) {
-            editTextUsername.setError("Email is required.");
-            editTextUsername.requestFocus();
+            try {
+                editTextUsername.setError("Email is required.");
+                editTextUsername.requestFocus();
+            }catch (Exception ex){
+                String error = ex.toString();
+            }
             return false;
         }
 
         // Check if username is valid
-        if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
-            editTextUsername.setError("Please enter a valid email.");
-            editTextUsername.requestFocus();
-            return false;
+        try {
+            if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+                editTextUsername.setError("Please enter a valid email.");
+                editTextUsername.requestFocus();
+                return false;
+            }
+        }catch (Exception ex){
+            String error = ex.toString();
         }
 
         // Check if password is empty
         if (password.isEmpty()) {
-            editTextPassword.setError("Password is required.");
-            editTextPassword.requestFocus();
+            try {
+                editTextPassword.setError("Password is required.");
+                editTextPassword.requestFocus();
+            }catch (Exception ex){
+                String error = ex.toString();
+            }
+
             return false;
         }
 
         // Check if password is valid
         if (password.length() < 6) {
-            editTextPassword.setError("Password length should be 6 char at least.");
-            editTextPassword.requestFocus();
+            try {
+                editTextPassword.setError("Password length should be 6 char at least.");
+                editTextPassword.requestFocus();
+            }catch (Exception ex){
+                String error = ex.toString();
+            }
+
             return false;
         }
 
         // Credentials are validated
-        Log.i(TAG, "GPS LOG | The inserted data are valid in the login.");
+        try {
+            Log.i(TAG, "GPS LOG | The inserted data are valid in the login.");
+        }catch (Exception ex){
+            String error = ex.toString();
+        }
+
         return true;
     }
 
