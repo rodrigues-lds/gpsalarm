@@ -243,7 +243,6 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
         geoFenceLimits = mMap.addCircle(circleOptions);
 
-
     }
 
     @Override
@@ -260,20 +259,23 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     public void saveAddressFromMaps(View view) {
 
         String the_description = description_from_layout.getText().toString();
-        radius=Float.parseFloat(radius_from_layout.getText().toString());
+        String radius_temp=radius_from_layout.getText().toString();
 
 
-        //Checking if there is a description of the place before saving the address
+        // Making a validation of the values
         if (the_description.length()<1) {
             Toast.makeText(this, "Enter a description of the place", Toast.LENGTH_SHORT).show();
         } else if (geofenceMarker==null) {
             Toast.makeText(this, "Touch the map to add the address", Toast.LENGTH_SHORT).show();
-        } else {
-            //Creating the GPSAlarm object based on the marker from maps and the radius entered
-            GPSAlarm the_gpsalarm = new GPSAlarm(geofenceMarker.getPosition().latitude, geofenceMarker.getPosition().longitude, radius, the_description, null);
-            //mFirebaseDatabase.child("GPSAlarm").child(Long.toString(nextGPSAlarmID + 1)).setValue(the_gpsalarm);
+        } else if(radius_temp.length()<1){
+            Toast.makeText(this,"Enter the radius",Toast.LENGTH_SHORT).show();
+        }else{
+            radius=Float.parseFloat(radius_temp);
 
-            //Finishing this activity and passing to the next activity
+            // Creating the GPSAlarm object based on the marker from maps and the radius entered
+            GPSAlarm the_gpsalarm = new GPSAlarm(geofenceMarker.getPosition().latitude, geofenceMarker.getPosition().longitude, radius, the_description, null);
+
+            // Finishing this activity and passing to the next activity
             Intent intent = new Intent(MapsActivity2.this, AddressActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("Status", "Returning with data from maps");
