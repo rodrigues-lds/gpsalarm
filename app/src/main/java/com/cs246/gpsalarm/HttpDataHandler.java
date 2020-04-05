@@ -21,11 +21,14 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class HttpDataHandler {
 
-    // Constructor
+    /**
+     * Non-Default Constructor
+     */
     public HttpDataHandler() {
 
     }
-     /**
+
+    /**
       * This function is called each time there is a request to get the coordinates.
       *
       * @param requestURL is a reference to a request made to get the URL location.

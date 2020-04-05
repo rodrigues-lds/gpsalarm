@@ -39,6 +39,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ADDRESS ACTIVITY
+ * It provides the address activity definition
+ *
+ * @author Robert Hampton, Hernan Yupanqui & Eduardo Rodrigues
+ * @version 1.2
+ * @since 2020-03-06
+ * <p>
+ * This class provides a user interface where the user can add an address to be monitored.
+ * It also provides a map visualization to check the current and target location as well as
+ * the geo fences.
+ */
 public class AddressActivity extends AppCompatActivity {
 
     //These variables are from the view part
@@ -61,7 +73,7 @@ public class AddressActivity extends AppCompatActivity {
     private LatLng the_address;
     private double the_latitude, the_longitude;
     private String description;
-    private GPSAlarm gpsAddress;          //The address that will be uploaded to Firebase
+    private GPSAlarm gpsAddress;
     private double desired_radius;
     private String addressPosition;
     long nextGPSAlarmID;
@@ -148,7 +160,6 @@ public class AddressActivity extends AppCompatActivity {
         });
 
     }
-
 
     /**
      * This method creates the ringtone manager activity and allows user to choose a ringtone
