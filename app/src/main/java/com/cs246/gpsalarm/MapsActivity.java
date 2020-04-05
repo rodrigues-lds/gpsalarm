@@ -58,10 +58,7 @@ import java.util.Random;
  */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    /*
-    THis class uses the Location services of Google to obtain location, not worker thread or Handler was needed
-     */
-
+    // These are maps related variables
     private GoogleMap mMap;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
@@ -81,7 +78,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Circle geoFenceLimits;
 
 
-
+    /**
+     * When we create the activity it sets the variables to their values
+     * Also, it obtains the information form the previous activity and creates the marker in the map based on that.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

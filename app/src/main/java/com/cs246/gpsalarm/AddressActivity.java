@@ -243,7 +243,13 @@ public class AddressActivity extends AppCompatActivity {
 
         if (radius_in_string.length()<1) {
             Toast.makeText(this, "You must enter the radius",Toast.LENGTH_SHORT).show();
+        } else if(latitude_txt.length()<1||longitude_txt.length()<1){
+            Toast.makeText(AddressActivity.this, "Enter the latitude and longitude", Toast.LENGTH_SHORT).show();
+        } else if (address.getText().toString().length()<1) {
+            Toast.makeText(AddressActivity.this, "You must enter a description", Toast.LENGTH_SHORT).show();
         } else {
+            the_latitude=Double.valueOf(lat_temp);
+            the_longitude=Double.valueOf(long_temp);
             desired_radius = Float.parseFloat(radius_in_string);
 
             if (unit_switch.isChecked()) {
@@ -271,7 +277,7 @@ public class AddressActivity extends AppCompatActivity {
      * This class makes an asynchronous activity to request the information of the string given
      * It returns the Latitude, Longitude and Descriptions of the place
      */
-    private class GetCoordinates extends AsyncTask<String, Void, String> {
+    public class GetCoordinates extends AsyncTask<String, Void, String> {
         //ProgressDialog dialog = new ProgressDialog(AddressActivity.this);
 
         @Override
