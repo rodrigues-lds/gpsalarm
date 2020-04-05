@@ -12,6 +12,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5dca7973-f18c-4b27-9f63-7fa77d003e53" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity2.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/cs246/gpsalarm/MapsActivity2.java" afterDir="false" />
     </list>
     <list id="5c92c598-7792-4e95-a813-0f35089503f7" name="Adding a second maps-activity that uses Geofences Locally, not with Geofire." comment="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
@@ -460,7 +461,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586045914681</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="More validation added">
+      <created>1586046615918</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1586046615918</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -487,7 +495,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire." />
     <MESSAGE value="Adding a second maps-activity that uses Geofences Locally, not with Geofire. After merging with Jose's Version." />
     <MESSAGE value="The Geocoder was implemented in the Address activity. New classes were created to accomplish this. It isn't pushed to firebase yet." />
     <MESSAGE value="WorkingAddresses added with the ListView of the user's addresses. Also, geofence is working, but not with the ListView. It still have to request Firebase data and be able to activate many Geofences at the same time." />
@@ -512,6 +519,7 @@
     <MESSAGE value="Implemented the conversion from miles to kilometers, after pulling" />
     <MESSAGE value="Now we can search the address in maps." />
     <MESSAGE value="Validation added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Validation added" />
+    <MESSAGE value="More validation added" />
+    <option name="LAST_COMMIT_MESSAGE" value="More validation added" />
   </component>
 </project>

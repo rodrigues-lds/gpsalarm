@@ -55,6 +55,9 @@ import java.util.Random;
 /**
  * This activity is used when the user wants to check where the position of the address in a map and
  * when the user wants to see a reference of its position from the address.
+ * @author Hernan Yupanqui
+ * @version 1.3
+ * @since 2020-03-15
  */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -198,6 +201,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
+    /**
+     * This method is To save battery, the location updates are canceled when the app is closed.
+     */
     @Override
     protected void onDestroy() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);

@@ -53,6 +53,8 @@ import org.json.JSONObject;
  * This activity provides the Edit Texts and tools needed to set the radius and a description of the address.
  * Then, the new address is added to Firebase and the user is returned to Control Panel Activity
  * @author Hernan Yupanqui
+ * @version 1.3
+ * @since 2020-03-19
  */
 public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
 
