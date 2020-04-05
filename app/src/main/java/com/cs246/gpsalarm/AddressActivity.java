@@ -206,7 +206,7 @@ public class AddressActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
 
             //create uri from setRingtone and get the selected ringtone
-            if(requestCode == 1 && resultCode == RESULT_OK) {
+            if (requestCode == 1 && resultCode == RESULT_OK) {
                 Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
 
                 //Set selected ringtone here.
@@ -222,6 +222,9 @@ public class AddressActivity extends AppCompatActivity {
 
                 //change output in address_activity.xml to selected ringtone
                 output.setText("Current Ringtone: " + mRingtone.getTitle(this));
+            }
+            else if (resultCode == RESULT_CANCELED) {
+                return;
             }
         }
     }
