@@ -224,6 +224,7 @@ public class ControlPanelActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        gpsAlarmList=null;
         super.onDestroy();
     }
 
@@ -485,6 +486,10 @@ public class ControlPanelActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.itemLogout:
                 mAuth.signOut();
+                finish();
+                if (this.isDestroyed()){
+                    gpsAlarmList=null;
+                }
                 openMainActivity();
                 return true;
             case R.id.itemAddAddress:
