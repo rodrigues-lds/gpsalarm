@@ -201,7 +201,7 @@ public class ControlPanelActivity extends AppCompatActivity {
      * Here we are saving the information of which geofences are activated.
      */
     @Override
-    public void onStop() {
+    public void onPause() {
 
         int idx = 1;
         if (gpsAlarmList != null) {
@@ -215,7 +215,7 @@ public class ControlPanelActivity extends AppCompatActivity {
                 Log.e(TAG, "GPS LOG | Problem saving the Geofences status to Firebase. " + ex.toString());
             }
         }
-        super.onStop();
+        super.onPause();
     }
 
     /**
@@ -224,7 +224,7 @@ public class ControlPanelActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-        gpsAlarmList=null;
+        gpsAlarmList.clear();
         super.onDestroy();
     }
 
