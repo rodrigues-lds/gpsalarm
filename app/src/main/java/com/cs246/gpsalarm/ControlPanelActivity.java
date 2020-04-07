@@ -68,7 +68,7 @@ import java.util.List;
  * for Location and used to determine if we are entering or exiting a Geofence.
  */
 public class ControlPanelActivity extends AppCompatActivity {
-
+    // Test commit
     private static final String TAG = "com.cs246.gpsalarm.TAG";
     public static final String ADDRESS_POSITION = "com.cs246.gpsalarm";
 
