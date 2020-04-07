@@ -409,7 +409,6 @@ public class ControlPanelActivity extends AppCompatActivity {
                             Log.i(TAG, "GPS LOG | The Geofence was not added.");
                         }
                     });
-            ;
         } catch (Exception ex) {
             Log.e(TAG, "GPS LOG | It was not possible to add the Geofence to be managed. " + ex.getMessage());
         }
